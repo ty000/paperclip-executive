@@ -1,0 +1,65 @@
+{
+  "schemaVersion": "executive-l02-runtime-evidence.v1",
+  "hostCommit": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+  "hostUrl": "http://127.0.0.1:3220",
+  "candidateBase": "c0839fe18a8673893cc6f87cafb5d765c556d638",
+  "candidateFileSha256": {
+    "packages/executive/src/contribution.ts": "6cea2ebced3f0847c7dd3aa06f98a2a925d0efa2f51efd8c2986b1c92098d223",
+    "packages/executive/src/contribution-repository.ts": "02086b8dd696cc5e48167d26704a0d3c50a4f5ad0108007d08421510f35af654",
+    "packages/executive/src/worker.ts": "0951b0dc12fe17d44f997fbc0d341e7188500b4a3637611996358da01af836cf",
+    "packages/executive/src/ui/index.tsx": "1a05fe190c759fb9bddeec65fd2c33ed6b7af3c0bf36ae4043f883bd333542e0",
+    "packages/executive/migrations/002_prepared_ticket_contributions.sql": "eb7aa2c814039f62070c1d6a676abb816f16a6102f4fb80055013728f03d5ebf"
+  },
+  "contributionId": "7201f796-70bb-489b-9685-e400aecdd651",
+  "requestKey": "contribution-eaaacc0e-b1f8-40d4-adde-1beb18a9ee03",
+  "inputHash": "ef9cb8f422c82551f636ad0bfe3ea9688d71d1fbb0c3eb3a296fddace212c6b6",
+  "sessionId": "8936fccb-f65e-490b-bb99-97dcac0cc1f0",
+  "runId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+  "status": "completed",
+  "nativeRunStatus": "succeeded",
+  "recommendation": "revise",
+  "findingClasses": [
+    "must_fix",
+    "must_fix",
+    "useful_now",
+    "defer"
+  ],
+  "issueStatus": "todo",
+  "executorStatus": "paused",
+  "capture": {
+    "checkedAt": "2026-09-30T16:32:08.173Z",
+    "mode": "capture",
+    "contributionId": "7201f796-70bb-489b-9685-e400aecdd651",
+    "runId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+    "runCount": 1,
+    "status": "pass"
+  },
+  "afterRestart": {
+    "checkedAt": "2026-09-30T16:32:44.263Z",
+    "mode": "verify",
+    "contributionId": "7201f796-70bb-489b-9685-e400aecdd651",
+    "runId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+    "runCount": 1,
+    "status": "pass"
+  },
+  "browser": {
+    "checkedAt": "2026-09-30T16:33:51.855Z",
+    "contributionId": "7201f796-70bb-489b-9685-e400aecdd651",
+    "runId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+    "url": "http://127.0.0.1:3220/EXE/plugins/2f5ead19-69e1-4065-9fe4-93bd7699e510",
+    "checks": [
+      "completed result",
+      "attribution",
+      "expand captured snapshot",
+      "reload"
+    ],
+    "pageErrors": [],
+    "status": "pass"
+  },
+  "limits": [
+    "One real Codex contribution; replay checks created zero new model runs.",
+    "Criterion references acceptanceCriteria[2] and exclusions[2] do not resolve against the single-item supplied arrays; semantic output limitation retained for inspection.",
+    "Interrupted in-flight restart and adverse callback cases covered synthetically, not by another live model run.",
+    "No Council authority, shared-instance activation, production readiness or general judgment-quality claim."
+  ]
+}

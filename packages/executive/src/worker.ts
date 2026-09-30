@@ -2,6 +2,8 @@ import { createHash } from "node:crypto";
 import { definePlugin, runWorker } from "@paperclipai/plugin-sdk";
 import { AdviceService, assertUnambiguousCompanyOwner, type VerifiedActor } from "./advice.js";
 import { SqlAdviceRepository } from "./repository.js";
+import { ContributionService } from "./contribution.js";
+import { SqlContributionRepository } from "./contribution-repository.js";
 
 function stringField(value: unknown): string | null {
   return typeof value === "string" && value.trim().length > 0 ? value.trim() : null;
@@ -11,11 +13,19 @@ const plugin = definePlugin({
   async setup(ctx) {
     const repository = new SqlAdviceRepository(ctx.db);
     const service = new AdviceService(repository, ctx.agents.sessions, (input) => createHash("sha256").update(input).digest("hex"));
+    const contributionRepository = new SqlContributionRepository(ctx.db);
+    const contributionService = new ContributionService(
+      contributionRepository, ctx.agents.sessions, ctx.issues, ctx.agents,
+      (input) => createHash("sha256").update(input).digest("hex"),
+    );
     const companyReconciliations = new Map<string, Promise<void>>();
     const reconcileCompanyStart = async (companyId: string) => {
       let reconciliation = companyReconciliations.get(companyId);
       if (!reconciliation) {
-        reconciliation = repository.markInterruptedUnknown(companyId);
+        reconciliation = Promise.all([
+          repository.markInterruptedUnknown(companyId),
+          contributionRepository.markInterruptedUnknown(companyId),
+        ]).then(() => undefined);
         companyReconciliations.set(companyId, reconciliation);
         void reconciliation.catch(() => {
           if (companyReconciliations.get(companyId) === reconciliation) companyReconciliations.delete(companyId);
@@ -44,7 +54,22 @@ const plugin = definePlugin({
                 : null,
         },
         requests: await repository.list(companyId),
+        contributions: await contributionRepository.list(companyId),
       };
+    });
+
+    ctx.actions.register("submit-contribution", async (params, context) => {
+      const companyId = context.companyId;
+      if (!companyId) throw new Error("A host-authorized company is required");
+      await reconcileCompanyStart(companyId);
+      const owner = assertUnambiguousCompanyOwner(
+        context.actor as VerifiedActor,
+        await ctx.access.members.list({ companyId }),
+      );
+      return contributionService.submit(
+        { ...context.actor, ...owner, verifiedCompanyOwner: true } as VerifiedActor,
+        params as Parameters<ContributionService["submit"]>[1],
+      );
     });
 
     ctx.actions.register("configure-executive", async (params, context) => {
@@ -87,7 +112,7 @@ const plugin = definePlugin({
   async onHealth() {
     return {
       status: "ok", message: "Paperclip Executive worker is ready for explicit company configuration",
-      details: { journey: "L01 direct advice", automaticProvisioning: false },
+      details: { journeys: ["L01 direct advice", "L02 prepared-ticket contribution"], automaticProvisioning: false },
     };
   },
 });

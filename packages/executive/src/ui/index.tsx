@@ -1,6 +1,7 @@
 import { usePluginAction, usePluginData, type PluginPageProps } from "@paperclipai/plugin-sdk/ui";
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
 import type { AdviceRecord } from "../advice.js";
+import type { ContributionRecord, FindingClass } from "../contribution.js";
 
 type AdviceState = {
   configuration: {
@@ -12,6 +13,7 @@ type AdviceState = {
     reason: string | null;
   };
   requests: AdviceRecord[];
+  contributions: ContributionRecord[];
 };
 
 const stack: CSSProperties = { display: "grid", gap: 16 };
@@ -24,31 +26,49 @@ function newRequestKey(): string {
   return `advice-${globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36)}`;
 }
 
-function statusLabel(status: AdviceRecord["status"]): string {
+function statusLabel(status: AdviceRecord["status"] | ContributionRecord["status"]): string {
   return status === "outcome_unknown" ? "Outcome unknown" : status.replaceAll("_", " ");
 }
+
+const findingLabels: Record<FindingClass, string> = {
+  must_fix: "Must fix", useful_now: "Useful now", defer: "Defer",
+};
 
 export function ExecutivePage({ context }: PluginPageProps) {
   const companyId = context.companyId;
   const { data, loading, error, refresh } = usePluginData<AdviceState>("advice-state", { companyId });
   const configure = usePluginAction("configure-executive");
   const submit = usePluginAction("submit-advice");
+  const submitContribution = usePluginAction("submit-contribution");
   const [agentId, setAgentId] = useState("");
   const [requestKey, setRequestKey] = useState(newRequestKey);
   const [question, setQuestion] = useState("");
   const [requestContext, setRequestContext] = useState("");
   const [busy, setBusy] = useState(false);
   const [actionError, setActionError] = useState<string | null>(null);
+  const [contributionKey, setContributionKey] = useState(() => `contribution-${globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36)}`);
+  const [issueId, setIssueId] = useState("");
+  const [contributorAgentId, setContributorAgentId] = useState("");
+  const [sourceReference, setSourceReference] = useState("");
+  const [objective, setObjective] = useState("");
+  const [acceptanceCriteria, setAcceptanceCriteria] = useState("");
+  const [exclusions, setExclusions] = useState("");
+  const [dependencies, setDependencies] = useState("");
+  const [approach, setApproach] = useState("");
+  const [evidenceReferences, setEvidenceReferences] = useState("");
+  const [decisiveUnknowns, setDecisiveUnknowns] = useState("");
+  const [constraints, setConstraints] = useState("");
 
   useEffect(() => {
     if (!agentId && data?.configuration.executiveAgentId) setAgentId(data.configuration.executiveAgentId);
   }, [agentId, data?.configuration.executiveAgentId]);
 
   useEffect(() => {
-    if (!data?.requests.some((item) => ["pending", "dispatching", "running"].includes(item.status))) return;
+    if (!data?.requests.some((item) => ["pending", "dispatching", "running"].includes(item.status)) &&
+        !data?.contributions.some((item) => ["prepared", "dispatching", "running"].includes(item.status))) return;
     const timer = globalThis.setInterval(refresh, 2500);
     return () => globalThis.clearInterval(timer);
-  }, [data?.requests, refresh]);
+  }, [data?.requests, data?.contributions, refresh]);
 
   async function saveConfiguration(event: FormEvent) {
     event.preventDefault();
@@ -77,6 +97,16 @@ export function ExecutivePage({ context }: PluginPageProps) {
     } finally {
       setBusy(false);
     }
+  }
+
+  async function requestContribution(event: FormEvent) {
+    event.preventDefault(); setBusy(true); setActionError(null);
+    try {
+      await submitContribution({ requestKey: contributionKey, issueId, contributorAgentId, sourceReference, objective,
+        acceptanceCriteria, exclusions, dependencies, approach, evidenceReferences, decisiveUnknowns, constraints });
+      refresh();
+    } catch (caught) { setActionError(caught instanceof Error ? caught.message : "Contribution request failed"); }
+    finally { setBusy(false); }
   }
 
   if (!companyId) return <div style={card}>Select a company to use Paperclip Executive.</div>;
@@ -154,6 +184,73 @@ export function ExecutivePage({ context }: PluginPageProps) {
               </div>
             ) : null}
             {request.error ? <div role="alert"><strong>Visible failure or uncertainty:</strong> {request.error}</div> : null}
+          </article>
+        ))}
+      </section>
+
+      <section style={card} aria-labelledby="contribution-title">
+        <h2 id="contribution-title" style={{ margin: 0 }}>Prepared-ticket approach contribution</h2>
+        <p style={{ margin: 0 }}><strong>Advisory only.</strong> This snapshot-bound contribution is not a Council verdict, approval, or permission to start work.</p>
+        <form onSubmit={requestContribution} style={stack}>
+          <label>Paperclip issue ID<input style={field} value={issueId} onChange={(e) => setIssueId(e.target.value)} required /></label>
+          <label>Contributor agent ID<input style={field} value={contributorAgentId} onChange={(e) => setContributorAgentId(e.target.value)} required /></label>
+          <label>Supplied Linear identifier or URL<input style={field} value={sourceReference} onChange={(e) => setSourceReference(e.target.value)} required /></label>
+          <label>Objective<textarea style={field} value={objective} onChange={(e) => setObjective(e.target.value)} required /></label>
+          <label>Acceptance criteria (one per line)<textarea style={field} value={acceptanceCriteria} onChange={(e) => setAcceptanceCriteria(e.target.value)} required /></label>
+          <label>Exclusions (one per line)<textarea style={field} value={exclusions} onChange={(e) => setExclusions(e.target.value)} required /></label>
+          <label>Relevant dependencies (one per line)<textarea style={field} value={dependencies} onChange={(e) => setDependencies(e.target.value)} /></label>
+          <label>Proposed approach<textarea style={{ ...field, minHeight: 100 }} value={approach} onChange={(e) => setApproach(e.target.value)} required /></label>
+          <label>Evidence references (one per line)<textarea style={field} value={evidenceReferences} onChange={(e) => setEvidenceReferences(e.target.value)} /></label>
+          <label>Decisive unknowns (use “None identified” when explicit)<textarea style={field} value={decisiveUnknowns} onChange={(e) => setDecisiveUnknowns(e.target.value)} required /></label>
+          <label>Time/resource constraints (use “None supplied” when explicit)<textarea style={field} value={constraints} onChange={(e) => setConstraints(e.target.value)} required /></label>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            <button style={button} disabled={busy}>Request one contribution</button>
+            <button type="button" style={mutedButton} onClick={() => {
+              setContributionKey(`contribution-${globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36)}`); setActionError(null);
+            }}>New contribution key</button>
+          </div>
+          <small>Correlation key: <code>{contributionKey}</code>. Identical repeats do not redispatch; changed captured input conflicts.</small>
+        </form>
+      </section>
+
+      <section style={stack} aria-labelledby="contribution-history-title">
+        <h2 id="contribution-history-title" style={{ margin: 0 }}>Contribution history</h2>
+        {data.contributions.length === 0 ? <div style={card}>No prepared-ticket contribution has been persisted for this company.</div> : null}
+        {data.contributions.map((item) => (
+          <article key={item.contributionId} style={card}>
+            <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap" }}>
+              <strong>{item.issue.identifier ?? item.issue.id}: {item.issue.title}</strong><span>Status: {statusLabel(item.status)}</span>
+            </div>
+            <div><small>Input v{item.inputVersion} · method {item.method.id}@{item.method.version} · request <code>{item.requestKey}</code></small></div>
+            <div><small>Contributor {item.contributor.name} (<code>{item.contributor.agentId}</code>) · executor <code>{item.issue.executorAgentId}</code></small></div>
+            <div><small>Session <code>{item.sessionId ?? "not recorded"}</code> · run <code>{item.runId ?? "not recorded"}</code></small></div>
+            <details><summary>Captured input snapshot</summary>
+              <p><strong>Issue status/project:</strong> {item.issue.status} / {item.issue.projectId ?? "no project"}</p>
+              <p><strong>Issue description:</strong> {item.issue.description ?? "No description captured."}</p>
+              <p><strong>Issue observed update:</strong> {item.issue.updatedAt}</p>
+              <p><strong>Supplied source:</strong> {item.source.reference}</p><p><strong>Objective:</strong> {item.source.objective}</p>
+              <div><strong>Acceptance criteria</strong><ul>{item.source.acceptanceCriteria.map((value) => <li key={value}>{value}</li>)}</ul></div>
+              <div><strong>Exclusions</strong><ul>{item.source.exclusions.map((value) => <li key={value}>{value}</li>)}</ul></div>
+              <div><strong>Dependencies</strong>{item.source.dependencies.length ? <ul>{item.source.dependencies.map((value) => <li key={value}>{value}</li>)}</ul> : <p>None supplied.</p>}</div>
+              <p><strong>Approach:</strong> {item.approach.summary}</p>
+              <div><strong>Evidence references</strong>{item.approach.evidenceReferences.length ? <ul>{item.approach.evidenceReferences.map((value) => <li key={value}>{value}</li>)}</ul> : <p>None supplied.</p>}</div>
+              <div><strong>Decisive unknowns</strong><ul>{item.approach.decisiveUnknowns.map((value) => <li key={value}>{value}</li>)}</ul></div>
+              <div><strong>Time/resource constraints</strong><ul>{item.approach.constraints.map((value) => <li key={value}>{value}</li>)}</ul></div>
+              <p><strong>Snapshot warning:</strong> issue and source may have changed since {item.issue.updatedAt}; this record remains advisory.</p>
+            </details>
+            {item.result ? <div style={stack}>
+              <div><strong>Recommendation</strong><p>{item.result.recommendation}</p></div>
+              <div><strong>Product perspective</strong><p>{item.result.perspectiveNotes.product}</p></div>
+              <div><strong>Technical perspective</strong><p>{item.result.perspectiveNotes.technical}</p></div>
+              <div><strong>Delivery/cost perspective</strong><p>{item.result.perspectiveNotes.delivery_cost}</p></div>
+              <div><strong>Findings</strong>{item.result.findings.length === 0 ? <p>No findings were returned; zero must-fix findings is valid.</p> : <ul>{item.result.findings.map((finding) => <li key={finding.id}>
+                <strong>{findingLabels[finding.class]} · {finding.id}</strong>: {finding.smallestUsefulAction}<br />
+                <small>{finding.perspective} · criterion/risk: {finding.criterionRef} · evidence: {finding.evidence.join("; ") || "none supplied"} · reasons: {finding.reasons.join("; ") || "none supplied"}</small>
+              </li>)}</ul>}</div>
+              <div><strong>Assumptions</strong><ul>{item.result.assumptions.map((value) => <li key={value}>{value}</li>)}</ul></div>
+              <div><strong>Limitations</strong><ul>{item.result.limitations.map((value) => <li key={value}>{value}</li>)}</ul></div>
+            </div> : null}
+            {item.error ? <div role="alert"><strong>Visible failure or uncertainty:</strong> {item.error}</div> : null}
           </article>
         ))}
       </section>
