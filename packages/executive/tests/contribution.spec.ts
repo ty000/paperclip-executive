@@ -228,12 +228,51 @@ describe("Paperclip Executive L02 contribution", () => {
     expect(stillRunning).toMatchObject({ status: "running", runId: "00000000-0000-4000-8000-000000000012", result: null });
   });
 
-  it("A4 keeps a synchronous terminal outcome unknown when persisting its returned run id fails", async () => {
+  it("A4 recovers a queued terminal result after returned run persistence becomes durably uncertain", async () => {
     const { service, sessions, repository } = setup(); repository.failRunning = true;
     sessions.synchronousEvents = [{ sessionId: "00000000-0000-4000-8000-000000000011", runId: "00000000-0000-4000-8000-000000000012", seq: 1, eventType: "done", stream: "stdout", message: JSON.stringify(validResult), payload: null }];
     const result = await service.submit(owner, input);
-    expect(result).toMatchObject({ status: "outcome_unknown", runId: "00000000-0000-4000-8000-000000000012", result: null });
+    expect(result).toMatchObject({ status: "completed", runId: "00000000-0000-4000-8000-000000000012", result: validResult });
     expect(sessions.creates).toBe(1); expect(sessions.sends).toBe(1);
+  });
+
+  it("A4 accepts a later correlated terminal callback after returned run persistence becomes durably uncertain", async () => {
+    const { service, sessions, repository } = setup(); repository.failRunning = true;
+    const unknown = await service.submit(owner, input);
+    expect(unknown).toMatchObject({ status: "outcome_unknown", sessionId: "00000000-0000-4000-8000-000000000011", runId: "00000000-0000-4000-8000-000000000012" });
+
+    sessions.onEvent?.({ sessionId: unknown.sessionId!, runId: unknown.runId!, seq: 1, eventType: "done", stream: "stdout", message: JSON.stringify(validResult), payload: null });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(await repository.get("company-1", unknown.contributionId)).toMatchObject({ status: "completed", result: validResult });
+  });
+
+  it("A4 does not complete queued or later callbacks without exact durable run correlation", async () => {
+    const wrongCallback = setup(); wrongCallback.repository.failRunning = true;
+    wrongCallback.sessions.synchronousEvents = [{ sessionId: "00000000-0000-4000-8000-000000000011", runId: "wrong-run", seq: 1,
+      eventType: "done", stream: "stdout", message: JSON.stringify(validResult), payload: null }];
+    const wrongUnknown = await wrongCallback.service.submit(owner, input);
+    expect(wrongUnknown).toMatchObject({ status: "outcome_unknown", result: null });
+
+    for (const durableMismatch of ["missing", "wrong-run"] as const) {
+      const current = setup(); current.repository.failRunning = true;
+      const durableGet = current.repository.get.bind(current.repository);
+      let suppressNextUncertainReadback = true;
+      current.repository.get = async (companyId, id) => {
+        const record = await durableGet(companyId, id);
+        if (!suppressNextUncertainReadback || record?.status !== "outcome_unknown") return record;
+        suppressNextUncertainReadback = false;
+        return durableMismatch === "missing" ? null : { ...record, runId: "wrong-durable-run" };
+      };
+      current.sessions.synchronousEvents = [{ sessionId: "00000000-0000-4000-8000-000000000011", runId: "00000000-0000-4000-8000-000000000012", seq: 1,
+        eventType: "done", stream: "stdout", message: JSON.stringify(validResult), payload: null }];
+
+      const unknown = await current.service.submit(owner, { ...input, requestKey: `durable-${durableMismatch}` });
+      expect(unknown).toMatchObject({ status: "outcome_unknown", result: null });
+      current.sessions.onEvent?.({ sessionId: unknown.sessionId!, runId: unknown.runId!, seq: 2,
+        eventType: "done", stream: "stdout", message: JSON.stringify(validResult), payload: null });
+      await new Promise((resolve) => setTimeout(resolve, 0));
+      expect(await durableGet("company-1", unknown.contributionId)).toMatchObject({ status: "outcome_unknown", result: null });
+    }
   });
 
   it("A4 marks valid completion persistence failure outcome-unknown and accepts later correlated recovery", async () => {

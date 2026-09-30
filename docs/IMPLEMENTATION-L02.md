@@ -88,7 +88,7 @@ contribution/session/run identity, and sanitized API/browser check results.
 | Completed-result persistence after host restart | Exact contribution, issue fields, executor state and run set preserved. |
 | Real Chromium interaction after restart | Completed result and run attribution visible; captured snapshot expanded; reload retained result; no uncaught page errors. |
 | Native issue/executor | EXE-2 remained `todo`, assigned to the same paused executor. |
-| Package checks | 32 tests passed; `pnpm typecheck` and `pnpm build` passed. |
+| Package checks | 34 tests passed; `pnpm typecheck` and `pnpm build` passed. |
 
 The full report is advisory. The real result included `acceptanceCriteria[2]` and
 `exclusions[2]`, although the owner had supplied one combined line per array. These
@@ -139,6 +139,15 @@ completion write fails now remains `outcome_unknown`, while invalid output remai
 Fault-injection tests cover both changes. Native readback after the updated build
 preserved the completed contribution and the same single run; no additional model
 call or live database-failure injection was performed.
+
+A third review found that a failed run-state write discarded queued terminal
+events and prevented later callbacks from recovering the uncertain contribution.
+The service now enables callback processing only after reading back the exact
+durable session/run identity in `outcome_unknown`, then drains the existing queue.
+Tests cover queued and later recovery, incorrect callback correlation, and missing
+or mismatched durable identity. Native readback again preserved the same result
+and single run. This correction has passed tests but still requires review on its
+published commit; the bounded PR review loop stopped before that additional review.
 
 ## Remaining boundaries
 

@@ -286,6 +286,12 @@ export class ContributionService {
       if (event.runId !== persistedRunId) return;
       terminalProcessing = terminalProcessing.then(() => persistTerminal(event)).catch(() => undefined);
     };
+    const drainTerminalQueue = async (): Promise<void> => {
+      const queued = terminalQueue;
+      terminalQueue = [];
+      for (const event of queued) acceptTerminal(event);
+      await terminalProcessing;
+    };
     try {
       const session = await this.sessions.create(contributor.id, companyId, {
         taskKey: `plugin:paperclip-executive.executive:session:contribution:${created.contributionId}:v:${created.inputVersion}`,
@@ -300,15 +306,22 @@ export class ContributionService {
       runId = sent.runId;
       await this.repository.markRunning(companyId, created.contributionId, sessionId, runId);
       persistedRunId = runId;
-      const queued = terminalQueue;
-      terminalQueue = [];
-      for (const event of queued) acceptTerminal(event);
-      await terminalProcessing;
+      await drainTerminalQueue();
     } catch (error) {
-      terminalQueue = [];
       await this.repository.fail(companyId, created.contributionId, "outcome_unknown",
         sessionId ? `Dispatch may have reached Paperclip: ${safeError(error)}` : `Session creation outcome is unknown: ${safeError(error)}`,
         runId, sessionId);
+      if (sessionId && runId) {
+        const uncertain = await this.repository.get(companyId, created.contributionId);
+        if (uncertain?.status === "outcome_unknown" && uncertain.sessionId === sessionId && uncertain.runId === runId) {
+          persistedRunId = runId;
+          await drainTerminalQueue();
+        } else {
+          terminalQueue = [];
+        }
+      } else {
+        terminalQueue = [];
+      }
     }
     return (await this.repository.get(companyId, created.contributionId)) ?? created;
   }
