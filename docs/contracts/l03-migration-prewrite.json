@@ -1,0 +1,18 @@
+{
+  "schema_version": "prewrite-migration-contract.v1",
+  "migration_id": "L03-EXECUTIVE",
+  "classification": "cross-plugin",
+  "owner": "Executive",
+  "surfaces": [
+    "Council mission aggregate and durable admissions",
+    "Executive reserved-slot contributions",
+    "Council receipts consumed without duplication",
+    "Executive private additive 004 widens slot_id uuid to text preserving installed003 and existing rows; no native tables"
+  ],
+  "slicing_verdict": "split-required",
+  "ordered_slices": [
+    "L03-COUNCIL",
+    "L03-EXECUTIVE",
+    "L03-INTEGRATION"
+  ]
+}

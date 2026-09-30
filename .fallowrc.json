@@ -1,0 +1,11 @@
+{
+  "entry": [
+    "scripts/fixtures/l03-*.mjs",
+    "scripts/install-l03-candidates.mjs",
+    "scripts/prepare-l03-safety.mjs",
+    "scripts/prepare-l03.mjs",
+    "scripts/qualify-l03-host.mjs",
+    "packages/executive/src/ui/index.tsx",
+    "scripts/prepare-l03-mandate.mjs"
+  ]
+}

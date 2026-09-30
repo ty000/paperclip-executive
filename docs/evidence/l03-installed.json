@@ -1,0 +1,42 @@
+{
+  "observedAt": "2026-09-30T22:27:12.452Z",
+  "host": {
+    "base": "http://127.0.0.1:3220",
+    "commit": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+    "instance": "executive-dev",
+    "schedulerEnabled": false
+  },
+  "candidates": [
+    {
+      "key": "paperclip-executive.executive",
+      "id": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
+      "path": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/packages/executive",
+      "version": "0.3.0",
+      "status": "ready",
+      "workerSha256": "89e78dbae8fac0e7fdcd9df606bf447fc41073b733ae5db5390954c791f168ad",
+      "manifestSha256": "c5d4d05d80ec2818c4dc7e519196667ab31dd63bbdfe0dcc9d3c69505b181042"
+    },
+    {
+      "key": "private.paperclip-council",
+      "id": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+      "path": "/home/davy-lp/workspace/paperclip-council-l03",
+      "version": "0.5.0",
+      "status": "ready",
+      "workerSha256": "63c25765162f570b69a68d71f13a1911260e2008876367bf6e09dea21378c533",
+      "manifestSha256": "45be80beed3b88139e03e5b8f902c217c610e565e15398863d4aeba9d20e5fc5"
+    }
+  ],
+  "l02Preserved": {
+    "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+    "runIds": [
+      "2285549d-f090-4f92-ad46-64c2bce1d3cd"
+    ],
+    "agentIds": [
+      "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+      "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+      "f49ad183-bb22-47f1-a235-ee3309b21e02"
+    ]
+  },
+  "providerCalls": 0,
+  "note": "Installed and ready is not model execution or effective profile-load proof."
+}

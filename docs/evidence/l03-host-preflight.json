@@ -1,0 +1,1593 @@
+{
+  "schemaVersion": 1,
+  "proofId": "paperclip-executive-l03-host-preflight-2026-09-30",
+  "startedAt": "2026-09-30T21:42:44.525Z",
+  "outcome": "PASS",
+  "environment": {
+    "baseUrl": "http://127.0.0.1:3220",
+    "hostCommit": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+    "runtimePid": 1074721,
+    "instanceId": "executive-dev",
+    "executiveSourceHead": "463bfbd4264ae5d048a877d26caf57ab5ca86b29",
+    "councilSourceHead": "565a2b9336c1819976638dbecc0876c76fa6c114",
+    "providerCalls": 0,
+    "fixture": "codex_local CLI JSONL; local process only"
+  },
+  "candidates": {
+    "executivePluginId": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
+    "councilPluginId": "cb1d37ab-e723-4d63-bed1-3e87442afc51"
+  },
+  "protectedBaselines": {
+    "l02": {
+      "agentCount": 3,
+      "agentStatuses": [
+        {
+          "id": "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+          "status": "paused"
+        },
+        {
+          "id": "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+          "status": "idle"
+        },
+        {
+          "id": "f49ad183-bb22-47f1-a235-ee3309b21e02",
+          "status": "idle"
+        }
+      ],
+      "runIds": [
+        "2285549d-f090-4f92-ad46-64c2bce1d3cd"
+      ]
+    },
+    "l03": {
+      "agentCount": 7,
+      "agentStatuses": [
+        {
+          "id": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+          "status": "paused"
+        },
+        {
+          "id": "63e53a4a-1c89-4490-9739-05699be031fa",
+          "status": "paused"
+        },
+        {
+          "id": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+          "status": "paused"
+        },
+        {
+          "id": "9acab613-9c24-45df-8f26-e600fc61d615",
+          "status": "paused"
+        },
+        {
+          "id": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+          "status": "paused"
+        },
+        {
+          "id": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+          "status": "paused"
+        },
+        {
+          "id": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+          "status": "paused"
+        }
+      ],
+      "runIds": []
+    }
+  },
+  "synthetic": {},
+  "checks": {
+    "candidateReadiness": {
+      "executive": {
+        "manifestId": "paperclip-executive.executive",
+        "version": "0.3.0",
+        "health": "ready"
+      },
+      "council": {
+        "manifestId": "private.paperclip-council",
+        "version": "0.5.0",
+        "health": "ready"
+      }
+    },
+    "boundary": "Candidate plugins ready; protected L02 and real L03 companies read only; no synthetic mutation attempted."
+  },
+  "steps": [
+    {
+      "at": "2026-09-30T21:42:44.622Z",
+      "method": "POST",
+      "path": "/api/auth/sign-in/email",
+      "actor": "board",
+      "status": 200,
+      "response": {
+        "userId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ"
+      }
+    },
+    {
+      "at": "2026-09-30T21:42:44.673Z",
+      "method": "GET",
+      "path": "/api/health",
+      "actor": "board",
+      "status": 200,
+      "response": {
+        "status": "ok",
+        "version": "2026.916.0+197.git.61b3fd57a.dirty",
+        "serverVersion": "2026.916.0+197.git.61b3fd57a.dirty",
+        "commit": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+        "deploymentMode": "authenticated",
+        "deploymentExposure": "private",
+        "localAiLoginSupported": true,
+        "authReady": true,
+        "bootstrapStatus": "ready",
+        "bootstrapInviteActive": false,
+        "features": {
+          "companyDeletionEnabled": false
+        },
+        "serverInfo": {
+          "processStartedAt": "2026-09-30T16:32:38.116Z",
+          "git": {
+            "available": true,
+            "fullSha": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+            "shortSha": "61b3fd57a",
+            "branchName": "codex/council-feasibility",
+            "subject": "fix(ui): recover gracefully during server restarts (#14560)",
+            "committedAt": "2026-09-29T13:31:05.000Z",
+            "localChanges": {
+              "available": true,
+              "hasLocalChanges": true,
+              "stagedFileCount": 0,
+              "unstagedFileCount": 1,
+              "untrackedFileCount": 2
+            }
+          }
+        },
+        "startupRecovery": {
+          "phase": "ready",
+          "updatedAt": "2026-09-30T16:32:42.002Z"
+        },
+        "nativeRecovery": {}
+      }
+    },
+    {
+      "at": "2026-09-30T21:42:44.683Z",
+      "method": "GET",
+      "path": "/api/plugins",
+      "actor": "board",
+      "status": 200,
+      "response": [
+        {
+          "id": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
+          "pluginKey": "paperclip-executive.executive",
+          "packageName": "@paperclip-executive/executive",
+          "version": "0.3.0",
+          "apiVersion": 1,
+          "categories": [
+            "automation",
+            "ui"
+          ],
+          "manifestJson": {
+            "id": "paperclip-executive.executive",
+            "ui": {
+              "slots": [
+                {
+                  "id": "advice",
+                  "type": "page",
+                  "routePath": "executive",
+                  "exportName": "ExecutivePage",
+                  "displayName": "Executive"
+                }
+              ]
+            },
+            "agents": [
+              {
+                "role": "general",
+                "title": "Executive Advisor",
+                "status": "paused",
+                "agentKey": "executive",
+                "displayName": "Executive",
+                "capabilities": "Provides bounded, attributable advice without authorizing or creating work.",
+                "instructions": {
+                  "assetPath": "profiles/executive",
+                  "entryFile": "AGENTS.md"
+                }
+              }
+            ],
+            "author": "Davy Guittard",
+            "version": "0.3.0",
+            "database": {
+              "migrationsDir": "migrations",
+              "namespaceSlug": "executive"
+            },
+            "apiVersion": 1,
+            "categories": [
+              "automation",
+              "ui"
+            ],
+            "description": "Attributable executive advice through native Paperclip agent sessions.",
+            "displayName": "Paperclip Executive",
+            "entrypoints": {
+              "ui": "./dist/ui",
+              "worker": "./dist/worker.js"
+            },
+            "capabilities": [
+              "agents.read",
+              "issues.read",
+              "agents.managed",
+              "access.members.read",
+              "agent.sessions.create",
+              "agent.sessions.send",
+              "events.subscribe",
+              "events.emit",
+              "database.namespace.migrate",
+              "database.namespace.read",
+              "database.namespace.write",
+              "ui.page.register"
+            ]
+          },
+          "status": "ready",
+          "installOrder": 1,
+          "packagePath": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/packages/executive",
+          "lastError": null,
+          "installedAt": "2026-09-30T15:09:25.268Z",
+          "updatedAt": "2026-09-30T21:39:38.231Z"
+        },
+        {
+          "id": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+          "pluginKey": "private.paperclip-council",
+          "packageName": "@paperclipai/plugin-council",
+          "version": "0.5.0",
+          "apiVersion": 1,
+          "categories": [
+            "automation"
+          ],
+          "manifestJson": {
+            "id": "private.paperclip-council",
+            "ui": {
+              "slots": [
+                {
+                  "id": "council-l03",
+                  "type": "page",
+                  "routePath": "council-l03",
+                  "exportName": "CouncilL03Page",
+                  "displayName": "Council missions"
+                },
+                {
+                  "id": "council-rosters",
+                  "type": "page",
+                  "routePath": "council-rosters",
+                  "exportName": "CouncilRostersPage",
+                  "displayName": "Council rosters"
+                }
+              ]
+            },
+            "author": "Local Paperclip integration",
+            "version": "0.5.0",
+            "database": {
+              "migrationsDir": "migrations",
+              "namespaceSlug": "private_paperclip_council",
+              "coreReadTables": [
+                "companies",
+                "issues",
+                "projects"
+              ]
+            },
+            "apiRoutes": [
+              {
+                "auth": "board-or-agent",
+                "path": "/companies/:companyId/l03",
+                "method": "GET",
+                "routeKey": "l03-list",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "query"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/l03",
+                "method": "POST",
+                "routeKey": "l03-create",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "body"
+                }
+              },
+              {
+                "auth": "board-or-agent",
+                "path": "/companies/:companyId/l03/:missionId/commands",
+                "method": "POST",
+                "routeKey": "l03-command",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "body"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/rosters",
+                "method": "GET",
+                "routeKey": "rosters-list",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "query"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/rosters",
+                "method": "POST",
+                "routeKey": "rosters-command",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "body"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/rosters/:rosterId",
+                "method": "GET",
+                "routeKey": "roster-read",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "query"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/rosters/:rosterId/commands",
+                "method": "POST",
+                "routeKey": "roster-command",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "body"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/missions",
+                "method": "GET",
+                "routeKey": "missions-list",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "query"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/missions",
+                "method": "POST",
+                "routeKey": "missions-command",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "body"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/missions/:missionId",
+                "method": "GET",
+                "routeKey": "mission-read",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "query"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/missions/:missionId/commands",
+                "method": "POST",
+                "routeKey": "mission-command",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "body"
+                }
+              },
+              {
+                "auth": "agent",
+                "path": "/issues/:issueId/decision",
+                "method": "POST",
+                "routeKey": "decision",
+                "capability": "api.routes.register",
+                "checkoutPolicy": "required-for-agent-in-progress",
+                "companyResolution": {
+                  "from": "issue",
+                  "param": "issueId"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/decisions",
+                "method": "GET",
+                "routeKey": "council-decisions-list",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "query"
+                }
+              },
+              {
+                "auth": "board",
+                "path": "/companies/:companyId/decisions/human",
+                "method": "POST",
+                "routeKey": "council-decision-human",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "key": "companyId",
+                  "from": "body"
+                }
+              },
+              {
+                "auth": "board-or-agent",
+                "path": "/issues/:issueId/foundation-probe",
+                "method": "POST",
+                "routeKey": "foundation-probe",
+                "capability": "api.routes.register",
+                "companyResolution": {
+                  "from": "issue",
+                  "param": "issueId"
+                }
+              }
+            ],
+            "apiVersion": 1,
+            "categories": [
+              "automation"
+            ],
+            "description": "Private Council integration with revisioned rosters, pinned draft missions, and explicit Paperclip review decisions.",
+            "displayName": "Paperclip Council",
+            "entrypoints": {
+              "ui": "./dist/ui",
+              "worker": "./dist/worker.js"
+            },
+            "capabilities": [
+              "api.routes.register",
+              "events.emit",
+              "events.subscribe",
+              "issues.orchestration.read",
+              "companies.read",
+              "projects.read",
+              "agents.read",
+              "database.namespace.migrate",
+              "database.namespace.read",
+              "database.namespace.write",
+              "issues.read",
+              "issues.wakeup",
+              "issue.documents.read",
+              "issue.attachments.read",
+              "issue.interactions.create",
+              "issue.interactions.read",
+              "issue.interactions.respond",
+              "secrets.read-ref",
+              "ui.page.register"
+            ],
+            "instanceConfigSchema": {
+              "type": "object",
+              "required": [
+                "apiBaseUrl",
+                "councilAgentId",
+                "councilApiKey"
+              ],
+              "properties": {
+                "apiBaseUrl": {
+                  "type": "string",
+                  "title": "Paperclip API base URL",
+                  "format": "uri",
+                  "description": "Loopback origin of the Paperclip instance, without credentials, path, query, fragment, or an /api suffix."
+                },
+                "councilApiKey": {
+                  "title": "Council agent API key",
+                  "format": "secret-ref",
+                  "description": "Reference to the Paperclip company secret containing the dedicated council agent token."
+                },
+                "councilAgentId": {
+                  "type": "string",
+                  "title": "Council agent ID",
+                  "format": "uuid",
+                  "description": "Paperclip agent whose dedicated standard API key is stored below."
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "status": "ready",
+          "installOrder": 2,
+          "packagePath": "/home/davy-lp/workspace/paperclip-council-l03",
+          "lastError": null,
+          "installedAt": "2026-09-30T21:39:38.519Z",
+          "updatedAt": "2026-09-30T21:39:38.592Z"
+        }
+      ]
+    },
+    {
+      "at": "2026-09-30T21:42:44.690Z",
+      "method": "GET",
+      "path": "/api/plugins/2f5ead19-69e1-4065-9fe4-93bd7699e510/health",
+      "actor": "board",
+      "status": 200,
+      "response": {
+        "pluginId": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
+        "status": "ready",
+        "healthy": true,
+        "checks": [
+          {
+            "name": "registry",
+            "passed": true,
+            "message": "Plugin found in registry"
+          },
+          {
+            "name": "manifest",
+            "passed": true,
+            "message": "Manifest is valid"
+          },
+          {
+            "name": "status",
+            "passed": true,
+            "message": "Current status: ready"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-30T21:42:44.696Z",
+      "method": "GET",
+      "path": "/api/plugins/cb1d37ab-e723-4d63-bed1-3e87442afc51/health",
+      "actor": "board",
+      "status": 200,
+      "response": {
+        "pluginId": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+        "status": "ready",
+        "healthy": true,
+        "checks": [
+          {
+            "name": "registry",
+            "passed": true,
+            "message": "Plugin found in registry"
+          },
+          {
+            "name": "manifest",
+            "passed": true,
+            "message": "Manifest is valid"
+          },
+          {
+            "name": "status",
+            "passed": true,
+            "message": "Current status: ready"
+          }
+        ]
+      }
+    },
+    {
+      "at": "2026-09-30T21:42:44.704Z",
+      "method": "GET",
+      "path": "/api/companies/331bf268-b21e-4874-9a3c-2137415c7e08/agents",
+      "actor": "board",
+      "status": 200,
+      "response": [
+        {
+          "id": "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+          "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+          "name": "exécutant",
+          "role": "general",
+          "title": null,
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "lime-lagoon"
+          },
+          "status": "paused",
+          "reportsTo": null,
+          "capabilities": null,
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "model": "gpt-5.6-luna",
+            "search": false,
+            "fastMode": false,
+            "graceSec": 15,
+            "timeoutSec": 0,
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/331bf268-b21e-4874-9a3c-2137415c7e08/agents/676e3f2a-eae0-48e9-8280-5f9e1d158975/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/331bf268-b21e-4874-9a3c-2137415c7e08/agents/676e3f2a-eae0-48e9-8280-5f9e1d158975/instructions",
+            "modelReasoningEffort": "low",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "cooldownSec": 10,
+              "intervalSec": 300,
+              "wakeOnDemand": true,
+              "maxConcurrentRuns": 20,
+              "skipTimerWhenNoActionableWork": true
+            },
+            "aiConnection": {
+              "mode": "responsible_user",
+              "method": "subscription",
+              "provider": "openai"
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 0,
+          "spentMonthlyCents": 0,
+          "pauseReason": "manual",
+          "pausedAt": "2026-09-30T16:17:17.126Z",
+          "errorReason": null,
+          "permissions": {
+            "canCreateAgents": true,
+            "canCreateSkills": true
+          },
+          "lastHeartbeatAt": null,
+          "metadata": null,
+          "createdAt": "2026-09-30T16:15:56.840Z",
+          "updatedAt": "2026-09-30T16:17:17.126Z",
+          "urlKey": "ex-cutant",
+          "avatarUrl": "/api/agent-avatars/cap-v1/lime-lagoon/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+                "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+                "name": "exécutant",
+                "status": "paused",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        },
+        {
+          "id": "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+          "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+          "name": "Executive development owner",
+          "role": "general",
+          "title": null,
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "turquoise-cherry"
+          },
+          "status": "idle",
+          "reportsTo": null,
+          "capabilities": null,
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "search": false,
+            "fastMode": false,
+            "graceSec": 15,
+            "timeoutSec": 0,
+            "paperclipSkillSync": {
+              "desiredSkills": [
+                "paperclipai/paperclip/paperclip",
+                "paperclipai/paperclip/paperclip-board",
+                "paperclipai/paperclip/paperclip-converting-plans-to-tasks",
+                "paperclipai/paperclip/paperclip-create-agent",
+                "paperclipai/paperclip/para-memory-files",
+                "paperclipai/paperclip/first-task"
+              ]
+            },
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/331bf268-b21e-4874-9a3c-2137415c7e08/agents/a844282f-fbfa-4404-b972-1ad11ab86f0f/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/331bf268-b21e-4874-9a3c-2137415c7e08/agents/a844282f-fbfa-4404-b972-1ad11ab86f0f/instructions",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "cooldownSec": 10,
+              "intervalSec": 300,
+              "wakeOnDemand": true,
+              "maxConcurrentRuns": 20,
+              "skipTimerWhenNoActionableWork": true
+            },
+            "aiConnection": {
+              "mode": "responsible_user",
+              "method": "subscription",
+              "provider": "openai"
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 0,
+          "spentMonthlyCents": 0,
+          "pauseReason": null,
+          "pausedAt": null,
+          "errorReason": null,
+          "permissions": {
+            "canCreateAgents": true,
+            "canCreateSkills": true
+          },
+          "lastHeartbeatAt": null,
+          "metadata": null,
+          "createdAt": "2026-09-30T16:14:29.466Z",
+          "updatedAt": "2026-09-30T16:14:29.499Z",
+          "urlKey": "executive-development-owner",
+          "avatarUrl": "/api/agent-avatars/cap-v1/turquoise-cherry/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+                "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+                "name": "Executive development owner",
+                "status": "idle",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        },
+        {
+          "id": "f49ad183-bb22-47f1-a235-ee3309b21e02",
+          "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+          "name": "contributeur distinct",
+          "role": "general",
+          "title": null,
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "violet-ember"
+          },
+          "status": "idle",
+          "reportsTo": null,
+          "capabilities": null,
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "model": "gpt-5.6-luna",
+            "search": false,
+            "fastMode": false,
+            "graceSec": 15,
+            "timeoutSec": 0,
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/331bf268-b21e-4874-9a3c-2137415c7e08/agents/f49ad183-bb22-47f1-a235-ee3309b21e02/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/331bf268-b21e-4874-9a3c-2137415c7e08/agents/f49ad183-bb22-47f1-a235-ee3309b21e02/instructions",
+            "modelReasoningEffort": "low",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "cooldownSec": 10,
+              "intervalSec": 300,
+              "wakeOnDemand": true,
+              "maxConcurrentRuns": 20,
+              "skipTimerWhenNoActionableWork": true
+            },
+            "aiConnection": {
+              "mode": "responsible_user",
+              "method": "subscription",
+              "provider": "openai"
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 0,
+          "spentMonthlyCents": 0,
+          "pauseReason": null,
+          "pausedAt": null,
+          "errorReason": null,
+          "permissions": {
+            "canCreateAgents": true,
+            "canCreateSkills": true
+          },
+          "lastHeartbeatAt": "2026-09-30T16:26:06.507Z",
+          "metadata": null,
+          "createdAt": "2026-09-30T16:16:48.542Z",
+          "updatedAt": "2026-09-30T16:52:05.618Z",
+          "urlKey": "contributeur-distinct",
+          "avatarUrl": "/api/agent-avatars/cap-v1/violet-ember/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "f49ad183-bb22-47f1-a235-ee3309b21e02",
+                "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+                "name": "contributeur distinct",
+                "status": "idle",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-09-30T21:42:44.712Z",
+      "method": "GET",
+      "path": "/api/companies/331bf268-b21e-4874-9a3c-2137415c7e08/heartbeat-runs?limit=1000",
+      "actor": "board",
+      "status": 200,
+      "response": [
+        {
+          "id": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+          "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+          "agentId": "f49ad183-bb22-47f1-a235-ee3309b21e02",
+          "invocationSource": "automation",
+          "triggerDetail": "system",
+          "status": "succeeded",
+          "startedAt": "2026-09-30T16:25:48.388Z",
+          "finishedAt": "2026-09-30T16:26:06.435Z",
+          "error": null,
+          "wakeupRequestId": "c82776a3-ad21-47e2-b0f5-7d23ef8e451b",
+          "exitCode": 0,
+          "signal": null,
+          "usageJson": {
+            "model": "gpt-5.6-luna",
+            "biller": "chatgpt",
+            "provider": "openai",
+            "costStatus": "unpriced",
+            "billingType": "subscription_included",
+            "inputTokens": 6401,
+            "usageSource": "per_run",
+            "freshSession": true,
+            "outputTokens": 598,
+            "sessionReused": false,
+            "rawInputTokens": 6401,
+            "sessionRotated": false,
+            "configFreshness": {
+              "session": {
+                "reset": true,
+                "categories": [
+                  "adapter",
+                  "adapterConfig",
+                  "agentRuntimeConfig",
+                  "instructions",
+                  "issueOverrides",
+                  "workspaceConfig",
+                  "environment",
+                  "envBindings",
+                  "secrets",
+                  "runtimeSkills"
+                ],
+                "resetReasons": [
+                  "effective run configuration fingerprint metadata is missing"
+                ],
+                "nextFingerprint": "v1:sha256:af41e19536d8fb34c3eae8c704b168f0daf2c71ad1106f18c49383baae4dc8d8",
+                "changedCategories": [
+                  "adapter",
+                  "adapterConfig",
+                  "agentRuntimeConfig",
+                  "instructions",
+                  "issueOverrides",
+                  "workspaceConfig",
+                  "environment",
+                  "envBindings",
+                  "secrets",
+                  "runtimeSkills"
+                ],
+                "taskSessionReused": false,
+                "fingerprintVersion": 1,
+                "taskSessionAvailable": true,
+                "storedFingerprintPresent": false
+              },
+              "version": 1,
+              "workspace": {
+                "action": "create",
+                "reasons": [],
+                "categories": [
+                  "mode",
+                  "projectWorkspace",
+                  "strategy",
+                  "repo",
+                  "lifecycleCommands",
+                  "runtimeServices",
+                  "environment",
+                  "realization"
+                ],
+                "reuseRequested": false,
+                "nextFingerprint": "v1:sha256:6cc5f74600a8dc7ae9e12d818de8a6ec1d7d5b6601cabff20cedaf88f957f218",
+                "workspaceReused": false,
+                "activeWorkspaceId": null,
+                "changedCategories": [],
+                "storedFingerprint": null,
+                "fingerprintVersion": 1,
+                "inferredFingerprint": null,
+                "previousWorkspaceId": null,
+                "configSnapshotRefreshed": false,
+                "storedFingerprintPresent": false
+              }
+            },
+            "rawOutputTokens": 598,
+            "cachedInputTokens": 9984,
+            "taskSessionReused": false,
+            "persistedSessionId": "01a0f322-f823-75c2-9167-363d22c4b8b0",
+            "rawCachedInputTokens": 9984,
+            "sessionRotationReason": null
+          },
+          "sessionIdBefore": null,
+          "sessionIdAfter": "01a0f322-f823-75c2-9167-363d22c4b8b0",
+          "logStore": "local_file",
+          "logRef": "331bf268-b21e-4874-9a3c-2137415c7e08/f49ad183-bb22-47f1-a235-ee3309b21e02/2285549d-f090-4f92-ad46-64c2bce1d3cd.ndjson",
+          "logBytes": 101719,
+          "logSha256": "fa717701bc60b25088c57f51c940ff5f919668ca66ed661409ff4a4074493c28",
+          "logCompressed": false,
+          "stdoutExcerpt": null,
+          "stderrExcerpt": null,
+          "errorCode": null,
+          "externalRunId": null,
+          "processPid": 1062621,
+          "processGroupId": null,
+          "processStartedAt": "2026-09-30T16:25:48.882Z",
+          "lastOutputAt": "2026-09-30T16:26:06.234Z",
+          "lastOutputSeq": 557,
+          "lastOutputStream": "stdout",
+          "lastOutputBytes": 101719,
+          "retryOfRunId": null,
+          "processLossRetryCount": 0,
+          "scheduledRetryAt": null,
+          "scheduledRetryAttempt": 0,
+          "scheduledRetryReason": null,
+          "livenessState": "advanced",
+          "livenessReason": "Run produced concrete action evidence: 1 workspace operation(s), 14 tool/action event(s)",
+          "continuationAttempt": 0,
+          "lastUsefulActionAt": "2026-09-30T16:26:06.415Z",
+          "nextAction": null,
+          "createdAt": "2026-09-30T16:25:48.372Z",
+          "updatedAt": "2026-09-30T16:26:06.569Z",
+          "contextSnapshot": {
+            "taskKey": "plugin:paperclip-executive.executive:session:contribution:7201f796-70bb-489b-9685-e400aecdd651:v:1",
+            "wakeReason": "paperclip-executive:contribution:7201f796-70bb-489b-9685-e400aecdd651",
+            "wakeSource": "automation",
+            "wakeTriggerDetail": "system"
+          },
+          "resultJson": {
+            "summary": "{\"schemaVersion\":\"prepared-ticket-contribution.v1\",\"recommendation\":\"revise\",\"perspectiveNotes\":{\"product\":\"The objective and acceptance criteria are clear, but the proposed approach adds behavior explicitly excluded from scope.\",\"technical\":\"Clipboard access should remain client-side; the proposed backend clipboard service and notification system are unnecessary for the stated feature.\",\"delivery_cost\":\"The proposed service, persistence, and generic notification work increase implementation and"
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-09-30T21:42:44.724Z",
+      "method": "GET",
+      "path": "/api/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents",
+      "actor": "board",
+      "status": 200,
+      "response": [
+        {
+          "id": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "name": "Product Advisor",
+          "role": "pm",
+          "title": "Product and CPO Advisor",
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "ultraviolet-tide"
+          },
+          "status": "paused",
+          "reportsTo": null,
+          "capabilities": "Assesses user value, scope, acceptance criteria, and product risk for prepared tickets.",
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "mode": "oneshot",
+            "model": "gpt-5.6-sol",
+            "engine": "acp",
+            "timeoutSec": 300,
+            "paperclipSkillSync": {
+              "desiredSkills": [
+                "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+              ]
+            },
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/481caab0-d0b3-442b-a5f4-5fe1d6563edb/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/481caab0-d0b3-442b-a5f4-5fe1d6563edb/instructions",
+            "modelReasoningEffort": "medium",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "nonInteractivePermissions": "deny",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "maxDailyRuns": 2,
+              "wakeOnDemand": false,
+              "maxConcurrentRuns": 1,
+              "maxDailyCostCents": 100
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 100,
+          "spentMonthlyCents": 0,
+          "pauseReason": "manual",
+          "pausedAt": "2026-09-30T21:19:09.153Z",
+          "errorReason": null,
+          "permissions": {
+            "canAssignTasks": false,
+            "canCreateAgents": false,
+            "canCreateSkills": false
+          },
+          "lastHeartbeatAt": null,
+          "metadata": {
+            "profileId": "product",
+            "qualification": "L03",
+            "catalogVersion": "1.0.0",
+            "profileVersion": "1.0.0"
+          },
+          "createdAt": "2026-09-30T21:19:09.104Z",
+          "updatedAt": "2026-09-30T21:21:44.777Z",
+          "urlKey": "product-advisor",
+          "avatarUrl": "/api/agent-avatars/cap-v1/ultraviolet-tide/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+                "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+                "name": "Product Advisor",
+                "status": "paused",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        },
+        {
+          "id": "63e53a4a-1c89-4490-9739-05699be031fa",
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "name": "Architecture Advisor",
+          "role": "cto",
+          "title": "Architecture and Engineering Advisor",
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "golden-hour"
+          },
+          "status": "paused",
+          "reportsTo": null,
+          "capabilities": "Assesses technical design, interfaces, operability, and implementation feasibility.",
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "mode": "oneshot",
+            "model": "gpt-6-sol",
+            "engine": "acp",
+            "timeoutSec": 300,
+            "paperclipSkillSync": {
+              "desiredSkills": [
+                "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+              ]
+            },
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/63e53a4a-1c89-4490-9739-05699be031fa/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/63e53a4a-1c89-4490-9739-05699be031fa/instructions",
+            "modelReasoningEffort": "high",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "nonInteractivePermissions": "deny",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "maxDailyRuns": 2,
+              "wakeOnDemand": false,
+              "maxConcurrentRuns": 1,
+              "maxDailyCostCents": 100
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 100,
+          "spentMonthlyCents": 0,
+          "pauseReason": "manual",
+          "pausedAt": "2026-09-30T21:19:39.772Z",
+          "errorReason": null,
+          "permissions": {
+            "canAssignTasks": false,
+            "canCreateAgents": false,
+            "canCreateSkills": false
+          },
+          "lastHeartbeatAt": null,
+          "metadata": {
+            "profileId": "architecture",
+            "qualification": "L03",
+            "catalogVersion": "1.0.0",
+            "profileVersion": "1.0.0"
+          },
+          "createdAt": "2026-09-30T21:19:39.733Z",
+          "updatedAt": "2026-09-30T21:21:44.870Z",
+          "urlKey": "architecture-advisor",
+          "avatarUrl": "/api/agent-avatars/cap-v1/golden-hour/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "63e53a4a-1c89-4490-9739-05699be031fa",
+                "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+                "name": "Architecture Advisor",
+                "status": "paused",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        },
+        {
+          "id": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "name": "Economics Advisor",
+          "role": "cfo",
+          "title": "Economics and CFO Advisor",
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "turquoise-cherry"
+          },
+          "status": "paused",
+          "reportsTo": null,
+          "capabilities": "Assesses cost, resource use, opportunity cost, and economic proportionality.",
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "mode": "oneshot",
+            "model": "gpt-5.6-sol",
+            "engine": "acp",
+            "timeoutSec": 300,
+            "paperclipSkillSync": {
+              "desiredSkills": [
+                "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+              ]
+            },
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/80d1e926-718d-4e7a-8311-c31e09e410fd/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/80d1e926-718d-4e7a-8311-c31e09e410fd/instructions",
+            "modelReasoningEffort": "medium",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "nonInteractivePermissions": "deny",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "maxDailyRuns": 2,
+              "wakeOnDemand": false,
+              "maxConcurrentRuns": 1,
+              "maxDailyCostCents": 100
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 100,
+          "spentMonthlyCents": 0,
+          "pauseReason": "manual",
+          "pausedAt": "2026-09-30T21:19:40.605Z",
+          "errorReason": null,
+          "permissions": {
+            "canAssignTasks": false,
+            "canCreateAgents": false,
+            "canCreateSkills": false
+          },
+          "lastHeartbeatAt": null,
+          "metadata": {
+            "profileId": "economics",
+            "qualification": "L03",
+            "catalogVersion": "1.0.0",
+            "profileVersion": "1.0.0"
+          },
+          "createdAt": "2026-09-30T21:19:40.573Z",
+          "updatedAt": "2026-09-30T21:21:45.188Z",
+          "urlKey": "economics-advisor",
+          "avatarUrl": "/api/agent-avatars/cap-v1/turquoise-cherry/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+                "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+                "name": "Economics Advisor",
+                "status": "paused",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        },
+        {
+          "id": "9acab613-9c24-45df-8f26-e600fc61d615",
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "name": "Software Executor",
+          "role": "engineer",
+          "title": "Software Executor",
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "turquoise-cherry"
+          },
+          "status": "paused",
+          "reportsTo": null,
+          "capabilities": "Implements bounded software tickets and returns replayable evidence for independent review.",
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "mode": "persistent",
+            "model": "gpt-6-sol",
+            "engine": "acp",
+            "timeoutSec": 300,
+            "paperclipSkillSync": {
+              "desiredSkills": [
+                "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution"
+              ]
+            },
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/9acab613-9c24-45df-8f26-e600fc61d615/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/9acab613-9c24-45df-8f26-e600fc61d615/instructions",
+            "modelReasoningEffort": "high",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "nonInteractivePermissions": "deny",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "maxDailyRuns": 2,
+              "wakeOnDemand": false,
+              "maxConcurrentRuns": 1,
+              "maxDailyCostCents": 100
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 100,
+          "spentMonthlyCents": 0,
+          "pauseReason": "manual",
+          "pausedAt": "2026-09-30T21:19:40.852Z",
+          "errorReason": null,
+          "permissions": {
+            "canAssignTasks": false,
+            "canCreateAgents": false,
+            "canCreateSkills": false
+          },
+          "lastHeartbeatAt": null,
+          "metadata": {
+            "profileId": "software-executor",
+            "qualification": "L03",
+            "catalogVersion": "1.0.0",
+            "profileVersion": "1.0.0"
+          },
+          "createdAt": "2026-09-30T21:19:40.821Z",
+          "updatedAt": "2026-09-30T21:21:45.297Z",
+          "urlKey": "software-executor",
+          "avatarUrl": "/api/agent-avatars/cap-v1/turquoise-cherry/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "9acab613-9c24-45df-8f26-e600fc61d615",
+                "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+                "name": "Software Executor",
+                "status": "paused",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        },
+        {
+          "id": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "name": "Quality Advisor",
+          "role": "qa",
+          "title": "Quality and QA Advisor",
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "violet-ember"
+          },
+          "status": "paused",
+          "reportsTo": null,
+          "capabilities": "Assesses acceptance coverage, regressions, test evidence, and residual quality risk.",
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "mode": "oneshot",
+            "model": "gpt-5.6-sol",
+            "engine": "acp",
+            "timeoutSec": 300,
+            "paperclipSkillSync": {
+              "desiredSkills": [
+                "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+                "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review"
+              ]
+            },
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/cc0fe155-dfeb-4157-9827-4abe01c98daf/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/cc0fe155-dfeb-4157-9827-4abe01c98daf/instructions",
+            "modelReasoningEffort": "medium",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "nonInteractivePermissions": "deny",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "maxDailyRuns": 2,
+              "wakeOnDemand": false,
+              "maxConcurrentRuns": 1,
+              "maxDailyCostCents": 100
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 100,
+          "spentMonthlyCents": 0,
+          "pauseReason": "manual",
+          "pausedAt": "2026-09-30T21:19:40.022Z",
+          "errorReason": null,
+          "permissions": {
+            "canAssignTasks": false,
+            "canCreateAgents": false,
+            "canCreateSkills": false
+          },
+          "lastHeartbeatAt": null,
+          "metadata": {
+            "profileId": "quality",
+            "qualification": "L03",
+            "catalogVersion": "1.0.0",
+            "profileVersion": "1.0.0"
+          },
+          "createdAt": "2026-09-30T21:19:39.989Z",
+          "updatedAt": "2026-09-30T21:21:44.995Z",
+          "urlKey": "quality-advisor",
+          "avatarUrl": "/api/agent-avatars/cap-v1/violet-ember/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+                "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+                "name": "Quality Advisor",
+                "status": "paused",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        },
+        {
+          "id": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "name": "Council Reviewer",
+          "role": "general",
+          "title": "Generalist Council Reviewer",
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "lime-lagoon"
+          },
+          "status": "paused",
+          "reportsTo": null,
+          "capabilities": "Synthesizes specialist evidence and records a Council decision within the granted mandate.",
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "mode": "persistent",
+            "model": "gpt-6-astra",
+            "engine": "acp",
+            "timeoutSec": 300,
+            "paperclipSkillSync": {
+              "desiredSkills": [
+                "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review"
+              ]
+            },
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/e39b0edd-435e-4aa7-bdd5-9d29753680ff/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/e39b0edd-435e-4aa7-bdd5-9d29753680ff/instructions",
+            "modelReasoningEffort": "high",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "nonInteractivePermissions": "deny",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "maxDailyRuns": 2,
+              "wakeOnDemand": false,
+              "maxConcurrentRuns": 1,
+              "maxDailyCostCents": 100
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 100,
+          "spentMonthlyCents": 0,
+          "pauseReason": "manual",
+          "pausedAt": "2026-09-30T21:19:41.095Z",
+          "errorReason": null,
+          "permissions": {
+            "canAssignTasks": false,
+            "canCreateAgents": false,
+            "canCreateSkills": false
+          },
+          "lastHeartbeatAt": null,
+          "metadata": {
+            "profileId": "council-reviewer",
+            "qualification": "L03",
+            "catalogVersion": "1.0.0",
+            "profileVersion": "1.0.0"
+          },
+          "createdAt": "2026-09-30T21:19:41.065Z",
+          "updatedAt": "2026-09-30T21:21:45.390Z",
+          "urlKey": "council-reviewer",
+          "avatarUrl": "/api/agent-avatars/cap-v1/lime-lagoon/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+                "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+                "name": "Council Reviewer",
+                "status": "paused",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        },
+        {
+          "id": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "name": "Delivery Advisor",
+          "role": "general",
+          "title": "Delivery and COO Advisor",
+          "icon": null,
+          "appearance": {
+            "schemaVersion": 1,
+            "characterVersion": "cap-v1",
+            "paletteId": "turquoise-cherry"
+          },
+          "status": "paused",
+          "reportsTo": null,
+          "capabilities": "Assesses sequencing, dependencies, capacity, coordination, and delivery confidence.",
+          "adapterType": "codex_local",
+          "adapterConfig": {
+            "mode": "oneshot",
+            "model": "gpt-5.6-sol",
+            "engine": "acp",
+            "timeoutSec": 300,
+            "paperclipSkillSync": {
+              "desiredSkills": [
+                "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+              ]
+            },
+            "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/ff2d8928-78f9-4f7f-9c81-af6bded5bd1e/instructions/AGENTS.md",
+            "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/ff2d8928-78f9-4f7f-9c81-af6bded5bd1e/instructions",
+            "modelReasoningEffort": "medium",
+            "instructionsEntryFile": "AGENTS.md",
+            "instructionsBundleMode": "managed",
+            "nonInteractivePermissions": "deny",
+            "dangerouslyBypassApprovalsAndSandbox": true
+          },
+          "runtimeConfig": {
+            "heartbeat": {
+              "enabled": false,
+              "maxDailyRuns": 2,
+              "wakeOnDemand": false,
+              "maxConcurrentRuns": 1,
+              "maxDailyCostCents": 100
+            }
+          },
+          "defaultEnvironmentId": null,
+          "budgetMonthlyCents": 100,
+          "spentMonthlyCents": 0,
+          "pauseReason": "manual",
+          "pausedAt": "2026-09-30T21:19:40.305Z",
+          "errorReason": null,
+          "permissions": {
+            "canAssignTasks": false,
+            "canCreateAgents": false,
+            "canCreateSkills": false
+          },
+          "lastHeartbeatAt": null,
+          "metadata": {
+            "profileId": "delivery",
+            "qualification": "L03",
+            "catalogVersion": "1.0.0",
+            "profileVersion": "1.0.0"
+          },
+          "createdAt": "2026-09-30T21:19:40.264Z",
+          "updatedAt": "2026-09-30T21:21:45.090Z",
+          "urlKey": "delivery-advisor",
+          "avatarUrl": "/api/agent-avatars/cap-v1/turquoise-cherry/rest.png?size=512&scale=1",
+          "orgChainHealth": {
+            "status": "healthy",
+            "reason": "healthy",
+            "fullChain": [
+              {
+                "id": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+                "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+                "name": "Delivery Advisor",
+                "status": "paused",
+                "reportsTo": null,
+                "depth": 0,
+                "relation": "self"
+              }
+            ],
+            "firstInvalidAncestor": null,
+            "invalidAncestors": [],
+            "repairGuidance": null,
+            "pausedAncestors": [],
+            "escalationWarning": null
+          }
+        }
+      ]
+    },
+    {
+      "at": "2026-09-30T21:42:44.730Z",
+      "method": "GET",
+      "path": "/api/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/heartbeat-runs?limit=1000",
+      "actor": "board",
+      "status": 200,
+      "response": []
+    }
+  ],
+  "finishedAt": "2026-09-30T21:42:44.730Z"
+}

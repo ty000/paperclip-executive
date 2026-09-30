@@ -1,9 +1,17 @@
 import { createHash } from "node:crypto";
+import { fileURLToPath } from "node:url";
 import { definePlugin, runWorker } from "@paperclipai/plugin-sdk";
 import { AdviceService, assertUnambiguousCompanyOwner, type VerifiedActor } from "./advice.js";
 import { SqlAdviceRepository } from "./repository.js";
 import { ContributionService } from "./contribution.js";
 import { SqlContributionRepository } from "./contribution-repository.js";
+import {
+  COUNCIL_ADMISSION_GRANT_EVENT,
+  COUNCIL_RESERVATION_EVENT,
+  FilePackagedProfileResolver,
+  L03ContributionService,
+} from "./l03-contribution.js";
+import { SqlL03ContributionRepository } from "./l03-repository.js";
 
 function stringField(value: unknown): string | null {
   return typeof value === "string" && value.trim().length > 0 ? value.trim() : null;
@@ -18,6 +26,14 @@ const plugin = definePlugin({
       contributionRepository, ctx.agents.sessions, ctx.issues, ctx.agents,
       (input) => createHash("sha256").update(input).digest("hex"),
     );
+    const l03Repository = new SqlL03ContributionRepository(ctx.db);
+    const l03Service = new L03ContributionService(
+      l03Repository,
+      ctx.agents.sessions,
+      ctx.agents,
+      ctx.events,
+      new FilePackagedProfileResolver(fileURLToPath(new URL("..", import.meta.url))),
+    );
     const companyReconciliations = new Map<string, Promise<void>>();
     const reconcileCompanyStart = async (companyId: string) => {
       let reconciliation = companyReconciliations.get(companyId);
@@ -25,6 +41,7 @@ const plugin = definePlugin({
         reconciliation = Promise.all([
           repository.markInterruptedUnknown(companyId),
           contributionRepository.markInterruptedUnknown(companyId),
+          l03Repository.markInterruptedUnknown(companyId),
         ]).then(() => undefined);
         companyReconciliations.set(companyId, reconciliation);
         void reconciliation.catch(() => {
@@ -55,8 +72,54 @@ const plugin = definePlugin({
         },
         requests: await repository.list(companyId),
         contributions: await contributionRepository.list(companyId),
+        councilContributions: await l03Repository.list(companyId),
       };
     });
+
+    ctx.events.on(COUNCIL_RESERVATION_EVENT, async (event) => {
+      try {
+        await reconcileCompanyStart(event.companyId);
+        await l03Service.handleReserved(event);
+      } catch (error) {
+        ctx.logger.error("Council reservation event was rejected", {
+          eventId: event.eventId,
+          companyId: event.companyId,
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+        throw error;
+      }
+    });
+
+    ctx.events.on(COUNCIL_ADMISSION_GRANT_EVENT, async (event) => {
+      try {
+        await reconcileCompanyStart(event.companyId);
+        await l03Service.handleAdmissionGrant(event);
+      } catch (error) {
+        ctx.logger.error("Council admission grant was rejected", {
+          eventId: event.eventId,
+          companyId: event.companyId,
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+        throw error;
+      }
+    });
+
+    const handleNativeRunTerminal = async (event: Parameters<L03ContributionService["handleNativeRunTerminal"]>[0]) => {
+      try {
+        await l03Service.handleNativeRunTerminal(event);
+      } catch (error) {
+        ctx.logger.error("Native L03 contribution terminal event was rejected", {
+          eventId: event.eventId,
+          companyId: event.companyId,
+          runId: event.entityId,
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+        throw error;
+      }
+    };
+    ctx.events.on("agent.run.finished", handleNativeRunTerminal);
+    ctx.events.on("agent.run.failed", handleNativeRunTerminal);
+    ctx.events.on("agent.run.cancelled", handleNativeRunTerminal);
 
     ctx.actions.register("submit-contribution", async (params, context) => {
       const companyId = context.companyId;
@@ -112,7 +175,10 @@ const plugin = definePlugin({
   async onHealth() {
     return {
       status: "ok", message: "Paperclip Executive worker is ready for explicit company configuration",
-      details: { journeys: ["L01 direct advice", "L02 prepared-ticket contribution"], automaticProvisioning: false },
+      details: {
+        journeys: ["L01 direct advice", "L02 prepared-ticket contribution", "L03 Council-reserved opinion"],
+        automaticProvisioning: false,
+      },
     };
   },
 });

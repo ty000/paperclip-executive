@@ -1,0 +1,1349 @@
+{
+  "schemaVersion": "paperclip-executive.l03-preparation.v1",
+  "checkedAt": "2026-09-30T21:49:17.126Z",
+  "operation": "prepare isolated dormant L03 company, skills, and seven agent profiles without provider calls",
+  "authorization": {
+    "instance": "executive-dev",
+    "baseUrl": "http://127.0.0.1:3220",
+    "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+    "modelProviderCallsAuthorized": false,
+    "automaticTriggersAuthorized": false
+  },
+  "runtime": {
+    "pid": 1074721,
+    "configPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/config.json",
+    "hostCommit": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+    "deploymentMode": "authenticated",
+    "deploymentExposure": "private",
+    "schedulerEnabled": false
+  },
+  "preservation": {
+    "l02CompanyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+    "l02RunId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+    "l02RunStatus": "succeeded",
+    "agentIdsBefore": [
+      "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+      "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+      "f49ad183-bb22-47f1-a235-ee3309b21e02"
+    ],
+    "agentIdsAfter": [
+      "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+      "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+      "f49ad183-bb22-47f1-a235-ee3309b21e02"
+    ],
+    "runIdsBefore": [
+      "2285549d-f090-4f92-ad46-64c2bce1d3cd"
+    ],
+    "runIdsAfter": [
+      "2285549d-f090-4f92-ad46-64c2bce1d3cd"
+    ],
+    "unchanged": true
+  },
+  "plugin": {
+    "id": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
+    "version": "0.3.0",
+    "status": "ready",
+    "candidateInstallOrUpgradeAttempted": false
+  },
+  "company": {
+    "id": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+    "name": "Executive L03 Qualification 2026-09-30",
+    "description": "Isolated dormant L03 real-campaign qualification space; no automatic triggers or provider calls.",
+    "createdForThisPreparation": true,
+    "createdDuringThisInvocation": false,
+    "status": "active",
+    "budgetMonthlyCents": 700,
+    "requireBoardApprovalForNewAgents": false
+  },
+  "catalogue": {
+    "path": "packages/executive/config/agent-catalog.json",
+    "version": "1.0.0",
+    "sourceContract": {
+      "repository": "paperclip",
+      "commit": "61b3fd57a695614dc4a37e2303f426a34a9795cf"
+    },
+    "selectedProfiles": [
+      "product",
+      "architecture",
+      "quality",
+      "delivery",
+      "economics",
+      "software-executor",
+      "council-reviewer"
+    ]
+  },
+  "modelInventory": [
+    {
+      "id": "gpt-5.6-sol",
+      "label": "gpt-5.6-sol"
+    },
+    {
+      "id": "gpt-6-astra",
+      "label": "gpt-6-astra"
+    },
+    {
+      "id": "gpt-6-sol",
+      "label": "gpt-6-sol"
+    },
+    {
+      "id": "gpt-6-luna",
+      "label": "gpt-6-luna"
+    },
+    {
+      "id": "gpt-5.6-terra",
+      "label": "gpt-5.6-terra"
+    },
+    {
+      "id": "gpt-5.6-luna",
+      "label": "gpt-5.6-luna"
+    },
+    {
+      "id": "gpt-5.5",
+      "label": "gpt-5.5"
+    },
+    {
+      "id": "gpt-5.4",
+      "label": "gpt-5.4"
+    },
+    {
+      "id": "gpt-5.4-mini",
+      "label": "gpt-5.4-mini"
+    },
+    {
+      "id": "gpt-5",
+      "label": "gpt-5"
+    },
+    {
+      "id": "o3",
+      "label": "o3"
+    },
+    {
+      "id": "o4-mini",
+      "label": "o4-mini"
+    },
+    {
+      "id": "gpt-5-mini",
+      "label": "gpt-5-mini"
+    },
+    {
+      "id": "gpt-5-nano",
+      "label": "gpt-5-nano"
+    },
+    {
+      "id": "o3-mini",
+      "label": "o3-mini"
+    },
+    {
+      "id": "codex-mini-latest",
+      "label": "Codex Mini"
+    }
+  ],
+  "skills": [
+    {
+      "catalogKey": "paperclip-executive.specialist-advisory",
+      "id": "64cdc93a-403c-430b-a160-697fc0f3fb05",
+      "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+      "name": "paperclip-executive.specialist-advisory",
+      "version": null,
+      "sourceType": "local_path",
+      "sourceLocator": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+      "contentHash": null,
+      "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40",
+      "sourceContentSha256": "92dbd9552ccfd2b42351eb8b93469f562a43255ce77ddf14bddc9ed6c133128d",
+      "observedContentSha256": "92dbd9552ccfd2b42351eb8b93469f562a43255ce77ddf14bddc9ed6c133128d"
+    },
+    {
+      "catalogKey": "paperclip-executive.evidence-review",
+      "id": "dfc04c94-5133-446c-a7cc-553dd3e68865",
+      "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+      "name": "paperclip-executive.evidence-review",
+      "version": null,
+      "sourceType": "local_path",
+      "sourceLocator": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+      "contentHash": null,
+      "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b",
+      "sourceContentSha256": "a960fdbaa43e4d1967c474ab54723c7fe077f649f1d99ff3f0c3cd5e4aa2a7da",
+      "observedContentSha256": "a960fdbaa43e4d1967c474ab54723c7fe077f649f1d99ff3f0c3cd5e4aa2a7da"
+    },
+    {
+      "catalogKey": "paperclip-executive.implementation-execution",
+      "id": "45ca7275-5a3b-4ae4-a2e5-3b16860f5fae",
+      "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+      "name": "paperclip-executive.implementation-execution",
+      "version": null,
+      "sourceType": "local_path",
+      "sourceLocator": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+      "contentHash": null,
+      "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25",
+      "sourceContentSha256": "0d13447bb82c0e6f1c22069d238a733184ba5c5ea9aea8cc6fb938b1a344cb95",
+      "observedContentSha256": "0d13447bb82c0e6f1c22069d238a733184ba5c5ea9aea8cc6fb938b1a344cb95"
+    },
+    {
+      "catalogKey": "paperclip-executive.council-decision-review",
+      "id": "8fab6d51-d4ef-4ca0-bac7-47fdb874960a",
+      "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+      "name": "paperclip-executive.council-decision-review",
+      "version": null,
+      "sourceType": "local_path",
+      "sourceLocator": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+      "contentHash": null,
+      "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab",
+      "sourceContentSha256": "a8904a0e29e05c5dfe541d55e7fc789a5cd7f7e24b975aa081bb03769ba272d3",
+      "observedContentSha256": "a8904a0e29e05c5dfe541d55e7fc789a5cd7f7e24b975aa081bb03769ba272d3"
+    }
+  ],
+  "operationLedger": [
+    {
+      "operation": "local-path skill import from the L03 source worktree",
+      "result": "denied before skill creation",
+      "httpStatus": 403,
+      "code": "skill_workspace_boundary_denied",
+      "recovery": "Used the supported company managed-skill creation endpoint with the exact source markdown and idempotency keys; no retry of the denied import was attempted."
+    },
+    {
+      "operation": "company managed-skill creation and agent provisioning",
+      "result": "verified by native readback",
+      "resources": "four exact skills and seven paused agents"
+    }
+  ],
+  "agents": [
+    {
+      "profileId": "product",
+      "profileVersion": "1.0.0",
+      "source": "profiles/product/AGENTS.md",
+      "sourceContentSha256": "2b9158b84262c01e1e6435641eea8cffc7d35af46f22941a2b8cd7e87aede9e1",
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        }
+      ],
+      "id": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+      "name": "Product Advisor",
+      "status": "paused",
+      "adapterType": "codex_local",
+      "adapterConfig": {
+        "mode": "oneshot",
+        "model": "gpt-5.6-sol",
+        "engine": "acp",
+        "timeoutSec": 300,
+        "paperclipSkillSync": {
+          "desiredSkills": [
+            "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+          ]
+        },
+        "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/481caab0-d0b3-442b-a5f4-5fe1d6563edb/instructions/AGENTS.md",
+        "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/481caab0-d0b3-442b-a5f4-5fe1d6563edb/instructions",
+        "modelReasoningEffort": "medium",
+        "instructionsEntryFile": "AGENTS.md",
+        "instructionsBundleMode": "managed",
+        "nonInteractivePermissions": "deny",
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
+      },
+      "runtimeConfig": {
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "budgetMonthlyCents": 100,
+      "permissions": {
+        "canAssignTasks": false,
+        "canCreateAgents": false,
+        "canCreateSkills": false
+      },
+      "bundle": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "revisionId": null,
+        "hash": "2b9158b84262c01e1e6435641eea8cffc7d35af46f22941a2b8cd7e87aede9e1",
+        "contentSha256": "2b9158b84262c01e1e6435641eea8cffc7d35af46f22941a2b8cd7e87aede9e1"
+      },
+      "skills": {
+        "adapterType": "codex_local",
+        "supported": true,
+        "mode": "ephemeral",
+        "desiredSkills": [
+          "paperclipai/paperclip/paperclip",
+          "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        ],
+        "desiredSkillEntries": [
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "versionId": null
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "versionId": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "runtimeName": "council-decision-review--0f78c5f539",
+            "versionId": null,
+            "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "runtimeName": "evidence-review--916785aff6",
+            "versionId": null,
+            "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "runtimeName": "implementation-execution--6e659bff5f",
+            "versionId": null,
+            "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "runtimeName": "specialist-advisory--31b0d1060e",
+            "versionId": null,
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40",
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "runtimeName": "paperclip",
+            "versionId": null,
+            "currentVersionId": null,
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip/skills/paperclip",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "profileId": "architecture",
+      "profileVersion": "1.0.0",
+      "source": "profiles/architecture/AGENTS.md",
+      "sourceContentSha256": "3819827feb94e524ae1684acd39b09b20e2fb3933a2c9ed1dfa4497c188778c7",
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        }
+      ],
+      "id": "63e53a4a-1c89-4490-9739-05699be031fa",
+      "name": "Architecture Advisor",
+      "status": "paused",
+      "adapterType": "codex_local",
+      "adapterConfig": {
+        "mode": "oneshot",
+        "model": "gpt-6-sol",
+        "engine": "acp",
+        "timeoutSec": 300,
+        "paperclipSkillSync": {
+          "desiredSkills": [
+            "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+          ]
+        },
+        "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/63e53a4a-1c89-4490-9739-05699be031fa/instructions/AGENTS.md",
+        "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/63e53a4a-1c89-4490-9739-05699be031fa/instructions",
+        "modelReasoningEffort": "high",
+        "instructionsEntryFile": "AGENTS.md",
+        "instructionsBundleMode": "managed",
+        "nonInteractivePermissions": "deny",
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
+      },
+      "runtimeConfig": {
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "budgetMonthlyCents": 100,
+      "permissions": {
+        "canAssignTasks": false,
+        "canCreateAgents": false,
+        "canCreateSkills": false
+      },
+      "bundle": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "revisionId": null,
+        "hash": "3819827feb94e524ae1684acd39b09b20e2fb3933a2c9ed1dfa4497c188778c7",
+        "contentSha256": "3819827feb94e524ae1684acd39b09b20e2fb3933a2c9ed1dfa4497c188778c7"
+      },
+      "skills": {
+        "adapterType": "codex_local",
+        "supported": true,
+        "mode": "ephemeral",
+        "desiredSkills": [
+          "paperclipai/paperclip/paperclip",
+          "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        ],
+        "desiredSkillEntries": [
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "versionId": null
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "versionId": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "runtimeName": "council-decision-review--0f78c5f539",
+            "versionId": null,
+            "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "runtimeName": "evidence-review--916785aff6",
+            "versionId": null,
+            "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "runtimeName": "implementation-execution--6e659bff5f",
+            "versionId": null,
+            "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "runtimeName": "specialist-advisory--31b0d1060e",
+            "versionId": null,
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40",
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "runtimeName": "paperclip",
+            "versionId": null,
+            "currentVersionId": null,
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip/skills/paperclip",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "profileId": "quality",
+      "profileVersion": "1.0.0",
+      "source": "profiles/quality/AGENTS.md",
+      "sourceContentSha256": "735729682a7a22478956e862d34c47d91ade60294721669a8a0576136a5625c5",
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        },
+        {
+          "catalogKey": "paperclip-executive.evidence-review",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review"
+        }
+      ],
+      "id": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+      "name": "Quality Advisor",
+      "status": "paused",
+      "adapterType": "codex_local",
+      "adapterConfig": {
+        "mode": "oneshot",
+        "model": "gpt-5.6-sol",
+        "engine": "acp",
+        "timeoutSec": 300,
+        "paperclipSkillSync": {
+          "desiredSkills": [
+            "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review"
+          ]
+        },
+        "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/cc0fe155-dfeb-4157-9827-4abe01c98daf/instructions/AGENTS.md",
+        "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/cc0fe155-dfeb-4157-9827-4abe01c98daf/instructions",
+        "modelReasoningEffort": "medium",
+        "instructionsEntryFile": "AGENTS.md",
+        "instructionsBundleMode": "managed",
+        "nonInteractivePermissions": "deny",
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
+      },
+      "runtimeConfig": {
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "budgetMonthlyCents": 100,
+      "permissions": {
+        "canAssignTasks": false,
+        "canCreateAgents": false,
+        "canCreateSkills": false
+      },
+      "bundle": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "revisionId": null,
+        "hash": "735729682a7a22478956e862d34c47d91ade60294721669a8a0576136a5625c5",
+        "contentSha256": "735729682a7a22478956e862d34c47d91ade60294721669a8a0576136a5625c5"
+      },
+      "skills": {
+        "adapterType": "codex_local",
+        "supported": true,
+        "mode": "ephemeral",
+        "desiredSkills": [
+          "paperclipai/paperclip/paperclip",
+          "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+          "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review"
+        ],
+        "desiredSkillEntries": [
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "versionId": null
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "versionId": null
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "versionId": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "runtimeName": "council-decision-review--0f78c5f539",
+            "versionId": null,
+            "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "runtimeName": "evidence-review--916785aff6",
+            "versionId": null,
+            "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b",
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "runtimeName": "implementation-execution--6e659bff5f",
+            "versionId": null,
+            "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "runtimeName": "specialist-advisory--31b0d1060e",
+            "versionId": null,
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40",
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "runtimeName": "paperclip",
+            "versionId": null,
+            "currentVersionId": null,
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip/skills/paperclip",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "profileId": "delivery",
+      "profileVersion": "1.0.0",
+      "source": "profiles/delivery/AGENTS.md",
+      "sourceContentSha256": "f9e766853d1b272dc6ec0ac878168d074718360df4d70f891bb86560fa5928d7",
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        }
+      ],
+      "id": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+      "name": "Delivery Advisor",
+      "status": "paused",
+      "adapterType": "codex_local",
+      "adapterConfig": {
+        "mode": "oneshot",
+        "model": "gpt-5.6-sol",
+        "engine": "acp",
+        "timeoutSec": 300,
+        "paperclipSkillSync": {
+          "desiredSkills": [
+            "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+          ]
+        },
+        "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/ff2d8928-78f9-4f7f-9c81-af6bded5bd1e/instructions/AGENTS.md",
+        "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/ff2d8928-78f9-4f7f-9c81-af6bded5bd1e/instructions",
+        "modelReasoningEffort": "medium",
+        "instructionsEntryFile": "AGENTS.md",
+        "instructionsBundleMode": "managed",
+        "nonInteractivePermissions": "deny",
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
+      },
+      "runtimeConfig": {
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "budgetMonthlyCents": 100,
+      "permissions": {
+        "canAssignTasks": false,
+        "canCreateAgents": false,
+        "canCreateSkills": false
+      },
+      "bundle": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "revisionId": null,
+        "hash": "f9e766853d1b272dc6ec0ac878168d074718360df4d70f891bb86560fa5928d7",
+        "contentSha256": "f9e766853d1b272dc6ec0ac878168d074718360df4d70f891bb86560fa5928d7"
+      },
+      "skills": {
+        "adapterType": "codex_local",
+        "supported": true,
+        "mode": "ephemeral",
+        "desiredSkills": [
+          "paperclipai/paperclip/paperclip",
+          "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        ],
+        "desiredSkillEntries": [
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "versionId": null
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "versionId": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "runtimeName": "council-decision-review--0f78c5f539",
+            "versionId": null,
+            "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "runtimeName": "evidence-review--916785aff6",
+            "versionId": null,
+            "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "runtimeName": "implementation-execution--6e659bff5f",
+            "versionId": null,
+            "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "runtimeName": "specialist-advisory--31b0d1060e",
+            "versionId": null,
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40",
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "runtimeName": "paperclip",
+            "versionId": null,
+            "currentVersionId": null,
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip/skills/paperclip",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "profileId": "economics",
+      "profileVersion": "1.0.0",
+      "source": "profiles/economics/AGENTS.md",
+      "sourceContentSha256": "867dc76590c9b893a3bb7b256e4a9ad3c3856f4a88f3eec6cca62284c784a7e1",
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        }
+      ],
+      "id": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+      "name": "Economics Advisor",
+      "status": "paused",
+      "adapterType": "codex_local",
+      "adapterConfig": {
+        "mode": "oneshot",
+        "model": "gpt-5.6-sol",
+        "engine": "acp",
+        "timeoutSec": 300,
+        "paperclipSkillSync": {
+          "desiredSkills": [
+            "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+          ]
+        },
+        "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/80d1e926-718d-4e7a-8311-c31e09e410fd/instructions/AGENTS.md",
+        "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/80d1e926-718d-4e7a-8311-c31e09e410fd/instructions",
+        "modelReasoningEffort": "medium",
+        "instructionsEntryFile": "AGENTS.md",
+        "instructionsBundleMode": "managed",
+        "nonInteractivePermissions": "deny",
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
+      },
+      "runtimeConfig": {
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "budgetMonthlyCents": 100,
+      "permissions": {
+        "canAssignTasks": false,
+        "canCreateAgents": false,
+        "canCreateSkills": false
+      },
+      "bundle": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "revisionId": null,
+        "hash": "867dc76590c9b893a3bb7b256e4a9ad3c3856f4a88f3eec6cca62284c784a7e1",
+        "contentSha256": "867dc76590c9b893a3bb7b256e4a9ad3c3856f4a88f3eec6cca62284c784a7e1"
+      },
+      "skills": {
+        "adapterType": "codex_local",
+        "supported": true,
+        "mode": "ephemeral",
+        "desiredSkills": [
+          "paperclipai/paperclip/paperclip",
+          "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        ],
+        "desiredSkillEntries": [
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "versionId": null
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "versionId": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "runtimeName": "council-decision-review--0f78c5f539",
+            "versionId": null,
+            "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "runtimeName": "evidence-review--916785aff6",
+            "versionId": null,
+            "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "runtimeName": "implementation-execution--6e659bff5f",
+            "versionId": null,
+            "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "runtimeName": "specialist-advisory--31b0d1060e",
+            "versionId": null,
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40",
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "runtimeName": "paperclip",
+            "versionId": null,
+            "currentVersionId": null,
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip/skills/paperclip",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "profileId": "software-executor",
+      "profileVersion": "1.0.0",
+      "source": "profiles/software-executor/AGENTS.md",
+      "sourceContentSha256": "cfd8a242fcd265b51c3de596fdf54f4b9988ff45769cb0a9c5752ee45471b6ae",
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.implementation-execution",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution"
+        }
+      ],
+      "id": "9acab613-9c24-45df-8f26-e600fc61d615",
+      "name": "Software Executor",
+      "status": "paused",
+      "adapterType": "codex_local",
+      "adapterConfig": {
+        "mode": "persistent",
+        "model": "gpt-6-sol",
+        "engine": "acp",
+        "timeoutSec": 300,
+        "paperclipSkillSync": {
+          "desiredSkills": [
+            "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution"
+          ]
+        },
+        "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/9acab613-9c24-45df-8f26-e600fc61d615/instructions/AGENTS.md",
+        "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/9acab613-9c24-45df-8f26-e600fc61d615/instructions",
+        "modelReasoningEffort": "high",
+        "instructionsEntryFile": "AGENTS.md",
+        "instructionsBundleMode": "managed",
+        "nonInteractivePermissions": "deny",
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
+      },
+      "runtimeConfig": {
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "budgetMonthlyCents": 100,
+      "permissions": {
+        "canAssignTasks": false,
+        "canCreateAgents": false,
+        "canCreateSkills": false
+      },
+      "bundle": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "revisionId": null,
+        "hash": "cfd8a242fcd265b51c3de596fdf54f4b9988ff45769cb0a9c5752ee45471b6ae",
+        "contentSha256": "cfd8a242fcd265b51c3de596fdf54f4b9988ff45769cb0a9c5752ee45471b6ae"
+      },
+      "skills": {
+        "adapterType": "codex_local",
+        "supported": true,
+        "mode": "ephemeral",
+        "desiredSkills": [
+          "paperclipai/paperclip/paperclip",
+          "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution"
+        ],
+        "desiredSkillEntries": [
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "versionId": null
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "versionId": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "runtimeName": "council-decision-review--0f78c5f539",
+            "versionId": null,
+            "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "runtimeName": "evidence-review--916785aff6",
+            "versionId": null,
+            "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "runtimeName": "implementation-execution--6e659bff5f",
+            "versionId": null,
+            "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25",
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "runtimeName": "specialist-advisory--31b0d1060e",
+            "versionId": null,
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "runtimeName": "paperclip",
+            "versionId": null,
+            "currentVersionId": null,
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip/skills/paperclip",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "profileId": "council-reviewer",
+      "profileVersion": "1.0.0",
+      "source": "profiles/council-reviewer/AGENTS.md",
+      "sourceContentSha256": "d8554631eee98ef6ac243ddb175de197f71ccaa1378f62d199be2e336c461ac9",
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.council-decision-review",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review"
+        }
+      ],
+      "id": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+      "name": "Council Reviewer",
+      "status": "paused",
+      "adapterType": "codex_local",
+      "adapterConfig": {
+        "mode": "persistent",
+        "model": "gpt-6-astra",
+        "engine": "acp",
+        "timeoutSec": 600,
+        "paperclipSkillSync": {
+          "desiredSkills": [
+            "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review"
+          ]
+        },
+        "instructionsFilePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/e39b0edd-435e-4aa7-bdd5-9d29753680ff/instructions/AGENTS.md",
+        "instructionsRootPath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/companies/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/agents/e39b0edd-435e-4aa7-bdd5-9d29753680ff/instructions",
+        "modelReasoningEffort": "high",
+        "instructionsEntryFile": "AGENTS.md",
+        "instructionsBundleMode": "managed",
+        "nonInteractivePermissions": "deny",
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
+      },
+      "runtimeConfig": {
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 3,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "budgetMonthlyCents": 100,
+      "permissions": {
+        "canAssignTasks": false,
+        "canCreateAgents": false,
+        "canCreateSkills": false
+      },
+      "bundle": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "revisionId": null,
+        "hash": "d8554631eee98ef6ac243ddb175de197f71ccaa1378f62d199be2e336c461ac9",
+        "contentSha256": "d8554631eee98ef6ac243ddb175de197f71ccaa1378f62d199be2e336c461ac9"
+      },
+      "skills": {
+        "adapterType": "codex_local",
+        "supported": true,
+        "mode": "ephemeral",
+        "desiredSkills": [
+          "paperclipai/paperclip/paperclip",
+          "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review"
+        ],
+        "desiredSkillEntries": [
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "versionId": null
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "versionId": null
+          }
+        ],
+        "entries": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "runtimeName": "council-decision-review--0f78c5f539",
+            "versionId": null,
+            "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab",
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "runtimeName": "evidence-review--916785aff6",
+            "versionId": null,
+            "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "runtimeName": "implementation-execution--6e659bff5f",
+            "versionId": null,
+            "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "runtimeName": "specialist-advisory--31b0d1060e",
+            "versionId": null,
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40",
+            "desired": false,
+            "managed": true,
+            "state": "available",
+            "sourcePath": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/instances/executive-dev/skills/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "targetPath": null,
+            "detail": null,
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "runtimeName": "paperclip",
+            "versionId": null,
+            "currentVersionId": null,
+            "desired": true,
+            "managed": true,
+            "state": "configured",
+            "sourcePath": "/home/davy-lp/workspace/paperclip/skills/paperclip",
+            "targetPath": null,
+            "detail": "Will be linked into the effective CODEX_HOME/skills/ directory on the next run.",
+            "origin": "company_managed",
+            "originLabel": "Managed by Paperclip",
+            "readOnly": false
+          }
+        ],
+        "warnings": []
+      }
+    }
+  ],
+  "runReadback": {
+    "count": 0,
+    "runs": []
+  },
+  "evidenceLayers": {
+    "declared": "verified",
+    "installed": "verified for the four company-library skills and current Executive plugin 0.3.0; this script performed no plugin install or upgrade",
+    "desired": "verified from each agent configuration and skill snapshot",
+    "loaded": "unverified without an authorized adapter run; library and desired state only",
+    "activated": "false: all agents paused or pending approval and heartbeat triggers disabled",
+    "executed": "false: zero L03 runs and no provider call was authorized"
+  },
+  "unresolved": [
+    "Actual Codex profile skill mount and provider authentication remain unverified until a separately authorized run."
+  ]
+}

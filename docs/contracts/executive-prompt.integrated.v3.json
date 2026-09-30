@@ -1,0 +1,53 @@
+{
+  "schema_version": "prompt-quality-compiler-implementation-envelope.v3",
+  "envelope_id": "L03-executive-integrated",
+  "phase": "lot-prompt",
+  "plan_id": "L03-20260930",
+  "contract_id": "L03-implementation",
+  "parent_lot_id": "L03",
+  "child_lot_id": "L03",
+  "slice_id": null,
+  "parent_plan_ref": "sprint-ready-plan.integrated.v2.json",
+  "parent_plan_sha256": "b088fc33f6c32d04bcff837513b7898b3b1aff479d1313960f13b10b26c95739",
+  "coverage_manifest_ref": "acceptance-coverage.integrated.v1.json",
+  "coverage_manifest_sha256": "e28117b274c41d6fd745c969b0a0bf9befe714e2bab986530cc24aaa3e0d9e51",
+  "objective": "Implement and integrate the complete L03 governed approach, advice, exact-result review and bounded correction journey.",
+  "parent_objective": "Implement and integrate the complete L03 governed approach, advice, exact-result review and bounded correction journey.",
+  "criterion_ids": [
+    "L03-A1",
+    "L03-A2",
+    "L03-A3",
+    "L03-A4",
+    "L03-A5",
+    "L03-A6",
+    "L03-A7",
+    "L03-A8"
+  ],
+  "surface_ids": [
+    "council-persistence",
+    "council-runtime",
+    "council-ui",
+    "executive-bridge",
+    "operator-ui"
+  ],
+  "repository_ids": [
+    "council",
+    "executive"
+  ],
+  "exclusions": [],
+  "activation_posture": {
+    "implementation": "required-executable-path",
+    "production_activation": "default-off"
+  },
+  "migration_prewrite": {
+    "applicability": "required",
+    "contract_ref": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/contracts/l03-migration-prewrite.json"
+  },
+  "executable_prompt": {
+    "format": "codex-worker-prompt.v1",
+    "content": "Source: user mission /home/davy-lp/.codex/attachments/9c9f97eb-38c9-48e7-96f7-e62141c82084/Texte coll\u00e9.txt; plan /home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/L03-IMPLEMENTATION-PLAN.md and contracts in /home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/contracts. Read pertinent current source before changes. This is a concrete native implementation subtask of full L03, not a claim to complete the parent. Parent integrator retains all A1-A8 and actual-host/UI/real qualification obligations. No host modifications, live calls, credentials, L04, catalogue rewrite, automatic merge or parallel receipt-worktree access. English code/docs. No assumptions about undocumented host APIs. No commits/push; parent integrates. Preserve concurrent files. Send exact API/type contract early. Stop after assigned working implementation and focused tests; report blockers with evidence, no false runtime proof.\nPlugins/skills \u00e0 utiliser: git-safety base already passed (verify branch); cross-repo-governance preserve ownership; implementation-meta-flow native bounded worker; prompt-quality-compiler preserve acceptance. Read named skills if needed.\nModele et effort recommandes: implementation worker gpt-5.6-sol/high for coupled authority/persistence, mapping /home/davy-lp/.codex/shared/model-selection/model-effort-mapping.md updated 2026-09-05. Launcher exposes this selection; reassess two repeated failures without new evidence. No substitution or claimed parent setting.\nReturn files, behaviors, commands/outcomes, unresolved risks. Durable worktrees required, do not use ephemeral source checkout.\nMission: implement authenticated Council-reserved contribution path in /home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/packages/executive, preserving L01/L02. Ownership new src/l03-contribution.ts, src/l03-repository.ts, tests/l03*.spec.ts, migrations/003_council_contributions.sql plus worker.ts/manifest.ts integration for your path only. No UI edits (parent owns), no package/lock edits unless tell parent. Migration prewrite required /home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/contracts/l03-migration-prewrite.json (passed, rerun). Coordinate with council worker through parent on exact slot payload. You own contribution contract; propose it immediately.\nCouncil reserves; Executive alone creates session and sends reserved slot. Existing owner-only L02 action MUST NOT be called with forged owner. Use actual host API route or action actor authentication, configured pinned Council agent/service identity, company scope, revalidate reservation via Council authenticated API before send. No arbitrary URLs or caller-supplied trusted reservations. Existing host sdk/read-only source /home/davy-lp/workspace/paperclip available; audit worker checking APIs. If bridge needs native token secret_ref use actual supported config/secrets/http capabilities; no credential reuse. Preserve one physical dispatch on duplicate/concurrent/restart; reuse existing contribution dispatch semantics or factor cautiously without regressions, not new Council-native decision receipt. Persist actual selected catalogue profile/method/version/source hash and session/run, criterion/evidence semantic checks (unknown refs invalid); pin source immutable context and slot. Never install/wake agents in this worker. Parse bounded attributed opinion with recommendation, findings must_fix/useful_now/defer and limitations/dissent. Readback must permit Council authorized caller to collect by slot. Keep executable route registration and manifest synced. Add tests unauthorized actor/company, duplicate, semantic invalid refs, missing profile, interrupted no resend, terminal correlation. Report no real profile loading proof from fixtures.\nContinuation after safe checkpoint/rebase: merged Council base 9ae33f13968be4d8d5d20dc511deb2215c552ab0 and Executive base 9797a1208b47edfae2eb1f97bbac9a70adafdb81 are verified ancestors. Read sprint-ready-plan.integrated.v2.json and acceptance-coverage.integrated.v1.json in the contracts directory. Preserve #13 documentary ownership. Resume remaining owned implementation/tests only; parent owns shared runtime/receipts wiring. Migration prewrite remains required and passed; reconciliation itself introduced no persistence migration. Original prompt/plan contracts are historical snapshots.\n",
+    "content_sha256": "842d3c0a4e830f4178a3da01570b4f68d8cb2c5202e64390da728d7291045179",
+    "target_phase": "lot-run",
+    "dispatch_posture": "prepared-not-authorized"
+  }
+}

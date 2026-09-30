@@ -1,0 +1,54 @@
+{
+  "schema_version": "l03-terminal.v1",
+  "outcome": "fail-terminal",
+  "parent_lot_status": "partial",
+  "capability_verification": "partial",
+  "merge_ready": false,
+  "prs": [
+    "https://github.com/ty000/paperclip-council/pull/16",
+    "https://github.com/ty000/paperclip-executive/pull/9"
+  ],
+  "global_correction_reslice_bound": 6,
+  "global_correction_reslice_remaining": 0,
+  "remediation_cycles_completed": 6,
+  "codex_review_requests_posted": 1,
+  "remaining_findings": [
+    {
+      "id": "L03-HOST-003",
+      "kind": "mandatory integration proof",
+      "status": "unresolved",
+      "diagnosis": "Usable native receipt confirms changes_requested and reassignment, not subsequent executor execution. No correction run observed in 30 seconds; cause unproven. No replacement wake or retry."
+    },
+    {
+      "id": "L03-REAL-AUTHORIZATION",
+      "kind": "mandatory real-profile qualification",
+      "status": "unexecuted",
+      "diagnosis": "Seven provisioned agents paused, zero real runs. Campaign on hold for functional qualification and explicit authorization."
+    },
+    {
+      "id": "L03-REMOTE-REVIEW",
+      "kind": "required current-head review",
+      "status": "unavailable",
+      "diagnosis": "Only posted Council request returned account quota exhaustion. No Executive request or later Council request after global bound exhausted."
+    }
+  ],
+  "comments_and_resolutions": {
+    "review_request": "https://github.com/ty000/paperclip-council/pull/16#issuecomment-5920356056",
+    "quota_response": "https://github.com/ty000/paperclip-council/pull/16#issuecomment-5920357867",
+    "review_threads": 0,
+    "thread_resolutions": 0,
+    "current_thread_state": "docs/evidence/l03-pr-review-state.json"
+  },
+  "evidence": [
+    "docs/evidence/l03-host-attempt6.json",
+    "docs/evidence/l03-host-browser-attempt6.json",
+    "docs/evidence/l03-review.json",
+    "docs/evidence/l03-local-validation.json",
+    "docs/evidence/l03-ci.json",
+    "docs/evidence/l03-package-static.json",
+    "docs/evidence/l03-design.json",
+    "docs/evidence/l03-final-source.json",
+    "docs/contracts/l03-review-budget.json"
+  ],
+  "qualification_boundary": "No dropped acceptance criteria, reslice, merge, paid campaign, host patch or automatic recovery. Evidence publication is completion of the authorized handoff, not another remediation batch."
+}

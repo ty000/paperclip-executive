@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "sourceEvidencePath": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/evidence/l03-host-attempt6.json",
+  "sourceOutcome": "FAIL",
+  "checkedAt": "2026-09-30T22:46:55.544Z",
+  "companyId": "14d5f600-335b-4715-8a06-367ee1b48454",
+  "missionId": "940f3566-fe66-4037-82c0-37498b301669",
+  "tooling": {
+    "package": "@playwright/test",
+    "hostRoot": "/home/davy-lp/workspace/paperclip",
+    "executablePath": "/home/davy-lp/.cache/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "screenshots": {
+    "council": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/evidence/l03-browser-council-attempt6.png",
+    "executive": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/evidence/l03-browser-executive-attempt6.png"
+  },
+  "checks": [
+    {
+      "kind": "Council",
+      "url": "http://127.0.0.1:3220/LHOAAAAA/council-l03",
+      "assertions": [
+        "Council missions",
+        "result correction required",
+        "Result: result-v1",
+        "1f24ee9bb5bd687c302f2bc3bb524b1dfc40f1c2",
+        "bundle digest: 1ba4ae8e447e238ec2525cfc47e3f8641171d1ed3705ec333704e1357d028ed6",
+        "Result decision: revise",
+        "native observation confirmed",
+        "Receipt result-review-v1:4a47477c-fc0a-4ed0-a544-84ce6567f428",
+        "native_observed",
+        "HTTP 200; usable: true",
+        "envelope: 6 / 6",
+        "approach: 2 / 2",
+        "result: 2 / 2",
+        "consultation: 2 / 2",
+        "correction: 2 / 2"
+      ],
+      "stableTexts": [
+        "result correction required",
+        "1f24ee9bb5bd687c302f2bc3bb524b1dfc40f1c2",
+        "1ba4ae8e447e238ec2525cfc47e3f8641171d1ed3705ec333704e1357d028ed6",
+        "Receipt result-review-v1:4a47477c-fc0a-4ed0-a544-84ce6567f428",
+        "native_observed",
+        "correction: 2 / 2"
+      ],
+      "reloadStable": true
+    },
+    {
+      "kind": "Executive",
+      "url": "http://127.0.0.1:3220/LHOAAAAA/executive",
+      "assertions": [
+        "Council missions and next actions",
+        "result correction required",
+        "1f24ee9bb5bd687c302f2bc3bb524b1dfc40f1c2",
+        "result decision: revise",
+        "native observation confirmed",
+        "Receipt result-review-v1:4a47477c-fc0a-4ed0-a544-84ce6567f428",
+        "native_observed",
+        "HTTP 200; usable: true",
+        "envelope: 6/6",
+        "approach: 2/2",
+        "result: 2/2",
+        "consultation: 2/2",
+        "correction: 2/2"
+      ],
+      "stableTexts": [
+        "result correction required",
+        "1f24ee9bb5bd687c302f2bc3bb524b1dfc40f1c2",
+        "result decision: revise",
+        "Receipt result-review-v1:4a47477c-fc0a-4ed0-a544-84ce6567f428",
+        "native_observed",
+        "correction: 2/2"
+      ],
+      "reloadStable": true
+    }
+  ],
+  "pageErrors": [],
+  "outcome": "PASS_BLOCKED_STATE_RENDERED",
+  "closureEffect": "pending-state defect evidence only; never evidence of L03 success",
+  "issuePrefix": "LHOAAAAA"
+}

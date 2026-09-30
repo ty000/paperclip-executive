@@ -1,0 +1,208 @@
+{
+  "scope": "L03 Executive and Council PR review remediation",
+  "authorization": "User selected six correction batches total on 2026-09-30",
+  "global_correction_reslice_bound": 6,
+  "global_correction_reslice_remaining": 0,
+  "remediation_cycles_completed": 6,
+  "codex_review_requests_posted": 1,
+  "consecutive_low_progress_cycles": 0,
+  "total_threads_seen": 0,
+  "unresolved_actionable_threads_remaining": 0,
+  "events": [
+    {
+      "batch": 1,
+      "at": "2026-09-30T21:47:21.806987+00:00",
+      "source": "staticCodeAuditGate introduced findings",
+      "intent_gate": "pass",
+      "findings": [
+        "unused inspectL03 export",
+        "unused canonicalJson export",
+        "unused L03MissionPanel export",
+        "unused ReservationLocator type",
+        "separate PostgreSQL test entry not recognized",
+        "remaining unused L03Inspection type export",
+        "Executive unconsumed constants/functions/type exports",
+        "Executive CLI fixture and qualification scripts require explicit audit entrypoints"
+      ],
+      "scope": [
+        "Council src/l03-runtime.ts",
+        "Council src/l03.ts",
+        "Council src/ui/l03.tsx",
+        "Council src/l03-types.ts",
+        "Council .fallowrc.json",
+        "Executive packages/executive/src/l03-contribution.ts",
+        "Executive .fallowrc.json"
+      ],
+      "intent": "Remove unused public exports/type and declare the explicitly invoked persistence test as a Fallow entry. No behavior or acceptance reduction.",
+      "status": "completed",
+      "validation": {
+        "Council": "typecheck; 126 tests; static PASS",
+        "Executive": "typecheck; 48 tests; catalog validation; static PASS"
+      }
+    },
+    {
+      "batch": 2,
+      "at": "2026-09-30T21:58:48.576123+00:00",
+      "intent_gate": "pass",
+      "source": "independent integration review and native host qualification",
+      "findings": [
+        "L03-IR-001 missing specialist native controls",
+        "L03-IR-002 concurrent event CAS loss",
+        "L03-IR-003 native session namespace mismatch",
+        "L03-IR-004 slot string vs UUID persistence mismatch",
+        "L03-IR-005 explicit on-demand wake required by native sessions and issue wake",
+        "L03-IR-006 draft roster profile keys must match catalogue IDs",
+        "L03-IR-007 reserve correction/result capacity before native corrective wake"
+      ],
+      "scope": [
+        "Executive l03-contribution source/tests",
+        "Executive additive004 private migration and prewrite contract",
+        "Council l03-runtime and concurrency tests",
+        "Executive real campaign activation protocol",
+        "Council l03 transition admission counters and regression tests",
+        "Executive draft mandate preparation"
+      ],
+      "intent": "Validate specialist controls before grant and send; use the host session task-key prefix; retry only idempotent event persistence CAS conflicts without any model resend; widen private slot_id UUID to text while preserving applied003. Requalify fresh native synthetic packet after preserving failed one. Reject disabled native wake before dispatch; document just-in-time authorized activation/readback and restoration. Reserve the next approach/result and correction allowance when granting revision, and the first result before initial execution; never spend only after returned work.",
+      "status": "completed",
+      "validation": {
+        "Council": "128 tests; typecheck; build; static pass",
+        "Executive": "50 tests; catalog validation; typecheck; build; static pass",
+        "review": "IR001-007 addressed; rereview found adjacent campaign protocol ordering RR001"
+      }
+    },
+    {
+      "batch": 3,
+      "at": "2026-09-30T22:10:14.673987+00:00",
+      "intent_gate": "pass",
+      "source": "independent bounded rereview",
+      "findings": [
+        "L03-RR-001 downstream executor must be armed before reviewer direction applies",
+        "L03-RR-002 pre-arm all five specialists before reviewer reservation; count automatic consultations as runs3-7"
+      ],
+      "scope": [
+        "docs/L03-REAL-CAMPAIGN.md"
+      ],
+      "intent": "Clarify native handoff preflight and count automatic execution as run9, preserve no retry, no live correction authorization, restore both actors after outcomes. No production code or runtime mutation.",
+      "status": "completed",
+      "validation": {
+        "review": "Independent bounded rereview: IR001-007 and RR001 resolved; no remaining P1/P2. Host and real proof explicitly separate.",
+        "checks": "git diff --check; exact installed worker hashes independently matched"
+      }
+    },
+    {
+      "batch": 4,
+      "at": "2026-09-30T22:13:14.023573+00:00",
+      "intent_gate": "pass",
+      "source": "actual installed host attempt3",
+      "findings": [
+        "L03-HOST-001 terminal session callback emits after native invocation scope expires"
+      ],
+      "scope": [
+        "Executive l03-contribution source/tests",
+        "Executive worker event registrations"
+      ],
+      "intent": "Persist session terminal result as before; publish already-persisted observation inside a fresh authenticated native run-terminal event invocation. Bind company, agent and exact stored run. Bound any ordering wait; no native resend, new session, allowance reset, host change or generic watcher. Missing event remains fail closed.",
+      "status": "completed",
+      "validation": {
+        "tests": 54,
+        "typecheck": "pass",
+        "independent_review": "finished/failed/cancelled path valid; interrupted native event absent documented residual HOST002",
+        "host": "Final attempt6 confirms terminal observation bridge; historical attempt3 retained.",
+        "exact_package_static": "fail on broader introduced complexity"
+      }
+    },
+    {
+      "batch": 5,
+      "at": "2026-09-30T22:15:10.269041+00:00",
+      "intent_gate": "pass",
+      "source": "Council push CI36784335510; PR CI36784341744 passed with different base",
+      "findings": [
+        "L03-CI-001 requireExecutorControls introduced complexity against prior push head"
+      ],
+      "scope": [
+        "Council src/l03-runtime.ts controls validation"
+      ],
+      "intent": "Extract typed numeric predicates and separate actor eligibility from bounded execution controls without changing accepted inputs. Run affected tests/typecheck/build and both audit bases. No suppression or policy change.",
+      "status": "completed",
+      "validation": {
+        "tests": 128,
+        "typecheck": "pass",
+        "build": "pass",
+        "static_main_base": "pass",
+        "static_push_base": "pass",
+        "independent_review": "no semantic regression"
+      }
+    },
+    {
+      "batch": 6,
+      "at": "2026-09-30T22:22:41.385755+00:00",
+      "intent_gate": "pass",
+      "source": "Exact Executive CI Fallow command reveals introduced complexity hidden by root wrapper attribution",
+      "findings": [
+        "L03-CI-002 introduced package-audit complexity in controls, dispatch, admission, profile resolution, UI rendering, test repository helper"
+      ],
+      "scope": [
+        "Executive l03-contribution.ts and tests",
+        "Executive council-observations.tsx",
+        "Executive optional local extracted helper files used by these modules"
+      ],
+      "intent": "Reduce introduced complexity with named pure validation/rendering helpers and preserve physical dispatch/error behavior. Keep audit thresholds and source contracts unchanged; do not modify L01/L02, add suppressions, or rewrite CI to ignore failure. Re-run exact package audit and affected tests/build, then qualify final hashes. This is the final globally authorized correction batch.",
+      "status": "completed",
+      "validation": {
+        "tests": 54,
+        "typecheck": "pass",
+        "build": "pass",
+        "exact_package_audit": {
+          "exit": 0,
+          "verdict": "warn",
+          "introduced_complexity": 0,
+          "introduced_duplication_advisory": 4
+        },
+        "installed_hash": "89e78dbae8fac0e7fdcd9df606bf447fc41073b733ae5db5390954c791f168ad",
+        "qualification": "Final attempt6 FAIL: missing correction executor run (HOST003); browser blocked-state rendering passes."
+      }
+    }
+  ],
+  "review_requests": [
+    {
+      "pr": "https://github.com/ty000/paperclip-council/pull/16",
+      "head": "6006a17d997008157ee59e151f70a4f504635326",
+      "request_url": "https://github.com/ty000/paperclip-council/pull/16#issuecomment-5920356056",
+      "createdAt": "2026-09-30T21:51:35Z",
+      "request_body_hash": "9c2af992b4d1910f259814f9f9c826673df2df4ec27ee88321f1e50f5f0e06d4",
+      "context_hash": "aa421f767f313b79bb6460161742e17eb44a459fcf8d148cb8c0068469ef953e",
+      "context_source_refs": [
+        "docs/L03-GOVERNANCE.md",
+        "src/l03-runtime.ts",
+        "src/l03-types.ts",
+        "docs/evidence/l03-static.json"
+      ],
+      "codex_review_request_context_gate": "pass",
+      "dedupe_gate": {
+        "state": "no_existing_request",
+        "threads": 0,
+        "reviews": 0,
+        "comments": 0,
+        "recent_threshold_minutes": 10
+      },
+      "project_gates": "no manifest; repository typecheck/tests/build/static passed",
+      "review_status": "unavailable_quota_exhausted",
+      "response_url": "https://github.com/ty000/paperclip-council/pull/16#issuecomment-5920357867",
+      "ci_status": "pass"
+    }
+  ],
+  "review_request_guard": {
+    "state": "global_bound_exhausted",
+    "remaining": 0,
+    "effect": "No later correction, reslice or new GitHub review request. Finish current validation and deliver reviewable candidates with unresolved evidence explicit."
+  },
+  "terminal_outcome": "fail-terminal",
+  "terminal_evidence": "docs/evidence/l03-terminal.json",
+  "review_roi_record": {
+    "cycles": 6,
+    "new_threads": 0,
+    "repeated_threads": 0,
+    "decision": "freeze",
+    "diagnosis": "Global bound exhausted; actual-host correction continuation missing, required real-profile evidence and current-head remote review absent. Unit/source review did not prove native wake continuation."
+  }
+}

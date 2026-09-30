@@ -1,0 +1,422 @@
+{
+  "schema_version": "acceptance-coverage-manifest.v1",
+  "contract_id": "L03-implementation",
+  "plan_id": "L03-20260930",
+  "parent_plan_sha256": "78f73c3b6d97938e33a55e87d02d8621305edffd2895c83eedd8f4f260be8e06",
+  "parent_lot_id": "L03",
+  "child_lot_id": "L03",
+  "slice_id": null,
+  "slice_criterion_ids": [
+    "L03-A1",
+    "L03-A2",
+    "L03-A3",
+    "L03-A4",
+    "L03-A5",
+    "L03-A6",
+    "L03-A7",
+    "L03-A8"
+  ],
+  "phase": "lot-prompt",
+  "objective": "Implement and integrate the complete L03 governed approach, advice, exact-result review and bounded correction journey.",
+  "parent_objective": "Implement and integrate the complete L03 governed approach, advice, exact-result review and bounded correction journey.",
+  "activation_posture": {
+    "implementation": "required-executable-path",
+    "production_activation": "default-off"
+  },
+  "repository_coverage": [
+    {
+      "repository_id": "executive",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "evidence_ids": [
+        "L03-A1-automated-test",
+        "L03-A1-integration-test",
+        "L03-A1-migration-test",
+        "L03-A2-automated-test",
+        "L03-A2-integration-test",
+        "L03-A3-automated-test",
+        "L03-A3-integration-test",
+        "L03-A4-automated-test",
+        "L03-A4-integration-test",
+        "L03-A5-automated-test",
+        "L03-A5-integration-test",
+        "L03-A5-migration-test",
+        "L03-A6-automated-test",
+        "L03-A6-integration-test",
+        "L03-A6-migration-test",
+        "L03-A7-automated-test",
+        "L03-A7-integration-test",
+        "L03-A7-provider-fake-test",
+        "L03-A7-runtime-observation",
+        "L03-A8-automated-test",
+        "L03-A8-integration-test",
+        "L03-A8-browser-test"
+      ]
+    },
+    {
+      "repository_id": "council",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "evidence_ids": [
+        "L03-A1-automated-test",
+        "L03-A1-integration-test",
+        "L03-A1-migration-test",
+        "L03-A2-automated-test",
+        "L03-A2-integration-test",
+        "L03-A3-automated-test",
+        "L03-A3-integration-test",
+        "L03-A4-automated-test",
+        "L03-A4-integration-test",
+        "L03-A5-automated-test",
+        "L03-A5-integration-test",
+        "L03-A5-migration-test",
+        "L03-A6-automated-test",
+        "L03-A6-integration-test",
+        "L03-A6-migration-test",
+        "L03-A7-automated-test",
+        "L03-A7-integration-test",
+        "L03-A7-provider-fake-test",
+        "L03-A7-runtime-observation",
+        "L03-A8-automated-test",
+        "L03-A8-integration-test",
+        "L03-A8-browser-test"
+      ]
+    }
+  ],
+  "criterion_coverage": [
+    {
+      "criterion_id": "L03-A1",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "surface_ids": [
+        "council-runtime",
+        "council-persistence"
+      ],
+      "evidence_ids": [
+        "L03-A1-automated-test",
+        "L03-A1-integration-test",
+        "L03-A1-migration-test"
+      ],
+      "blocker_ids": []
+    },
+    {
+      "criterion_id": "L03-A2",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "surface_ids": [
+        "council-runtime"
+      ],
+      "evidence_ids": [
+        "L03-A2-automated-test",
+        "L03-A2-integration-test"
+      ],
+      "blocker_ids": []
+    },
+    {
+      "criterion_id": "L03-A3",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "surface_ids": [
+        "council-runtime"
+      ],
+      "evidence_ids": [
+        "L03-A3-automated-test",
+        "L03-A3-integration-test"
+      ],
+      "blocker_ids": []
+    },
+    {
+      "criterion_id": "L03-A4",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "surface_ids": [
+        "council-runtime",
+        "council-persistence"
+      ],
+      "evidence_ids": [
+        "L03-A4-automated-test",
+        "L03-A4-integration-test"
+      ],
+      "blocker_ids": []
+    },
+    {
+      "criterion_id": "L03-A5",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "surface_ids": [
+        "council-runtime",
+        "council-persistence"
+      ],
+      "evidence_ids": [
+        "L03-A5-automated-test",
+        "L03-A5-integration-test",
+        "L03-A5-migration-test"
+      ],
+      "blocker_ids": []
+    },
+    {
+      "criterion_id": "L03-A6",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "surface_ids": [
+        "council-persistence"
+      ],
+      "evidence_ids": [
+        "L03-A6-automated-test",
+        "L03-A6-integration-test",
+        "L03-A6-migration-test"
+      ],
+      "blocker_ids": []
+    },
+    {
+      "criterion_id": "L03-A7",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "surface_ids": [
+        "executive-bridge",
+        "council-runtime"
+      ],
+      "evidence_ids": [
+        "L03-A7-automated-test",
+        "L03-A7-integration-test",
+        "L03-A7-provider-fake-test",
+        "L03-A7-runtime-observation"
+      ],
+      "blocker_ids": []
+    },
+    {
+      "criterion_id": "L03-A8",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "surface_ids": [
+        "operator-ui",
+        "council-ui"
+      ],
+      "evidence_ids": [
+        "L03-A8-automated-test",
+        "L03-A8-integration-test",
+        "L03-A8-browser-test"
+      ],
+      "blocker_ids": []
+    }
+  ],
+  "surface_coverage": [
+    {
+      "surface_id": "council-runtime",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "evidence_ids": [
+        "L03-A1-automated-test",
+        "L03-A1-integration-test",
+        "L03-A1-migration-test",
+        "L03-A2-automated-test",
+        "L03-A2-integration-test",
+        "L03-A3-automated-test",
+        "L03-A3-integration-test",
+        "L03-A4-automated-test",
+        "L03-A4-integration-test",
+        "L03-A5-automated-test",
+        "L03-A5-integration-test",
+        "L03-A5-migration-test",
+        "L03-A7-automated-test",
+        "L03-A7-integration-test",
+        "L03-A7-provider-fake-test",
+        "L03-A7-runtime-observation"
+      ]
+    },
+    {
+      "surface_id": "council-persistence",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "evidence_ids": [
+        "L03-A1-automated-test",
+        "L03-A1-integration-test",
+        "L03-A1-migration-test",
+        "L03-A4-automated-test",
+        "L03-A4-integration-test",
+        "L03-A5-automated-test",
+        "L03-A5-integration-test",
+        "L03-A5-migration-test",
+        "L03-A6-automated-test",
+        "L03-A6-integration-test",
+        "L03-A6-migration-test"
+      ]
+    },
+    {
+      "surface_id": "executive-bridge",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "evidence_ids": [
+        "L03-A7-automated-test",
+        "L03-A7-integration-test",
+        "L03-A7-provider-fake-test",
+        "L03-A7-runtime-observation"
+      ]
+    },
+    {
+      "surface_id": "operator-ui",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "evidence_ids": [
+        "L03-A8-automated-test",
+        "L03-A8-integration-test",
+        "L03-A8-browser-test"
+      ]
+    },
+    {
+      "surface_id": "council-ui",
+      "disposition": "included",
+      "preservation_status": "child-owned",
+      "evidence_ids": [
+        "L03-A8-automated-test",
+        "L03-A8-integration-test",
+        "L03-A8-browser-test"
+      ]
+    }
+  ],
+  "evidence_map": [
+    {
+      "evidence_id": "L03-A1-automated-test",
+      "kind": "automated-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A1-integration-test",
+      "kind": "integration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A1-migration-test",
+      "kind": "migration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A2-automated-test",
+      "kind": "automated-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A2-integration-test",
+      "kind": "integration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A3-automated-test",
+      "kind": "automated-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A3-integration-test",
+      "kind": "integration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A4-automated-test",
+      "kind": "automated-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A4-integration-test",
+      "kind": "integration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A5-automated-test",
+      "kind": "automated-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A5-integration-test",
+      "kind": "integration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A5-migration-test",
+      "kind": "migration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A6-automated-test",
+      "kind": "automated-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A6-integration-test",
+      "kind": "integration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A6-migration-test",
+      "kind": "migration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A7-automated-test",
+      "kind": "automated-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A7-integration-test",
+      "kind": "integration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A7-provider-fake-test",
+      "kind": "provider-fake-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A7-runtime-observation",
+      "kind": "runtime-observation",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A8-automated-test",
+      "kind": "automated-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A8-integration-test",
+      "kind": "integration-test",
+      "status": "planned",
+      "artifact_refs": []
+    },
+    {
+      "evidence_id": "L03-A8-browser-test",
+      "kind": "browser-test",
+      "status": "planned",
+      "artifact_refs": []
+    }
+  ],
+  "dependency_coverage": [],
+  "blocking_finding_coverage": [],
+  "exclusions": [],
+  "completion_status": {
+    "run_artifact_status": "pending",
+    "child_lot_status": "pending",
+    "parent_lot_status": "pending",
+    "capability_verification": "unverified",
+    "production_activation": "off"
+  },
+  "review_target": "parent"
+}

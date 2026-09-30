@@ -1,0 +1,40 @@
+{
+  "schema_version": "l03-local-validation.v1",
+  "basis": "Parent observed command results before final host qualification; synthetic tests do not establish real-profile execution",
+  "Council": {
+    "repository": "ty000/paperclip-council",
+    "base": "9ae33f13968be4d8d5d20dc511deb2215c552ab0",
+    "typecheck": "pass",
+    "build": "pass",
+    "test_count": 128,
+    "test": "pass",
+    "postgres_concurrency_and_server_restart": "pass",
+    "static_gate": "docs/evidence/l03-static.json",
+    "installed_worker_sha256": "63c25765162f570b69a68d71f13a1911260e2008876367bf6e09dea21378c533"
+  },
+  "Executive": {
+    "repository": "ty000/paperclip-executive",
+    "base": "9797a1208b47edfae2eb1f97bbac9a70adafdb81",
+    "typecheck": "pass",
+    "build": "pass",
+    "test_count": 54,
+    "test": "pass",
+    "catalog": "18 profiles / 8 skills valid",
+    "static_gate": "docs/evidence/l03-static.json",
+    "exact_package_audit": {
+      "exit": 0,
+      "verdict": "warn",
+      "introduced_complexity": 0,
+      "advisory_duplication_groups": 4
+    },
+    "installed_worker_sha256": "89e78dbae8fac0e7fdcd9df606bf447fc41073b733ae5db5390954c791f168ad"
+  },
+  "final_native_qualification": {
+    "status": "blocked",
+    "finding": "L03-HOST-003",
+    "artifact": "docs/evidence/l03-host-attempt6.json",
+    "browser": "docs/evidence/l03-host-browser-attempt6.json",
+    "browser_scope": "Actual blocked state rendered and stable after reload; no V2 or acceptance proof",
+    "real_campaign": "not launched; no provider calls"
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "sourceEvidencePath": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/evidence/l03-host-attempt1.json",
+  "sourceOutcome": "FAIL",
+  "checkedAt": "2026-09-30T22:00:21.693Z",
+  "companyId": "2552fe4a-65a1-4c3c-9695-b9b54dc84a8e",
+  "missionId": "4732f694-0c3a-4ce9-937d-bd8ea4ff14bd",
+  "tooling": {
+    "package": "@playwright/test",
+    "hostRoot": "/home/davy-lp/workspace/paperclip",
+    "executablePath": "/home/davy-lp/.cache/ms-playwright/chromium_headless_shell-1243/chrome-headless-shell-linux64/chrome-headless-shell"
+  },
+  "screenshots": {
+    "council": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/evidence/l03-browser-council-attempt1.png",
+    "executive": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/evidence/l03-browser-executive-attempt1.png"
+  },
+  "checks": [
+    {
+      "kind": "Council",
+      "url": "http://127.0.0.1:3220/LHO/council-l03",
+      "assertions": [
+        "Council missions",
+        "admission not observed",
+        "No confirmed observation"
+      ],
+      "reloadStable": true
+    },
+    {
+      "kind": "Executive",
+      "url": "http://127.0.0.1:3220/LHO/executive",
+      "assertions": [
+        "Council missions and next actions",
+        "Observation: missing",
+        "Native observation: missing"
+      ],
+      "reloadStable": true
+    }
+  ],
+  "pageErrors": [],
+  "outcome": "PASS_PENDING_DEFECT_RENDERED",
+  "closureEffect": "pending-state defect evidence only; never evidence of L03 success",
+  "issuePrefix": "LHO"
+}

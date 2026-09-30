@@ -1,0 +1,129 @@
+{
+  "child_lot_id": "L03",
+  "completion_status": {
+    "capability_verification": "partial",
+    "child_lot_status": "partial",
+    "parent_lot_status": "partial",
+    "production_activation": "off",
+    "run_artifact_status": "complete"
+  },
+  "finding_codes": [
+    "CHILD_LOT_COMPLETION_BLOCKED",
+    "MANDATORY_EVIDENCE_UNMAPPED",
+    "PARENT_COMPLETION_BLOCKED",
+    "PR_PARENT_ACCEPTANCE_INCOMPLETE"
+  ],
+  "findings": [
+    {
+      "code": "PARENT_COMPLETION_BLOCKED",
+      "message": "owned mandatory criterion L03-A3 cannot complete with disposition blocked or blockers ['L03-HOST-003']",
+      "path": "criterion_coverage[L03-A3]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "mandatory evidence L03-A3-integration-test has non-satisfying status blocked",
+      "path": "evidence_map[L03-A3-integration-test]"
+    },
+    {
+      "code": "PARENT_COMPLETION_BLOCKED",
+      "message": "owned mandatory criterion L03-A4 cannot complete with disposition blocked or blockers ['L03-HOST-003']",
+      "path": "criterion_coverage[L03-A4]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "mandatory evidence L03-A4-integration-test has non-satisfying status blocked",
+      "path": "evidence_map[L03-A4-integration-test]"
+    },
+    {
+      "code": "PARENT_COMPLETION_BLOCKED",
+      "message": "owned mandatory criterion L03-A7 cannot complete with disposition blocked or blockers ['L03-REAL-AUTHORIZATION']",
+      "path": "criterion_coverage[L03-A7]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "mandatory evidence L03-A7-integration-test has non-satisfying status blocked",
+      "path": "evidence_map[L03-A7-integration-test]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "mandatory evidence L03-A7-runtime-observation has non-satisfying status blocked",
+      "path": "evidence_map[L03-A7-runtime-observation]"
+    },
+    {
+      "code": "PARENT_COMPLETION_BLOCKED",
+      "message": "owned mandatory criterion L03-A8 cannot complete with disposition blocked or blockers ['L03-HOST-003']",
+      "path": "criterion_coverage[L03-A8]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "mandatory evidence L03-A8-integration-test has non-satisfying status blocked",
+      "path": "evidence_map[L03-A8-integration-test]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface council-runtime evidence L03-A3-integration-test is not passed",
+      "path": "evidence_map[L03-A3-integration-test]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface council-runtime evidence L03-A4-integration-test is not passed",
+      "path": "evidence_map[L03-A4-integration-test]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface council-runtime evidence L03-A7-integration-test is not passed",
+      "path": "evidence_map[L03-A7-integration-test]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface council-runtime evidence L03-A7-runtime-observation is not passed",
+      "path": "evidence_map[L03-A7-runtime-observation]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface council-persistence evidence L03-A4-integration-test is not passed",
+      "path": "evidence_map[L03-A4-integration-test]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface executive-bridge evidence L03-A7-integration-test is not passed",
+      "path": "evidence_map[L03-A7-integration-test]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface executive-bridge evidence L03-A7-runtime-observation is not passed",
+      "path": "evidence_map[L03-A7-runtime-observation]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface operator-ui evidence L03-A8-integration-test is not passed",
+      "path": "evidence_map[L03-A8-integration-test]"
+    },
+    {
+      "code": "MANDATORY_EVIDENCE_UNMAPPED",
+      "message": "required surface council-ui evidence L03-A8-integration-test is not passed",
+      "path": "evidence_map[L03-A8-integration-test]"
+    },
+    {
+      "code": "CHILD_LOT_COMPLETION_BLOCKED",
+      "message": "child lot is not complete",
+      "path": "completion_status.child_lot_status"
+    },
+    {
+      "code": "PARENT_COMPLETION_BLOCKED",
+      "message": "parent lot and capability cannot complete until all mandatory obligations are proved",
+      "path": "completion_status"
+    },
+    {
+      "code": "PR_PARENT_ACCEPTANCE_INCOMPLETE",
+      "message": "parent-lot PR readiness requires complete parent acceptance"
+    }
+  ],
+  "gate": "acceptance-preservation",
+  "is_slice": false,
+  "parent_lot_id": "L03",
+  "parent_plan_sha256": "b088fc33f6c32d04bcff837513b7898b3b1aff479d1313960f13b10b26c95739",
+  "phase": "pr-readiness",
+  "schema_version": "acceptance-preservation-gate-output.v1",
+  "status": "blocked"
+}

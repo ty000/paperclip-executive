@@ -1,3 +1,4 @@
+import { CouncilObservations } from "./council-observations.js";
 import { usePluginAction, usePluginData, type PluginPageProps } from "@paperclipai/plugin-sdk/ui";
 import { useEffect, useState, type CSSProperties, type FormEvent } from "react";
 import type { AdviceRecord } from "../advice.js";
@@ -278,6 +279,7 @@ export function ExecutivePage({ context }: PluginPageProps) {
           </article>
         ))}
       </section>
+      <CouncilObservations companyId={companyId} />
     </main>
   );
 }

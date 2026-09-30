@@ -1,0 +1,290 @@
+{
+  "schema_version": "implementation-meta-flow-sprint-ready-plan.v2",
+  "plan_id": "L03-20260930",
+  "sprint_plan_source": {
+    "ref": "../L03-IMPLEMENTATION-PLAN.md",
+    "sha256": "272953090ec7d824c6b6cd1e2b25acf1bb985398e89882282d0070ca48c66beb"
+  },
+  "parallelism_policy": "parallel-eligible",
+  "repositories": [
+    {
+      "repository_id": "executive",
+      "required": true,
+      "ownership": "Contribution producer and canonical display",
+      "source_ref": "940aa21be26d5defae0c2b88bcbffbfc1a2aaeaa"
+    },
+    {
+      "repository_id": "council",
+      "required": true,
+      "ownership": "Mission authority and durable admission",
+      "source_ref": "46669b3b77f760b0f481bb927d3ff3f53bf9b42c"
+    }
+  ],
+  "lots": [
+    {
+      "lot_id": "L03",
+      "title": "Council decision and bounded correction",
+      "objective": "Implement and integrate the complete L03 governed approach, advice, exact-result review and bounded correction journey.",
+      "change_class": "source-changing",
+      "scope": [
+        "Governed L03 journey in Executive and Council"
+      ],
+      "exclusions": [
+        "Paperclip modifications",
+        "L04",
+        "Live activation without explicit authorization"
+      ],
+      "stop_condition": "Integrated reviewable candidates with replayable evidence; disclose unresolved mandatory proof and dependency limits.",
+      "permissions": {
+        "mode": "native orchestration",
+        "write": "Isolated Executive and Council worktrees only"
+      },
+      "completion_policy": "all-mandatory-criteria-and-evidence",
+      "activation_posture": {
+        "implementation": "required-executable-path",
+        "production_activation": "default-off"
+      },
+      "required_repositories": [
+        {
+          "repository_id": "executive",
+          "mandatory": true
+        },
+        {
+          "repository_id": "council",
+          "mandatory": true
+        }
+      ],
+      "required_surfaces": [
+        {
+          "surface_id": "council-runtime",
+          "kind": "runtime",
+          "repository_id": "council",
+          "mandatory": true
+        },
+        {
+          "surface_id": "council-persistence",
+          "kind": "persistence",
+          "repository_id": "council",
+          "mandatory": true
+        },
+        {
+          "surface_id": "executive-bridge",
+          "kind": "provider",
+          "repository_id": "executive",
+          "mandatory": true
+        },
+        {
+          "surface_id": "operator-ui",
+          "kind": "ui",
+          "repository_id": "executive",
+          "mandatory": true
+        },
+        {
+          "surface_id": "council-ui",
+          "kind": "ui",
+          "repository_id": "council",
+          "mandatory": true
+        }
+      ],
+      "acceptance_criteria": [
+        {
+          "criterion_id": "L03-A1",
+          "classification": "mandatory",
+          "statement": "bind ticket, supplied Linear snapshot, criteria, exclusions, composition and versioned mandate. Revalidate actor/company/expiry on admission/application.",
+          "required_surface_ids": [
+            "council-runtime",
+            "council-persistence"
+          ],
+          "evidence_requirements": [
+            {
+              "evidence_id": "L03-A1-automated-test",
+              "kind": "automated-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A1-integration-test",
+              "kind": "integration-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A1-migration-test",
+              "kind": "migration-test",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "criterion_id": "L03-A2",
+          "classification": "mandatory",
+          "statement": "explicit proceed/revise/refuse/escalate; A1\u2192A2 keeps criteria and budget, blocks release until fresh direction.",
+          "required_surface_ids": [
+            "council-runtime"
+          ],
+          "evidence_requirements": [
+            {
+              "evidence_id": "L03-A2-automated-test",
+              "kind": "automated-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A2-integration-test",
+              "kind": "integration-test",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "criterion_id": "L03-A3",
+          "classification": "mandatory",
+          "statement": "exact immutable result revision, author, artifacts, evidence and verified bytes; approval never transfers.",
+          "required_surface_ids": [
+            "council-runtime"
+          ],
+          "evidence_requirements": [
+            {
+              "evidence_id": "L03-A3-automated-test",
+              "kind": "automated-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A3-integration-test",
+              "kind": "integration-test",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "criterion_id": "L03-A4",
+          "classification": "mandatory",
+          "statement": "V1\u2192targeted must-fix correction\u2192V2\u2192fresh review; optional suggestions do not force cycles.",
+          "required_surface_ids": [
+            "council-runtime",
+            "council-persistence"
+          ],
+          "evidence_requirements": [
+            {
+              "evidence_id": "L03-A4-automated-test",
+              "kind": "automated-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A4-integration-test",
+              "kind": "integration-test",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "criterion_id": "L03-A5",
+          "classification": "mandatory",
+          "statement": "consume retained Council receipts, distinguish decision/attempt/native observation/later execution; persistent unknown blocks without resending.",
+          "required_surface_ids": [
+            "council-runtime",
+            "council-persistence"
+          ],
+          "evidence_requirements": [
+            {
+              "evidence_id": "L03-A5-automated-test",
+              "kind": "automated-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A5-integration-test",
+              "kind": "integration-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A5-migration-test",
+              "kind": "migration-test",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "criterion_id": "L03-A6",
+          "classification": "mandatory",
+          "statement": "atomic durable approach/result/consultation counters and shared mission envelope; concurrency/restart/unknown exposure, costs remain unknown when unmeasured.",
+          "required_surface_ids": [
+            "council-persistence"
+          ],
+          "evidence_requirements": [
+            {
+              "evidence_id": "L03-A6-automated-test",
+              "kind": "automated-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A6-integration-test",
+              "kind": "integration-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A6-migration-test",
+              "kind": "migration-test",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "criterion_id": "L03-A7",
+          "classification": "mandatory",
+          "statement": "distinct selected advisors, required slots, preserved dissent and reference validation; one final reviewer distinct from executor.",
+          "required_surface_ids": [
+            "executive-bridge",
+            "council-runtime"
+          ],
+          "evidence_requirements": [
+            {
+              "evidence_id": "L03-A7-automated-test",
+              "kind": "automated-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A7-integration-test",
+              "kind": "integration-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A7-provider-fake-test",
+              "kind": "provider-fake-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A7-runtime-observation",
+              "kind": "runtime-observation",
+              "mandatory": true
+            }
+          ]
+        },
+        {
+          "criterion_id": "L03-A8",
+          "classification": "mandatory",
+          "statement": "rendered/reloaded operator views show subjects, opinions, decisions, application, counters, unknowns and next action.",
+          "required_surface_ids": [
+            "operator-ui",
+            "council-ui"
+          ],
+          "evidence_requirements": [
+            {
+              "evidence_id": "L03-A8-automated-test",
+              "kind": "automated-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A8-integration-test",
+              "kind": "integration-test",
+              "mandatory": true
+            },
+            {
+              "evidence_id": "L03-A8-browser-test",
+              "kind": "browser-test",
+              "mandatory": true
+            }
+          ]
+        }
+      ],
+      "dependencies": [],
+      "blocking_findings": []
+    }
+  ]
+}

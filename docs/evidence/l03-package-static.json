@@ -1,0 +1,30 @@
+{
+  "kind": "audit",
+  "schema_version": 10,
+  "version": "3.23.0",
+  "verdict": "warn",
+  "base_ref": "9797a1208b47edfae2eb1f97bbac9a70adafdb81",
+  "head_sha": "463bfbd",
+  "summary": {
+    "dead_code_issues": 2,
+    "dead_code_has_errors": true,
+    "complexity_findings": 4,
+    "max_cyclomatic": 15,
+    "duplication_clone_groups": 4
+  },
+  "attribution": {
+    "gate": "new-only",
+    "dead_code_introduced": 0,
+    "dead_code_inherited": 2,
+    "complexity_introduced": 0,
+    "complexity_inherited": 3,
+    "duplication_introduced": 4,
+    "duplication_inherited": 0,
+    "styling_introduced": 0,
+    "styling_inherited": 0,
+    "duplication_demoted": 0
+  },
+  "command": "pnpm run fallow --base 9797a1208b47edfae2eb1f97bbac9a70adafdb81",
+  "cwd": "packages/executive",
+  "exit_code": 0
+}
