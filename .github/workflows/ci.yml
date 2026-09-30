@@ -1,0 +1,94 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+permissions:
+  contents: read
+
+env:
+  FALLOW_TELEMETRY_DISABLED: "1"
+  DO_NOT_TRACK: "1"
+
+jobs:
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/executive
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: 9.15.4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.12.0
+          cache: pnpm
+          cache-dependency-path: packages/executive/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check types
+        run: pnpm typecheck
+
+      - name: Run automated tests
+        run: pnpm test
+
+      - name: Build plugin
+        run: pnpm build
+
+  fallow:
+    name: Fallow
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/executive
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: 9.15.4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24.12.0
+          cache: pnpm
+          cache-dependency-path: packages/executive/pnpm-lock.yaml
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Select audit base
+        id: audit-base
+        env:
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          EVENT_NAME: ${{ github.event_name }}
+          PR_BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          PUSH_BASE_SHA: ${{ github.event.before }}
+        run: |
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            base_sha="$PR_BASE_SHA"
+          elif [ -n "$PUSH_BASE_SHA" ] && [ "$PUSH_BASE_SHA" != "0000000000000000000000000000000000000000" ]; then
+            base_sha="$PUSH_BASE_SHA"
+          else
+            base_sha="$(git merge-base HEAD "origin/$DEFAULT_BRANCH")"
+          fi
+          echo "sha=$base_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Run Fallow audit
+        run: pnpm run fallow --base "${{ steps.audit-base.outputs.sha }}"
