@@ -146,8 +146,8 @@ The service now enables callback processing only after reading back the exact
 durable session/run identity in `outcome_unknown`, then drains the existing queue.
 Tests cover queued and later recovery, incorrect callback correlation, and missing
 or mismatched durable identity. Native readback again preserved the same result
-and single run. This correction has passed tests but still requires review on its
-published commit; the bounded PR review loop stopped before that additional review.
+and single run. The initial review loop stopped after publishing this tested correction.
+Current review and merge status are tracked in [PR #4](https://github.com/ty000/paperclip-executive/pull/4).
 
 ## Remaining boundaries
 
