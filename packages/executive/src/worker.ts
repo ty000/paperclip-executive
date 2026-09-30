@@ -104,6 +104,23 @@ const plugin = definePlugin({
       }
     });
 
+    const handleNativeRunTerminal = async (event: Parameters<L03ContributionService["handleNativeRunTerminal"]>[0]) => {
+      try {
+        await l03Service.handleNativeRunTerminal(event);
+      } catch (error) {
+        ctx.logger.error("Native L03 contribution terminal event was rejected", {
+          eventId: event.eventId,
+          companyId: event.companyId,
+          runId: event.entityId,
+          error: error instanceof Error ? error.message : "Unknown error",
+        });
+        throw error;
+      }
+    };
+    ctx.events.on("agent.run.finished", handleNativeRunTerminal);
+    ctx.events.on("agent.run.failed", handleNativeRunTerminal);
+    ctx.events.on("agent.run.cancelled", handleNativeRunTerminal);
+
     ctx.actions.register("submit-contribution", async (params, context) => {
       const companyId = context.companyId;
       if (!companyId) throw new Error("A host-authorized company is required");

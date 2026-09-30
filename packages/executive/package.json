@@ -1,6 +1,6 @@
 {
   "name": "@paperclip-executive/executive",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "type": "module",
   "private": true,
   "description": "Attributable executive advice through native Paperclip agent sessions.",

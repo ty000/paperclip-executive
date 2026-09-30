@@ -9,6 +9,8 @@ CREATE TABLE plugin_executive_6aeed6300d.council_contributions (
   trigger_hash text NOT NULL CHECK (trigger_hash ~ '^[a-f0-9]{64}$'),
   request_id uuid NOT NULL,
   grant_id uuid,
+  grant_granted_at timestamptz,
+  grant_expires_at timestamptz,
   slot_hash text NOT NULL CHECK (slot_hash ~ '^[a-f0-9]{64}$'),
   slot_snapshot jsonb NOT NULL,
   input_hash text CHECK (input_hash IS NULL OR input_hash ~ '^[a-f0-9]{64}$'),
@@ -35,9 +37,11 @@ CREATE TABLE plugin_executive_6aeed6300d.council_contributions (
   UNIQUE (company_id, grant_id),
   UNIQUE (company_id, observed_event_ref),
   CHECK (
-    (status = 'awaiting_grant' AND grant_id IS NULL AND input_hash IS NULL AND profile_snapshot IS NULL AND contributor_snapshot IS NULL)
+    (status = 'awaiting_grant' AND grant_id IS NULL AND grant_granted_at IS NULL AND grant_expires_at IS NULL
+      AND input_hash IS NULL AND profile_snapshot IS NULL AND contributor_snapshot IS NULL)
     OR
-    (status <> 'awaiting_grant' AND grant_id IS NOT NULL AND input_hash IS NOT NULL AND profile_snapshot IS NOT NULL AND contributor_snapshot IS NOT NULL)
+    (status <> 'awaiting_grant' AND grant_id IS NOT NULL AND grant_granted_at IS NOT NULL AND grant_expires_at IS NOT NULL
+      AND grant_expires_at > grant_granted_at AND input_hash IS NOT NULL AND profile_snapshot IS NOT NULL AND contributor_snapshot IS NOT NULL)
   ),
   CHECK (status <> 'completed' OR (opinion IS NOT NULL AND session_id IS NOT NULL AND run_id IS NOT NULL))
 );

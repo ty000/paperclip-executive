@@ -3,7 +3,7 @@ import type { PaperclipPluginManifestV1 } from "@paperclipai/plugin-sdk";
 const manifest: PaperclipPluginManifestV1 = {
   id: "paperclip-executive.executive",
   apiVersion: 1,
-  version: "0.2.0",
+  version: "0.3.0",
   displayName: "Paperclip Executive",
   description: "Attributable executive advice through native Paperclip agent sessions.",
   author: "Davy Guittard",

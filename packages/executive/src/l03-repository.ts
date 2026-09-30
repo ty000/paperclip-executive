@@ -20,6 +20,8 @@ type Row = {
   trigger_hash: string;
   request_id: string;
   grant_id: string | null;
+  grant_granted_at: string | Date | null;
+  grant_expires_at: string | Date | null;
   slot_hash: string;
   slot_snapshot: ReservedConsultationSlot;
   input_hash: string | null;
@@ -54,6 +56,8 @@ function map(row: Row): L03ContributionRecord {
     triggerHash: row.trigger_hash,
     requestId: row.request_id,
     grantId: row.grant_id,
+    grantGrantedAt: optionalTimestamp(row.grant_granted_at),
+    grantExpiresAt: optionalTimestamp(row.grant_expires_at),
     slotHash: row.slot_hash,
     slot: row.slot_snapshot,
     inputHash: row.input_hash,
@@ -83,14 +87,16 @@ export class SqlL03ContributionRepository implements L03ContributionRepository {
     const result = await this.db.execute(
       `INSERT INTO ${this.table()}
        (company_id, contribution_id, reservation_id, mission_id, slot_id, reservation_version,
-        trigger_event_id, trigger_hash, request_id, grant_id, slot_hash, slot_snapshot, input_hash,
+        trigger_event_id, trigger_hash, request_id, grant_id, grant_granted_at, grant_expires_at,
+        slot_hash, slot_snapshot, input_hash,
         profile_snapshot, contributor_snapshot, session_id, run_id, status, opinion, error,
         admission_requested_at, admission_error, observed_event_ref, observation_emitted_at, observation_error)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12::jsonb,$13,$14::jsonb,$15::jsonb,$16,$17,$18,$19::jsonb,$20,$21,$22,$23,$24,$25)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14::jsonb,$15,$16::jsonb,$17::jsonb,$18,$19,$20,$21::jsonb,$22,$23,$24,$25,$26,$27)
        ON CONFLICT (company_id, reservation_id) DO NOTHING`,
       [
         input.companyId, input.contributionId, input.reservationId, input.missionId, input.slotId, input.reservationVersion,
-        input.triggerEventId, input.triggerHash, input.requestId, input.grantId, input.slotHash, JSON.stringify(input.slot), input.inputHash,
+        input.triggerEventId, input.triggerHash, input.requestId, input.grantId, input.grantGrantedAt, input.grantExpiresAt,
+        input.slotHash, JSON.stringify(input.slot), input.inputHash,
         input.profile ? JSON.stringify(input.profile) : null, input.contributor ? JSON.stringify(input.contributor) : null,
         input.sessionId, input.runId, input.status, input.opinion ? JSON.stringify(input.opinion) : null, input.error,
         input.admissionRequestedAt, input.admissionError, input.observedEventRef, input.observationEmittedAt, input.observationError,
@@ -158,17 +164,21 @@ export class SqlL03ContributionRepository implements L03ContributionRepository {
     contributionId: string;
     requestId: string;
     grantId: string;
+    grantGrantedAt: string;
+    grantExpiresAt: string;
     slotHash: string;
     inputHash: string;
     profile: PackagedProfileSnapshot;
     contributor: L03ContributorSnapshot;
   }): Promise<boolean> {
     const result = await this.db.execute(
-      `UPDATE ${this.table()} SET grant_id = $1, input_hash = $2, profile_snapshot = $3::jsonb,
-       contributor_snapshot = $4::jsonb, status = 'prepared', error = NULL, updated_at = now()
-       WHERE company_id = $5 AND contribution_id = $6 AND request_id = $7 AND slot_hash = $8
+      `UPDATE ${this.table()} SET grant_id = $1, grant_granted_at = $2, grant_expires_at = $3,
+       input_hash = $4, profile_snapshot = $5::jsonb, contributor_snapshot = $6::jsonb,
+       status = 'prepared', error = NULL, updated_at = now()
+       WHERE company_id = $7 AND contribution_id = $8 AND request_id = $9 AND slot_hash = $10
          AND status = 'awaiting_grant' AND grant_id IS NULL`,
-      [input.grantId, input.inputHash, JSON.stringify(input.profile), JSON.stringify(input.contributor),
+      [input.grantId, input.grantGrantedAt, input.grantExpiresAt, input.inputHash,
+        JSON.stringify(input.profile), JSON.stringify(input.contributor),
         input.companyId, input.contributionId, input.requestId, input.slotHash],
     );
     if (result.rowCount > 1) throw new Error("Unexpected Council grant transition cardinality");

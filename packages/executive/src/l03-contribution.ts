@@ -5,15 +5,17 @@ import type { AgentSessionEvent, PluginEvent } from "@paperclipai/plugin-sdk";
 
 export const COUNCIL_RESERVATION_EVENT = "plugin.private.paperclip-council.opinion-slot-reserved.v1" as const;
 export const COUNCIL_ADMISSION_GRANT_EVENT = "plugin.private.paperclip-council.opinion-slot-admission-granted.v1" as const;
-export const EXECUTIVE_ADMISSION_REQUEST_EVENT = "opinion-slot-admission-requested.v1" as const;
-export const EXECUTIVE_OPINION_OBSERVED_EVENT = "opinion-observed.v1" as const;
+const EXECUTIVE_ADMISSION_REQUEST_EVENT = "opinion-slot-admission-requested.v1" as const;
+const EXECUTIVE_OPINION_OBSERVED_EVENT = "opinion-observed.v1" as const;
 export const COUNCIL_PLUGIN_ACTOR_ID = "private.paperclip-council" as const;
-export const L03_OPINION_SCHEMA_VERSION = "council-reserved-opinion.v1" as const;
-export const L03_ADMISSION_REQUEST_SCHEMA_VERSION = "council-opinion-admission-request.v1" as const;
-export const L03_ADMISSION_GRANT_SCHEMA_VERSION = "council-opinion-admission-grant.v1" as const;
-export const L03_OBSERVED_SCHEMA_VERSION = "council-reserved-opinion-observed.v1" as const;
+const L03_OPINION_SCHEMA_VERSION = "council-reserved-opinion.v1" as const;
+const L03_ADMISSION_REQUEST_SCHEMA_VERSION = "council-opinion-admission-request.v1" as const;
+const L03_ADMISSION_GRANT_SCHEMA_VERSION = "council-opinion-admission-grant.v1" as const;
+const L03_OBSERVED_SCHEMA_VERSION = "council-reserved-opinion-observed.v1" as const;
 export const L03_METHOD = { id: "paperclip-executive.council-reserved-opinion", version: "1.0.0" } as const;
-export const MAX_GRANT_LIFETIME_MS = 60_000;
+const MAX_GRANT_LIFETIME_MS = 60_000;
+const TERMINAL_PERSISTENCE_WAIT_ATTEMPTS = 81;
+const TERMINAL_PERSISTENCE_WAIT_MS = 25;
 
 export type ReservedConsultationSlot = {
   companyId: string;
@@ -33,7 +35,7 @@ export type ReservedConsultationSlot = {
   expiresAt: string;
 };
 
-export type L03AdmissionRequest = {
+type L03AdmissionRequest = {
   schemaVersion: typeof L03_ADMISSION_REQUEST_SCHEMA_VERSION;
   requestId: string;
   reservationId: string;
@@ -45,7 +47,7 @@ export type L03AdmissionRequest = {
   requestedAt: string;
 };
 
-export type L03AdmissionGrant = {
+type L03AdmissionGrant = {
   schemaVersion: typeof L03_ADMISSION_GRANT_SCHEMA_VERSION;
   requestId: string;
   grantId: string;
@@ -177,6 +179,8 @@ export interface L03AgentReader {
     title: string | null;
     status: string;
     adapterType: string;
+    adapterConfig: Record<string, unknown>;
+    runtimeConfig: Record<string, unknown>;
   } | null>;
 }
 
@@ -188,7 +192,7 @@ export interface PackagedProfileResolver {
   resolve(expected: ReservedConsultationSlot["profile"]): Promise<PackagedProfileSnapshot>;
 }
 
-export function canonicalJson(value: unknown): string {
+function canonicalJson(value: unknown): string {
   if (value === null || typeof value !== "object") return JSON.stringify(value);
   if (Array.isArray(value)) return `[${value.map(canonicalJson).join(",")}]`;
   const object = value as Record<string, unknown>;
@@ -199,6 +203,30 @@ export function sha256Canonical(value: unknown): string {
   return createHash("sha256").update(canonicalJson(value)).digest("hex");
 }
 
+type PackagedCatalogAgent = { profileId?: unknown; profileVersion?: unknown; instructionsSource?: unknown };
+
+function selectPackagedProfile(agents: PackagedCatalogAgent[], expected: ReservedConsultationSlot["profile"]): PackagedCatalogAgent & { instructionsSource: string } {
+  const matches = agents.filter((agent) => agent.profileId === expected.id);
+  if (matches.length !== 1) throw new Error("The reserved catalogue profile is missing or ambiguous in the packaged catalogue");
+  const selected = matches[0]!;
+  if (selected.profileVersion !== expected.version || typeof selected.instructionsSource !== "string") {
+    throw new Error("The reserved catalogue profile version is not packaged");
+  }
+  return selected as PackagedCatalogAgent & { instructionsSource: string };
+}
+
+function packagedCatalogVersion(value: unknown): string {
+  if (typeof value !== "string" || value.length === 0) throw new Error("The packaged catalogue version is missing");
+  return value;
+}
+
+function packagedProfilePath(packageRoot: string, instructionsSource: string): string {
+  const profilePath = path.resolve(packageRoot, instructionsSource);
+  const relative = path.relative(packageRoot, profilePath);
+  if (relative.startsWith("..") || path.isAbsolute(relative)) throw new Error("The packaged profile path escapes the package root");
+  return profilePath;
+}
+
 export class FilePackagedProfileResolver implements PackagedProfileResolver {
   constructor(private readonly packageRoot: string) {}
 
@@ -206,28 +234,18 @@ export class FilePackagedProfileResolver implements PackagedProfileResolver {
     const catalogPath = path.resolve(this.packageRoot, "config/agent-catalog.json");
     const catalog = JSON.parse(await readFile(catalogPath, "utf8")) as {
       catalogVersion?: unknown;
-      agents?: Array<{ profileId?: unknown; profileVersion?: unknown; instructionsSource?: unknown }>;
+      agents?: PackagedCatalogAgent[];
     };
-    const matches = (catalog.agents ?? []).filter((agent) => agent.profileId === expected.id);
-    if (matches.length !== 1) throw new Error("The reserved catalogue profile is missing or ambiguous in the packaged catalogue");
-    const selected = matches[0]!;
-    if (selected.profileVersion !== expected.version || typeof selected.instructionsSource !== "string") {
-      throw new Error("The reserved catalogue profile version is not packaged");
-    }
-    const profilePath = path.resolve(this.packageRoot, selected.instructionsSource);
-    const relative = path.relative(this.packageRoot, profilePath);
-    if (relative.startsWith("..") || path.isAbsolute(relative)) throw new Error("The packaged profile path escapes the package root");
+    const selected = selectPackagedProfile(catalog.agents ?? [], expected);
+    const profilePath = packagedProfilePath(this.packageRoot, selected.instructionsSource);
     const sourceHash = createHash("sha256").update(await readFile(profilePath)).digest("hex");
     if (sourceHash !== expected.sourceHash) throw new Error("The reserved catalogue profile source hash does not match the packaged profile bytes");
-    if (typeof catalog.catalogVersion !== "string" || catalog.catalogVersion.length === 0) {
-      throw new Error("The packaged catalogue version is missing");
-    }
     return {
       id: expected.id,
       version: expected.version,
       sourceHash,
       instructionsSource: selected.instructionsSource,
-      catalogVersion: catalog.catalogVersion,
+      catalogVersion: packagedCatalogVersion(catalog.catalogVersion),
       loadedProfileProof: "not_observed",
     };
   }
@@ -266,7 +284,7 @@ function stringArray(value: unknown, label: string, required: boolean, maxItems 
   return items;
 }
 
-export function parseReservedConsultationSlot(value: unknown, eventCompanyId: string): ReservedConsultationSlot {
+function parseReservedConsultationSlot(value: unknown, eventCompanyId: string): ReservedConsultationSlot {
   const slot = object(value, "reservation payload");
   const profile = object(slot.profile, "profile");
   const method = object(slot.method, "method");
@@ -379,7 +397,7 @@ export function parseL03OpinionResult(message: string | null, slot: ReservedCons
   };
 }
 
-export function buildL03ContributionPrompt(record: L03ContributionRecord): string {
+function buildL03ContributionPrompt(record: L03ContributionRecord): string {
   if (!record.profile || !record.contributor || !record.grantId) throw new Error("A granted contribution is required before prompt construction");
   return [
     "Provide one bounded, attributed opinion for the Council-reserved slot below.",
@@ -418,7 +436,151 @@ function eventTimeValid(grant: L03AdmissionGrant, event: PluginEvent, now: numbe
   if (Date.parse(grant.slot.expiresAt) <= now) throw new Error("The Council reservation has expired");
 }
 
+type NativeRunTerminalIdentity = { companyId: string; runId: string; agentId: string };
+type TerminalCorrelation = { contributionId: string; sessionId: string; agentId: string };
+type DispatchAttempt = {
+  sessionId: string | null;
+  runId: string | null;
+  sessionCreationAttempted: boolean;
+  sendAttempted: boolean;
+};
+type DispatchAgent = NonNullable<Awaited<ReturnType<L03AgentReader["get"]>>>;
+
+function positiveFinite(value: unknown): boolean {
+  return typeof value === "number" && Number.isFinite(value) && value > 0;
+}
+
+function positiveSafeInteger(value: unknown): boolean {
+  return Number.isSafeInteger(value) && Number(value) > 0;
+}
+
+function dispatchHeartbeatValid(heartbeat: Record<string, unknown> | undefined): boolean {
+  if (!heartbeat) return false;
+  if (heartbeat.wakeOnDemand !== true || heartbeat.maxConcurrentRuns !== 1) return false;
+  return positiveSafeInteger(heartbeat.maxDailyRuns) && positiveSafeInteger(heartbeat.maxDailyCostCents);
+}
+
+function requireDispatchAgent(agent: DispatchAgent | null, agentId: string, companyId: string): asserts agent is DispatchAgent {
+  if (!agent || agent.id !== agentId || agent.companyId !== companyId) {
+    throw new Error("The reserved Executive agent does not belong to this company");
+  }
+}
+
+function requireAvailableAgent(agent: DispatchAgent): void {
+  if (agent.status !== "idle" && agent.status !== "running") {
+    throw new Error("The reserved Executive agent is unavailable; no opinion was dispatched");
+  }
+}
+
+function requireDispatchBounds(agent: DispatchAgent): void {
+  const heartbeat = agent.runtimeConfig?.heartbeat as Record<string, unknown> | undefined;
+  if (!positiveFinite(agent.adapterConfig?.timeoutSec) || !dispatchHeartbeatValid(heartbeat)) {
+    throw new Error("Reserved Executive agent requires positive timeout, explicit on-demand wake, concurrency one, finite daily run and cost thresholds");
+  }
+}
+
+function contributorSnapshot(agent: DispatchAgent): L03ContributorSnapshot {
+  return {
+    agentId: agent.id,
+    name: agent.name,
+    role: agent.role,
+    title: agent.title,
+    status: agent.status,
+    adapterType: agent.adapterType,
+  };
+}
+
+function dispatchFailure(attempt: DispatchAttempt, error: unknown): { status: "failed" | "outcome_unknown"; detail: string } {
+  if (!attempt.sessionCreationAttempted) return { status: "failed", detail: `Native send was not attempted: ${safeError(error)}` };
+  if (!attempt.sessionId) return { status: "outcome_unknown", detail: `Session creation outcome is unknown: ${safeError(error)}` };
+  if (!attempt.sendAttempted) return { status: "failed", detail: `Native send was not attempted after session creation: ${safeError(error)}` };
+  return { status: "outcome_unknown", detail: `Dispatch may have reached Paperclip: ${safeError(error)}` };
+}
+
+class TerminalPersistence {
+  private sessionId: string | null = null;
+  private runId: string | null = null;
+  private queue: AgentSessionEvent[] = [];
+  private processing = Promise.resolve();
+
+  constructor(private readonly repository: L03ContributionRepository, private readonly record: L03ContributionRecord) {}
+
+  accept(event: AgentSessionEvent): void {
+    if (event.eventType !== "done" && event.eventType !== "error") return;
+    if (!this.runId) { this.queue.push(event); return; }
+    if (event.runId !== this.runId) return;
+    this.processing = this.processing.then(() => this.persist(event)).catch(() => undefined);
+  }
+
+  bind(sessionId: string, runId: string): void {
+    this.sessionId = sessionId;
+    this.runId = runId;
+  }
+
+  clear(): void {
+    this.queue = [];
+  }
+
+  async drain(): Promise<void> {
+    const queued = this.queue;
+    this.queue = [];
+    for (const event of queued) this.accept(event);
+    await this.processing;
+  }
+
+  private async persist(event: AgentSessionEvent): Promise<void> {
+    if (!this.sessionId || !this.runId || event.sessionId !== this.sessionId || event.runId !== this.runId) return;
+    if (event.eventType === "error") {
+      await this.fail(event.message ?? "The Council opinion run failed", event);
+      return;
+    }
+    try {
+      const opinion = parseL03OpinionResult(event.message, this.record.slot);
+      await this.repository.complete(this.record.companyId, this.record.contributionId, this.sessionId, event.runId, opinion);
+    } catch (error) {
+      await this.fail(safeError(error), event);
+    }
+  }
+
+  private async fail(error: string, event: AgentSessionEvent): Promise<void> {
+    await this.repository.fail(this.record.companyId, this.record.contributionId, "failed", error, event.runId, this.sessionId).catch(() => undefined);
+  }
+}
+
+function parseNativeRunTerminal(event: PluginEvent): NativeRunTerminalIdentity {
+  if (!["agent.run.finished", "agent.run.failed", "agent.run.cancelled"].includes(event.eventType)) {
+    throw new Error("The event is not a native terminal agent run event");
+  }
+  const payload = object(event.payload, "native run terminal payload");
+  const runId = text(payload.runId, "payload.runId", 200);
+  const agentId = text(payload.agentId, "payload.agentId", 200);
+  if (event.actorType !== "agent" || event.actorId !== agentId || event.entityType !== "heartbeat_run" || event.entityId !== runId) {
+    throw new Error("The native terminal event actor and run identity are inconsistent");
+  }
+  return { companyId: text(event.companyId, "event.companyId", 200), runId, agentId };
+}
+
+function terminalContribution(record: L03ContributionRecord): boolean {
+  return ["completed", "failed", "outcome_unknown"].includes(record.status);
+}
+
+function classifyTerminalRecord(
+  record: L03ContributionRecord,
+  identity: NativeRunTerminalIdentity,
+  correlation: TerminalCorrelation,
+): "pending" | "terminal" | "unrelated" {
+  if (record.companyId !== identity.companyId || record.slot.companyId !== identity.companyId
+    || record.slot.reservedExecutiveAgentId !== identity.agentId || record.sessionId !== correlation.sessionId) {
+    throw new Error("The native terminal event does not match the persisted contribution company and actor");
+  }
+  if (record.runId && record.runId !== identity.runId) return "unrelated";
+  return record.runId === identity.runId && terminalContribution(record) ? "terminal" : "pending";
+}
+
 export class L03ContributionService {
+  private readonly terminalCandidates = new Map<string, TerminalCorrelation>();
+  private readonly terminalRuns = new Map<string, TerminalCorrelation>();
+
   constructor(
     private readonly repository: L03ContributionRepository,
     private readonly sessions: L03SessionClient,
@@ -426,7 +588,64 @@ export class L03ContributionService {
     private readonly events: L03EventPublisher,
     private readonly profiles: PackagedProfileResolver,
     private readonly now: () => Date = () => new Date(),
+    private readonly wait: (milliseconds: number) => Promise<void> = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds)),
   ) {}
+
+  async handleNativeRunTerminal(event: PluginEvent): Promise<L03ContributionRecord | null> {
+    const identity = parseNativeRunTerminal(event);
+    const correlation = this.findTerminalCorrelation(identity);
+    if (!correlation) return null;
+    const record = await this.waitForPersistedTerminal(identity, correlation);
+    if (!record) return null;
+    await this.emitObserved(record);
+    const observed = (await this.repository.get(record.companyId, record.contributionId)) ?? record;
+    this.releaseTerminalCorrelation(identity, observed);
+    return observed;
+  }
+
+  private findTerminalCorrelation(identity: NativeRunTerminalIdentity): TerminalCorrelation | null {
+    const knownRun = this.terminalRuns.get(`${identity.companyId}:${identity.runId}`);
+    if (knownRun && knownRun.agentId !== identity.agentId) {
+      throw new Error("The native terminal event does not match the persisted contribution company and actor");
+    }
+    return knownRun ?? this.terminalCandidates.get(`${identity.companyId}:${identity.agentId}`) ?? null;
+  }
+
+  private async waitForPersistedTerminal(
+    identity: NativeRunTerminalIdentity,
+    correlation: TerminalCorrelation,
+  ): Promise<L03ContributionRecord | null> {
+    for (let attempt = 0; attempt < TERMINAL_PERSISTENCE_WAIT_ATTEMPTS; attempt += 1) {
+      const record = await this.repository.get(identity.companyId, correlation.contributionId);
+      if (record) {
+        const state = classifyTerminalRecord(record, identity, correlation);
+        if (state === "terminal") return record;
+        if (state === "unrelated") return null;
+      }
+      if (attempt + 1 < TERMINAL_PERSISTENCE_WAIT_ATTEMPTS) await this.wait(TERMINAL_PERSISTENCE_WAIT_MS);
+    }
+    throw new Error("The correlated terminal callback was not durably observed within the bounded native-event wait");
+  }
+
+  private releaseTerminalCorrelation(identity: NativeRunTerminalIdentity, observed: L03ContributionRecord): void {
+    if (!observed.observationEmittedAt || observed.observationError) return;
+    this.terminalRuns.delete(`${identity.companyId}:${identity.runId}`);
+    this.terminalCandidates.delete(`${identity.companyId}:${identity.agentId}`);
+  }
+
+  private trackTerminalCandidate(record: L03ContributionRecord, sessionId: string): void {
+    const agentId = record.slot.reservedExecutiveAgentId;
+    this.terminalCandidates.set(`${record.companyId}:${agentId}`, { contributionId: record.contributionId, sessionId, agentId });
+  }
+
+  private trackTerminalRun(record: L03ContributionRecord, sessionId: string, runId: string): void {
+    const agentId = record.slot.reservedExecutiveAgentId;
+    this.terminalRuns.set(`${record.companyId}:${runId}`, { contributionId: record.contributionId, sessionId, agentId });
+  }
+
+  private discardUncorrelatedCandidate(record: L03ContributionRecord, runId: string | null): void {
+    if (!runId) this.terminalCandidates.delete(`${record.companyId}:${record.slot.reservedExecutiveAgentId}`);
+  }
 
   async handleReserved(event: PluginEvent): Promise<L03ContributionRecord> {
     assertCouncilEvent(event, COUNCIL_RESERVATION_EVENT);
@@ -451,6 +670,8 @@ export class L03ContributionService {
       triggerHash,
       requestId: randomUUID(),
       grantId: null,
+      grantGrantedAt: null,
+      grantExpiresAt: null,
       slotHash: triggerHash,
       slot,
       inputHash: null,
@@ -476,38 +697,51 @@ export class L03ContributionService {
     assertCouncilEvent(event, COUNCIL_ADMISSION_GRANT_EVENT);
     const grant = parseGrant(event);
     eventTimeValid(grant, event, this.now().getTime());
-    const record = await this.repository.getByRequest(event.companyId, grant.requestId);
-    if (!record) throw new Error("The admission grant does not match a persisted Executive request");
+    const record = await this.requireGrantRecord(event.companyId, grant.requestId);
     const slotHash = sha256Canonical(grant.slot);
     if (slotHash !== grant.slotHash || slotHash !== record.slotHash) throw new Error("The admission grant slot hash does not match the reserved slot");
     this.assertSameReservation(record, grant.slot, slotHash);
-    if (record.grantId) {
-      if (record.grantId !== grant.grantId) throw new Error("This reservation is already bound to a different admission grant");
-      if (["completed", "failed", "outcome_unknown"].includes(record.status)) await this.emitObserved(record);
-      return (await this.repository.get(record.companyId, record.contributionId)) ?? record;
-    }
+    const replay = await this.existingGrant(record, grant.grantId);
+    if (replay) return replay;
     if (grant.slot.method.id !== L03_METHOD.id || grant.slot.method.version !== L03_METHOD.version) {
       throw new Error("The reserved contribution method is not supported by this Executive build");
     }
     const profile = await this.profiles.resolve(grant.slot.profile);
-    const agent = await this.agents.get(grant.slot.reservedExecutiveAgentId, event.companyId);
-    if (!agent || agent.companyId !== event.companyId) throw new Error("The reserved Executive agent does not belong to this company");
-    if (agent.status !== "idle" && agent.status !== "running") throw new Error("The reserved Executive agent is unavailable; no opinion was dispatched");
-    const contributor: L03ContributorSnapshot = {
-      agentId: agent.id,
-      name: agent.name,
-      role: agent.role,
-      title: agent.title,
-      status: agent.status,
-      adapterType: agent.adapterType,
-    };
+    const agent = await this.requireDispatchControls(grant.slot.reservedExecutiveAgentId, event.companyId);
+    const contributor = contributorSnapshot(agent);
     const { status: _status, ...stableContributor } = contributor;
     const inputHash = sha256Canonical({ slot: grant.slot, profile, contributor: stableContributor, requestId: grant.requestId, grantId: grant.grantId });
+    return this.acceptAdmission(record, grant, slotHash, inputHash, profile, contributor);
+  }
+
+  private async requireGrantRecord(companyId: string, requestId: string): Promise<L03ContributionRecord> {
+    const record = await this.repository.getByRequest(companyId, requestId);
+    if (!record) throw new Error("The admission grant does not match a persisted Executive request");
+    return record;
+  }
+
+  private async existingGrant(record: L03ContributionRecord, grantId: string): Promise<L03ContributionRecord | null> {
+    if (!record.grantId) return null;
+    if (record.grantId !== grantId) throw new Error("This reservation is already bound to a different admission grant");
+    if (terminalContribution(record)) await this.emitObserved(record);
+    return (await this.repository.get(record.companyId, record.contributionId)) ?? record;
+  }
+
+  private async acceptAdmission(
+    record: L03ContributionRecord,
+    grant: L03AdmissionGrant,
+    slotHash: string,
+    inputHash: string,
+    profile: PackagedProfileSnapshot,
+    contributor: L03ContributorSnapshot,
+  ): Promise<L03ContributionRecord> {
     const accepted = await this.repository.acceptGrant({
       companyId: record.companyId,
       contributionId: record.contributionId,
       requestId: grant.requestId,
       grantId: grant.grantId,
+      grantGrantedAt: grant.grantedAt,
+      grantExpiresAt: grant.expiresAt,
       slotHash,
       inputHash,
       profile,
@@ -523,6 +757,14 @@ export class L03ContributionService {
     const prepared = await this.repository.get(record.companyId, record.contributionId);
     if (!prepared) throw new Error("The admitted contribution could not be read back");
     return this.dispatch(prepared);
+  }
+
+  private async requireDispatchControls(agentId: string, companyId: string) {
+    const agent = await this.agents.get(agentId, companyId);
+    requireDispatchAgent(agent, agentId, companyId);
+    requireAvailableAgent(agent);
+    requireDispatchBounds(agent);
+    return agent;
   }
 
   private async emitAdmissionRequest(record: L03ContributionRecord): Promise<void> {
@@ -549,85 +791,76 @@ export class L03ContributionService {
   }
 
   private async dispatch(record: L03ContributionRecord): Promise<L03ContributionRecord> {
-    let sessionId: string | null = null;
-    let runId: string | null = null;
-    let persistedRunId: string | null = null;
-    let terminalQueue: AgentSessionEvent[] = [];
-    let terminalProcessing = Promise.resolve();
-    const persistTerminal = async (event: AgentSessionEvent): Promise<void> => {
-      if (!sessionId || event.sessionId !== sessionId || !persistedRunId || event.runId !== persistedRunId) return;
-      if (event.eventType === "done") {
-        try {
-          const opinion = parseL03OpinionResult(event.message, record.slot);
-          await this.repository.complete(record.companyId, record.contributionId, sessionId, event.runId, opinion);
-        } catch (error) {
-          await this.repository.fail(record.companyId, record.contributionId, "failed", safeError(error), event.runId, sessionId).catch(() => undefined);
-        }
-      } else if (event.eventType === "error") {
-        await this.repository.fail(record.companyId, record.contributionId, "failed", event.message ?? "The Council opinion run failed", event.runId, sessionId).catch(() => undefined);
-      } else {
-        return;
-      }
-      const terminal = await this.repository.get(record.companyId, record.contributionId);
-      if (terminal) await this.emitObserved(terminal);
-    };
-    const acceptTerminal = (event: AgentSessionEvent): void => {
-      if (event.eventType !== "done" && event.eventType !== "error") return;
-      if (!persistedRunId) { terminalQueue.push(event); return; }
-      if (event.runId !== persistedRunId) return;
-      terminalProcessing = terminalProcessing.then(() => persistTerminal(event)).catch(() => undefined);
-    };
-    const drain = async (): Promise<void> => {
-      const queued = terminalQueue;
-      terminalQueue = [];
-      for (const event of queued) acceptTerminal(event);
-      await terminalProcessing;
-    };
+    const attempt: DispatchAttempt = { sessionId: null, runId: null, sessionCreationAttempted: false, sendAttempted: false };
+    const terminal = new TerminalPersistence(this.repository, record);
     try {
-      const session = await this.sessions.create(record.slot.reservedExecutiveAgentId, record.companyId, {
-        taskKey: `plugin:paperclip-executive.executive:l03:${record.reservationId}:v:${record.reservationVersion}`,
-        reason: `paperclip-executive:l03:${record.contributionId}`,
-      });
-      sessionId = session.sessionId;
-      await this.repository.markDispatching(record.companyId, record.contributionId, sessionId);
-      const sent = await this.sessions.sendMessage(sessionId, record.companyId, {
-        prompt: buildL03ContributionPrompt({ ...record, sessionId, status: "dispatching" }),
-        reason: `paperclip-executive:l03:${record.contributionId}`,
-        onEvent: acceptTerminal,
-      });
-      runId = sent.runId;
-      await this.repository.markRunning(record.companyId, record.contributionId, sessionId, runId);
-      persistedRunId = runId;
-      await drain();
+      await this.executeDispatch(record, attempt, terminal);
     } catch (error) {
-      await this.repository.fail(
-        record.companyId,
-        record.contributionId,
-        "outcome_unknown",
-        sessionId ? `Dispatch may have reached Paperclip: ${safeError(error)}` : `Session creation outcome is unknown: ${safeError(error)}`,
-        runId,
-        sessionId,
-      );
-      if (sessionId && runId) {
-        const uncertain = await this.repository.get(record.companyId, record.contributionId);
-        if (uncertain?.status === "outcome_unknown" && uncertain.sessionId === sessionId && uncertain.runId === runId) {
-          persistedRunId = runId;
-          await drain();
-        } else terminalQueue = [];
-      } else terminalQueue = [];
-      const uncertain = await this.repository.get(record.companyId, record.contributionId);
-      if (uncertain) await this.emitObserved(uncertain);
+      await this.recoverDispatch(record, attempt, terminal, error);
     }
     return (await this.repository.get(record.companyId, record.contributionId)) ?? record;
   }
 
+  private async executeDispatch(record: L03ContributionRecord, attempt: DispatchAttempt, terminal: TerminalPersistence): Promise<void> {
+    this.assertGrantFresh(record);
+    attempt.sessionCreationAttempted = true;
+    const session = await this.sessions.create(record.slot.reservedExecutiveAgentId, record.companyId, {
+      taskKey: `plugin:paperclip-executive.executive:session:l03:${record.reservationId}:v:${record.reservationVersion}`,
+      reason: `paperclip-executive:l03:${record.contributionId}`,
+    });
+    attempt.sessionId = session.sessionId;
+    await this.repository.markDispatching(record.companyId, record.contributionId, session.sessionId);
+    await this.requireDispatchControls(record.slot.reservedExecutiveAgentId, record.companyId);
+    this.assertGrantFresh(record);
+    this.trackTerminalCandidate(record, session.sessionId);
+    attempt.sendAttempted = true;
+    const sent = await this.sessions.sendMessage(session.sessionId, record.companyId, {
+      prompt: buildL03ContributionPrompt({ ...record, sessionId: session.sessionId, status: "dispatching" }),
+      reason: `paperclip-executive:l03:${record.contributionId}`,
+      onEvent: terminal.accept.bind(terminal),
+    });
+    attempt.runId = sent.runId;
+    this.trackTerminalRun(record, session.sessionId, sent.runId);
+    await this.repository.markRunning(record.companyId, record.contributionId, session.sessionId, sent.runId);
+    terminal.bind(session.sessionId, sent.runId);
+    await terminal.drain();
+  }
+
+  private async recoverDispatch(
+    record: L03ContributionRecord,
+    attempt: DispatchAttempt,
+    terminal: TerminalPersistence,
+    error: unknown,
+  ): Promise<void> {
+    const failure = dispatchFailure(attempt, error);
+    await this.repository.fail(record.companyId, record.contributionId, failure.status, failure.detail, attempt.runId, attempt.sessionId);
+    await this.recoverTerminalQueue(record, attempt, terminal);
+    this.discardUncorrelatedCandidate(record, attempt.runId);
+    const uncertain = await this.repository.get(record.companyId, record.contributionId);
+    if (uncertain) await this.emitObserved(uncertain);
+  }
+
+  private async recoverTerminalQueue(record: L03ContributionRecord, attempt: DispatchAttempt, terminal: TerminalPersistence): Promise<void> {
+    if (!attempt.sessionId || !attempt.runId) {
+      terminal.clear();
+      return;
+    }
+    const uncertain = await this.repository.get(record.companyId, record.contributionId);
+    if (uncertain?.status !== "outcome_unknown" || uncertain.sessionId !== attempt.sessionId || uncertain.runId !== attempt.runId) {
+      terminal.clear();
+      return;
+    }
+    terminal.bind(attempt.sessionId, attempt.runId);
+    await terminal.drain();
+  }
+
   private async emitObserved(record: L03ContributionRecord): Promise<void> {
     if (!["completed", "failed", "outcome_unknown"].includes(record.status) || !record.grantId) return;
-    const emittedAt = this.now().toISOString();
+    const observedAt = record.observationEmittedAt ?? record.updatedAt;
     const payload = {
       schemaVersion: L03_OBSERVED_SCHEMA_VERSION,
       observedEventRef: record.observedEventRef,
-      observedAt: emittedAt,
+      observedAt,
       requestId: record.requestId,
       grantId: record.grantId,
       reservationId: record.reservationId,
@@ -646,10 +879,10 @@ export class L03ContributionService {
     };
     try {
       await this.events.emit(EXECUTIVE_OPINION_OBSERVED_EVENT, record.companyId, payload);
-      await this.repository.recordObservation(record.companyId, record.contributionId, emittedAt, null);
+      await this.repository.recordObservation(record.companyId, record.contributionId, observedAt, null);
     } catch (error) {
       const message = `Opinion observation routing failed without a Council receipt: ${safeError(error)}`;
-      await this.repository.recordObservation(record.companyId, record.contributionId, emittedAt, message);
+      await this.repository.recordObservation(record.companyId, record.contributionId, observedAt, message);
     }
   }
 
@@ -657,6 +890,18 @@ export class L03ContributionService {
     if (record.companyId !== slot.companyId || record.reservationId !== slot.reservationId || record.missionId !== slot.missionId ||
         record.slotId !== slot.slotId || record.reservationVersion !== slot.reservationVersion || record.slotHash !== slotHash) {
       throw new Error("The reservation identity is already bound to different immutable input");
+    }
+  }
+
+  private assertGrantFresh(record: L03ContributionRecord): void {
+    if (!record.grantGrantedAt || !record.grantExpiresAt) {
+      throw new Error("A persisted admission grant is required before dispatch");
+    }
+    const grantedAt = Date.parse(record.grantGrantedAt);
+    const expiresAt = Date.parse(record.grantExpiresAt);
+    if (!Number.isFinite(grantedAt) || !Number.isFinite(expiresAt) || expiresAt - grantedAt <= 0 ||
+        expiresAt - grantedAt > MAX_GRANT_LIFETIME_MS || expiresAt <= this.now().getTime()) {
+      throw new Error("The Council admission grant expired before native send");
     }
   }
 }

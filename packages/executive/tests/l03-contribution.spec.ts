@@ -74,6 +74,32 @@ function councilEvent(eventType: typeof COUNCIL_RESERVATION_EVENT | typeof COUNC
   };
 }
 
+function nativeTerminalEvent(overrides: Partial<PluginEvent> = {}): PluginEvent {
+  const runId = "00000000-0000-4000-8000-000000000021";
+  return {
+    eventId: "00000000-0000-4000-8000-000000000040",
+    eventType: "agent.run.finished",
+    occurredAt: now.toISOString(),
+    actorType: "agent",
+    actorId: slot.reservedExecutiveAgentId,
+    entityId: runId,
+    entityType: "heartbeat_run",
+    companyId: slot.companyId,
+    payload: { runId, agentId: slot.reservedExecutiveAgentId, status: "succeeded" },
+    ...overrides,
+  };
+}
+
+function optionalIdentityMatches(stored: string | null, supplied: string | null): boolean {
+  if (!stored || !supplied) return true;
+  return stored === supplied;
+}
+
+function failureTargetMatches(record: L03ContributionRecord | null, runId: string | null, sessionId: string | null): record is L03ContributionRecord {
+  if (!record || ["completed", "failed"].includes(record.status)) return false;
+  return optionalIdentityMatches(record.sessionId, sessionId) && optionalIdentityMatches(record.runId, runId);
+}
+
 class MemoryRepository implements L03ContributionRepository {
   records = new Map<string, L03ContributionRecord>();
 
@@ -106,13 +132,15 @@ class MemoryRepository implements L03ContributionRepository {
     const record = await this.get(companyId, contributionId);
     if (record?.status === "awaiting_grant") this.records.set(contributionId, { ...record, admissionRequestedAt: requestedAt, admissionError: error });
   }
-  async acceptGrant(input: { companyId: string; contributionId: string; requestId: string; grantId: string; slotHash: string; inputHash: string; profile: PackagedProfileSnapshot; contributor: L03ContributorSnapshot }) {
+  async acceptGrant(input: { companyId: string; contributionId: string; requestId: string; grantId: string; grantGrantedAt: string; grantExpiresAt: string; slotHash: string; inputHash: string; profile: PackagedProfileSnapshot; contributor: L03ContributorSnapshot }) {
     const candidate = this.records.get(input.contributionId);
     const record = candidate?.companyId === input.companyId ? candidate : null;
     if (!record || record.status !== "awaiting_grant" || record.grantId || record.requestId !== input.requestId || record.slotHash !== input.slotHash) return false;
     this.records.set(input.contributionId, {
       ...record,
       grantId: input.grantId,
+      grantGrantedAt: input.grantGrantedAt,
+      grantExpiresAt: input.grantExpiresAt,
       inputHash: input.inputHash,
       profile: input.profile,
       contributor: input.contributor,
@@ -138,9 +166,7 @@ class MemoryRepository implements L03ContributionRepository {
   }
   async fail(companyId: string, contributionId: string, status: "failed" | "outcome_unknown", error: string, runId: string | null = null, sessionId: string | null = null) {
     const record = await this.get(companyId, contributionId);
-    if (!record || ["completed", "failed"].includes(record.status)) return;
-    if (record.sessionId && sessionId && record.sessionId !== sessionId) return;
-    if (record.runId && runId && record.runId !== runId) return;
+    if (!failureTargetMatches(record, runId, sessionId)) return;
     this.records.set(contributionId, { ...record, status, error, runId: runId ?? record.runId, sessionId: sessionId ?? record.sessionId });
   }
   async recordObservation(companyId: string, contributionId: string, emittedAt: string, error: string | null) {
@@ -152,9 +178,16 @@ class MemoryRepository implements L03ContributionRepository {
 class Sessions implements L03SessionClient {
   creates = 0;
   sends = 0;
+  afterCreate: (() => void) | null = null;
   synchronousEvents: AgentSessionEvent[] = [];
   onEvent: ((event: AgentSessionEvent) => void) | null = null;
-  async create() { this.creates += 1; return { sessionId: "00000000-0000-4000-8000-000000000020" }; }
+  async create(_agentId: string, _companyId: string, options: { taskKey: string; reason: string }) {
+    // Mirrors the unchanged host's native session ownership query, not a permissive mock.
+    if (!options.taskKey.startsWith("plugin:paperclip-executive.executive:session:")) throw new Error("Session not found");
+    this.creates += 1;
+    this.afterCreate?.();
+    return { sessionId: "00000000-0000-4000-8000-000000000020" };
+  }
   async sendMessage(_sessionId: string, _companyId: string, options: { onEvent: (event: AgentSessionEvent) => void }) {
     this.sends += 1;
     this.onEvent = options.onEvent;
@@ -180,7 +213,7 @@ class Profiles implements PackagedProfileResolver {
   }
 }
 
-function setup() {
+function setup(clock = { value: now }, onWait?: () => void | Promise<void>) {
   const repository = new MemoryRepository();
   const sessions = new Sessions();
   const events = new Events();
@@ -193,9 +226,14 @@ function setup() {
     title: "Product Advisor",
     status: "idle",
     adapterType: "codex_local",
+    adapterConfig: { timeoutSec: 300 },
+    runtimeConfig: { heartbeat: { wakeOnDemand: true, maxConcurrentRuns: 1, maxDailyRuns: 2, maxDailyCostCents: 100 } },
   };
-  const service = new L03ContributionService(repository, sessions, { get: async () => agent }, events, profiles, () => now);
-  return { repository, sessions, events, profiles, agent, service };
+  const service = new L03ContributionService(
+    repository, sessions, { get: async () => agent }, events, profiles, () => clock.value,
+    async () => { await onWait?.(); },
+  );
+  return { repository, sessions, events, profiles, agent, service, clock };
 }
 
 async function reserveAndGrant(current: ReturnType<typeof setup>, grantOverrides: Record<string, unknown> = {}) {
@@ -256,6 +294,19 @@ describe("Executive L03 Council-reserved contribution", () => {
       expiresAt: "2026-09-30T12:00:00.000Z",
     }))).rejects.toThrow("expired");
     expect(expired.sessions.sends).toBe(0);
+  });
+
+  it("rechecks persisted grant expiry immediately before native send", async () => {
+    const clock = { value: now };
+    const current = setup(clock);
+    current.sessions.afterCreate = () => { clock.value = new Date("2026-09-30T12:00:31.000Z"); };
+
+    const result = await reserveAndGrant(current);
+
+    expect(current.sessions.creates).toBe(1);
+    expect(current.sessions.sends).toBe(0);
+    expect(result.status).toBe("failed");
+    expect(result.error).toContain("expired before native send");
   });
 
   it("rejects a missing packaged profile and a source hash mismatch before claim or native session", async () => {
@@ -328,6 +379,8 @@ describe("Executive L03 Council-reserved contribution", () => {
     ];
     const completed = await reserveAndGrant(current);
     expect(completed).toMatchObject({ status: "completed", opinion, runId: "00000000-0000-4000-8000-000000000021" });
+    expect(current.events.calls.some((call) => call.name === "opinion-observed.v1")).toBe(false);
+    await current.service.handleNativeRunTerminal(nativeTerminalEvent());
     const observed = current.events.calls.find((call) => call.name === "opinion-observed.v1");
     expect(observed?.payload).toMatchObject({
       requestId: completed.requestId,
@@ -337,6 +390,21 @@ describe("Executive L03 Council-reserved contribution", () => {
       status: "completed",
       opinion,
     });
+
+    const grantReplay = councilEvent(COUNCIL_ADMISSION_GRANT_EVENT, {
+      schemaVersion: "council-opinion-admission-grant.v1",
+      requestId: completed.requestId,
+      grantId: completed.grantId,
+      grantedAt: completed.grantGrantedAt,
+      expiresAt: completed.grantExpiresAt,
+      slot,
+      slotHash: sha256Canonical(slot),
+    });
+    await current.service.handleAdmissionGrant(grantReplay);
+    const observedPayloads = current.events.calls.filter((call) => call.name === "opinion-observed.v1").map((call) => call.payload);
+    expect(observedPayloads).toHaveLength(2);
+    expect(observedPayloads[1]).toEqual(observedPayloads[0]);
+    expect(observedPayloads[0]).toMatchObject({ observedAt: completed.updatedAt });
   });
 
   it("persists admission routing errors instead of treating emit completion as peer acknowledgement", async () => {
@@ -348,4 +416,101 @@ describe("Executive L03 Council-reserved contribution", () => {
     expect(persisted?.admissionError).toContain("event bus unavailable");
     expect(current.sessions.sends).toBe(0);
   });
+
+  it("publishes a callback-persisted result only from the later native terminal event", async () => {
+    const current = setup();
+    const running = await reserveAndGrant(current);
+    expect(running.status).toBe("running");
+
+    current.sessions.onEvent?.({
+      sessionId: running.sessionId!, runId: running.runId!, seq: 1, eventType: "done", stream: "stdout",
+      message: JSON.stringify(opinion), payload: null,
+    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(await current.repository.get(slot.companyId, running.contributionId)).toMatchObject({ status: "completed", opinion });
+    expect(current.events.calls.some((call) => call.name === "opinion-observed.v1")).toBe(false);
+
+    await current.service.handleNativeRunTerminal(nativeTerminalEvent());
+    expect(current.events.calls.filter((call) => call.name === "opinion-observed.v1")).toHaveLength(1);
+    expect(current.sessions.sends).toBe(1);
+  });
+
+  it("waits boundedly for a racing callback and duplicate terminal notifications never resend", async () => {
+    let current!: ReturnType<typeof setup>;
+    let callbackDelivered = false;
+    current = setup({ value: now }, async () => {
+      if (!callbackDelivered) {
+        callbackDelivered = true;
+        const record = (await current.repository.list(slot.companyId))[0]!;
+        current.sessions.onEvent?.({
+          sessionId: record.sessionId!, runId: record.runId!, seq: 1, eventType: "done", stream: "stdout",
+          message: JSON.stringify(opinion), payload: null,
+        });
+        await new Promise((resolve) => setTimeout(resolve, 0));
+      }
+    });
+    const running = await reserveAndGrant(current);
+    expect(running.status).toBe("running");
+
+    await current.service.handleNativeRunTerminal(nativeTerminalEvent());
+    await current.service.handleNativeRunTerminal(nativeTerminalEvent({ eventId: "00000000-0000-4000-8000-000000000041" }));
+    expect(await current.repository.get(slot.companyId, running.contributionId)).toMatchObject({ status: "completed", opinion });
+    expect(current.sessions.creates).toBe(1);
+    expect(current.sessions.sends).toBe(1);
+  });
+
+  it("fails closed after the bounded terminal persistence wait", async () => {
+    let waits = 0;
+    const current = setup({ value: now }, () => { waits += 1; });
+    await reserveAndGrant(current);
+
+    await expect(current.service.handleNativeRunTerminal(nativeTerminalEvent())).rejects.toThrow(/bounded native-event wait/);
+    expect(waits).toBe(80);
+    expect(current.events.calls.some((call) => call.name === "opinion-observed.v1")).toBe(false);
+    expect(current.sessions.creates).toBe(1);
+    expect(current.sessions.sends).toBe(1);
+  });
+
+  it("rejects a spoofed correlated actor and silently ignores unrelated company and run terminals", async () => {
+    const current = setup();
+    const running = await reserveAndGrant(current);
+    current.sessions.onEvent?.({
+      sessionId: running.sessionId!, runId: running.runId!, seq: 1, eventType: "done", stream: "stdout",
+      message: JSON.stringify(opinion), payload: null,
+    });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+
+    await expect(current.service.handleNativeRunTerminal(nativeTerminalEvent({ actorId: "spoofed-agent" }))).rejects.toThrow("inconsistent");
+    await expect(current.service.handleNativeRunTerminal(nativeTerminalEvent({
+      actorId: "spoofed-agent",
+      payload: { runId: running.runId!, agentId: "spoofed-agent", status: "succeeded" },
+    }))).rejects.toThrow("does not match");
+    await expect(current.service.handleNativeRunTerminal(nativeTerminalEvent({
+      companyId: "00000000-0000-4000-8000-000000000099",
+    }))).resolves.toBeNull();
+    await expect(current.service.handleNativeRunTerminal(nativeTerminalEvent({
+      entityId: "wrong-run",
+      payload: { runId: "wrong-run", agentId: slot.reservedExecutiveAgentId, status: "succeeded" },
+    }))).resolves.toBeNull();
+    expect(current.events.calls.some((call) => call.name === "opinion-observed.v1")).toBe(false);
+    expect(current.sessions.sends).toBe(1);
+  });
+});
+
+it("blocks missing native limits before grant acceptance and rechecks changes before physical send", async () => {
+  const h = setup();
+  h.agent.adapterConfig.timeoutSec = 0;
+  await expect(reserveAndGrant(h)).rejects.toThrow(/positive timeout/);
+  expect(h.sessions.creates).toBe(0); expect(h.sessions.sends).toBe(0);
+  expect((await h.repository.list(slot.companyId))[0]?.grantId).toBeNull();
+  const drift = setup();
+  drift.sessions.afterCreate = () => { drift.agent.runtimeConfig.heartbeat.maxDailyRuns = 0; };
+  const held = await reserveAndGrant(drift);
+  expect(held.status).toBe("failed"); expect(drift.sessions.creates).toBe(1); expect(drift.sessions.sends).toBe(0);
+});
+
+it("does not consume an admission or call sessions when native on-demand wake is disabled", async () => {
+  const h = setup(); h.agent.runtimeConfig.heartbeat.wakeOnDemand = false;
+  await expect(reserveAndGrant(h)).rejects.toThrow(/on-demand wake/);
+  expect(h.sessions.creates).toBe(0); expect(h.sessions.sends).toBe(0);
 });
