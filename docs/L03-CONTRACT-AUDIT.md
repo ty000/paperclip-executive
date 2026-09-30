@@ -217,6 +217,277 @@ pin the same source object; historical test reports do not replace source inspec
 | H5 | [H human Decisions routes](https://github.com/paperclipai/paperclip/blob/61b3fd57a695614dc4a37e2303f426a34a9795cf/server/src/routes/decisions.ts), `server/src/services/decisions.ts`, `packages/shared/src/types/decision.ts`; `server/src/services/budgets.ts`, `getInvocationBlock` | Source only: board decision/per-effect tracking and observed-spend controls exist, distinct from Council delegated direction/readback/reservations. |
 | H4 | [H managed agents](https://github.com/paperclipai/paperclip/blob/61b3fd57a695614dc4a37e2303f426a34a9795cf/server/src/services/plugin-managed-agents.ts), `reconcile` / `reset`; SDK `PluginSkillsClient`; native agent permission/instruction services | Source only. Reconcile preserves existing customization; catalog declaration is not loaded-instruction proof. |
 
+### 6.1 PR-visible immutable Council source snapshot
+
+The Council repository is private to some reviewers, so the bounded excerpts below
+make the critical C claims reviewable in this PR. Each fenced block is an exact,
+contiguous excerpt with no omitted lines inside it. Provenance is Council commit
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; each full-file SHA-256 was computed over
+the bytes returned by `git show <commit>:<path>`. These are source observations only.
+They do not prove installation, activation, runtime execution or the absence of a
+different capability elsewhere. Negative conclusions here are limited to the shown
+mission aggregate, registered routes and decision/preflight dispatch paths.
+
+Source: `src/missions.ts` lines 36–65 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`1d0777a6a73883c11f802066658c9e24f7326ef5bc5edc13dc21a781fad89c77`.
+
+```ts
+export type MissionAggregate = {
+  schemaVersion: 1;
+  missionId: string;
+  companyId: string;
+  rootIssueId: string;
+  projectId: string;
+  ownerUserId: string;
+  mandate: MissionMandate;
+  compositions: {
+    status: "pinned";
+    team: PinnedRoster;
+    council: PinnedRoster;
+  };
+  responsibilities: {
+    integrationLeadAgentId: string;
+    finalReviewerAgentId: string;
+    requiredPerspectives: string[];
+  };
+  phase: "draft";
+  control: { status: "inactive"; reason: "mission_not_enabled" };
+  readiness: {
+    mission: "recorded";
+    compositions: "pinned";
+    execution: "blocked";
+    blockers: MissionPrerequisite[];
+  };
+  journal: Array<Record<string, unknown>>;
+  commandReceipts: MissionReceipt[];
+  effectIntents: [];
+};
+```
+
+This supports the narrow F2/A2 observation that the stored shape is
+draft/inactive/blocked with no effect intents. The excerpt is not evidence that every
+Council file lacks future or alternate execution code.
+
+Source: `src/manifest.ts` lines 102–109 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`1bbaac206ea899206e94475d93f2a524ba66b2a359f7c5a52bc353169d36f16a`.
+
+```ts
+    {
+      routeKey: "missions-command",
+      method: "POST",
+      path: "/companies/:companyId/missions",
+      auth: "board",
+      capability: "api.routes.register",
+      companyResolution: { from: "body", key: "companyId" },
+    },
+```
+
+Source: `src/manifest.ts` lines 118–142 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`1bbaac206ea899206e94475d93f2a524ba66b2a359f7c5a52bc353169d36f16a`.
+
+```ts
+    {
+      routeKey: "mission-command",
+      method: "POST",
+      path: "/companies/:companyId/missions/:missionId/commands",
+      auth: "board",
+      capability: "api.routes.register",
+      companyResolution: { from: "body", key: "companyId" },
+    },
+    {
+      routeKey: "decision",
+      method: "POST",
+      path: "/issues/:issueId/decision",
+      auth: "agent",
+      capability: "api.routes.register",
+      checkoutPolicy: "required-for-agent-in-progress",
+      companyResolution: { from: "issue", param: "issueId" },
+    },
+    {
+      routeKey: "foundation-probe",
+      method: "POST",
+      path: "/issues/:issueId/foundation-probe",
+      auth: "board-or-agent",
+      capability: "api.routes.register",
+      companyResolution: { from: "issue", param: "issueId" },
+    },
+```
+
+This is the implemented route set relevant to the audited mission/decision paths. It
+does not contain the richer proposed `/issues/:issueId/council/...` family and keeps
+the production decision and foundation probe as separate routes.
+
+Source: `src/worker.ts` lines 21–73 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`8c5ea9fc33495d73f801b5ab722dca6887680764ab56c3f66bd837f8d87281a5`.
+
+```ts
+function parseBody(body: unknown): CouncilDecisionPayload {
+  const record = body && typeof body === "object" && !Array.isArray(body)
+    ? body as Record<string, unknown>
+    : {};
+  if (record.verdict !== "changes_requested" && record.verdict !== "approved") {
+    throw new Error("verdict must be changes_requested or approved");
+  }
+  const approvedCommit = record.verdict === "approved" ? record.approvedCommit : undefined;
+  if (record.verdict === "approved" && (typeof approvedCommit !== "string" || !/^[a-f0-9]{40}$/.test(approvedCommit))) {
+    throw new Error("approvedCommit must be a 40-character lowercase Git commit hash for approved");
+  }
+  const justification = requiredString(record.justification, "justification");
+  const resultReference = requiredString(record.resultReference, "resultReference");
+  return record.verdict === "approved"
+    ? { verdict: "approved", approvedCommit: approvedCommit as string, justification, resultReference }
+    : { verdict: "changes_requested", justification, resultReference };
+}
+
+export async function handleDecision(input: PluginApiRequestInput, context: PluginContext = ctx) {
+  let decision;
+  try {
+    decision = parseBody(input.body);
+  } catch (error) {
+    return { status: 422, body: { error: error instanceof Error ? error.message : String(error) } };
+  }
+
+  const config = parseCouncilConfig(await context.config.get(input.companyId));
+  if (input.actor.actorType !== "agent" || input.actor.agentId !== config.councilAgentId) {
+    return { status: 403, body: { error: "Configured council identity required" } };
+  }
+  const runId = requiredString(input.actor.runId, "council run id");
+  const issueId = requiredString(input.params.issueId, "issueId");
+  const issue = await context.issues.get(issueId, input.companyId);
+  if (!issue) return { status: 404, body: { error: "Issue not found" } };
+  if (issue.companyId !== input.companyId || issue.status !== "in_review" || issue.assigneeAgentId !== config.councilAgentId) {
+    return { status: 409, body: { error: "Issue is not pending this council" } };
+  }
+
+  if (decision.verdict === "approved") {
+    try {
+      await verifyApprovalCandidate(context, issue, input.companyId, decision.approvedCommit);
+    } catch (error) {
+      if (!(error instanceof ApprovalPreflightError)) throw error;
+      return { status: error.status, body: { error: error.message } };
+    }
+  }
+
+  const result = await emitCouncilDecision(context, config, {
+    companyId: input.companyId,
+    issueId,
+    runId,
+    ...decision,
+  });
+```
+
+Source: `src/decision-adapter.ts` lines 52–67 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`a53b42643f7638a5571ec6c8e1c802c0e7cb3904c12b65cfa5cbcce816c5658b`.
+
+```ts
+function decisionPatch(input: CouncilDecisionInput) {
+  const requestedIssueStatus = input.verdict === "changes_requested" ? "in_progress" : "done";
+  const label = input.verdict === "changes_requested" ? "changes requested" : "approved";
+  return {
+    requestedIssueStatus,
+    body: {
+      status: requestedIssueStatus,
+      comment: [
+        `Council decision: ${label}.`,
+        `Justification: ${input.justification}`,
+        `Result reference: ${input.resultReference}`,
+        ...(input.verdict === "approved" ? [`Approved commit: ${input.approvedCommit}`] : []),
+      ].join("\n"),
+    },
+  } as const;
+}
+```
+
+Together these excerpts show the production handler's two result verdicts, actor/run
+and current issue checks, approval preflight, dispatch, and mapping to native
+`in_progress`/`done`. On this shown path there is no approach-direction payload,
+mission-version claim, durable decision intent, reservation or uncertainty reconciler;
+that bounded absence is why F1/F3/F5 remain dependencies rather than runtime claims.
+
+Source: `src/delivery-manifest.ts` lines 93–115 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`c0f94f78b52118e5b1117a0228c051c99f3e8d5612836d6ea5a6220d42766390`.
+
+```ts
+export async function verifyApprovalCandidate(
+  ctx: PluginContext,
+  issue: Issue,
+  companyId: string,
+  approvedCommit: string,
+): Promise<DeliveryManifest> {
+  const doc = await ctx.issues.documents.get(issue.id, "delivery-manifest", companyId);
+  if (!doc) throw new ApprovalPreflightError("Add a delivery-manifest document to this issue before approval", 409);
+  const manifest = parseDeliveryManifest(doc.body);
+  if (manifest.approvedCommit !== approvedCommit) {
+    throw new ApprovalPreflightError("approvedCommit does not match delivery-manifest approvedCommit");
+  }
+  const attachments = await ctx.issues.listAttachments(issue.id, companyId);
+  const bundle = attachments.find((attachment) => attachment.id === manifest.bundleAttachmentId);
+  if (!bundle || bundle.issueId !== issue.id || bundle.companyId !== companyId) {
+    throw new ApprovalPreflightError("delivery-manifest bundleAttachmentId does not belong to this issue");
+  }
+  if (bundle.sha256 !== manifest.bundleSha256) {
+    throw new ApprovalPreflightError("delivery-manifest bundleSha256 does not match attachment metadata");
+  }
+  verifyWorkProducts(issue, manifest);
+  return manifest;
+}
+```
+
+Source: `src/foundation-probe.ts` lines 120–151 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`a312903693386811b58d8e8c3343914a2684b6c1428afc880560e2e35425e84a`.
+
+```ts
+export async function verifyCandidateAttachment(
+  ctx: PluginContext,
+  input: {
+    companyId: string;
+    issueId: string;
+    attachmentId: string;
+    expectedSha256: string;
+    baseCommit: string;
+    candidateCommit: string;
+  },
+) {
+  if (!/^[a-f0-9]{64}$/.test(input.expectedSha256)) {
+    throw new Error("expectedSha256 must be a lowercase SHA-256 digest");
+  }
+  const baseCommit = commit(input.baseCommit, "baseCommit");
+  const candidateCommit = commit(input.candidateCommit, "candidateCommit");
+  const attachments = await ctx.issues.listAttachments(input.issueId, input.companyId);
+  if (!attachments.some((attachment) => attachment.id === input.attachmentId)) {
+    throw new Error("Candidate attachment is not attached to this issue");
+  }
+  const attachment = await ctx.issues.getAttachmentContent(
+    input.attachmentId,
+    input.companyId,
+    { maxBytes: MAX_CANDIDATE_BUNDLE_BYTES },
+  );
+  if (!attachment) throw new Error("Candidate attachment is unavailable in this company");
+  const bytes = Buffer.from(attachment.contentBase64, "base64");
+  if (bytes.byteLength !== attachment.byteSize) throw new Error("Candidate attachment byte size mismatch");
+  const sha256 = createHash("sha256").update(bytes).digest("hex");
+  if (sha256 !== attachment.sha256 || sha256 !== input.expectedSha256) {
+    throw new Error("Candidate attachment SHA-256 mismatch");
+  }
+```
+
+The first excerpt performs the complete production approval preflight call: parsed
+delivery manifest, exact approved commit, attachment ownership/hash metadata and the
+conditional `verifyWorkProducts` check. The second begins the separate probe's byte
+verifier and shows bounded content retrieval plus byte-size and SHA-256 validation;
+the source index pins the rest of that function, including Git-bundle/ref validation.
+The production approval handler calls only `verifyApprovalCandidate`, while the
+manifest registers `foundation-probe` separately. These excerpts therefore
+substantiate F4's integration boundary without presenting the probe as production
+approval or runtime proof.
+
 Validation for this audit is documentary: exact Git identities and remote PR state,
 source-to-claim review, coverage of all ten audit axes, link/path checks and
 `git diff --check`. No package test, installation, runtime mutation, secret lookup,
