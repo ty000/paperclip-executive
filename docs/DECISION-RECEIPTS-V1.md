@@ -37,4 +37,3 @@ attributed opinions and A8 operator visibility. D-LIMIT, D-C and overall L03 rem
 open. Later host readback may improve evidence, but is not a V1 dependency and cannot
 retroactively convert an indeterminate receipt into proven native success without
 matching evidence.
-
