@@ -228,11 +228,36 @@ They do not prove installation, activation, runtime execution or the absence of 
 different capability elsewhere. Negative conclusions here are limited to the shown
 mission aggregate, registered routes and decision/preflight dispatch paths.
 
-Source: `src/missions.ts` lines 36–65 at
+#### L03-SNAPSHOT-MISSION-EVIDENCE-002
+
+Source: `src/missions.ts` lines 13–65 at
 `bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
 `1d0777a6a73883c11f802066658c9e24f7326ef5bc5edc13dc21a781fad89c77`.
 
 ```ts
+export type MissionMandate = {
+  objective: string;
+  acceptanceCriteria: string[];
+  commitments: string[];
+  limits: {
+    taskPolicy: string;
+    periodPolicy: string;
+    correctionLimit: number;
+    elapsedMinutes: number;
+  };
+};
+
+export type MissionReceipt = {
+  commandId: string;
+  command: "create" | "update-mandate";
+  actorType: "user";
+  actorId: string;
+  payloadHash: string;
+  appliedVersion: number;
+  result: { missionId: string; version: number };
+  recordedAt: string;
+};
+
 export type MissionAggregate = {
   schemaVersion: 1;
   missionId: string;
@@ -265,9 +290,110 @@ export type MissionAggregate = {
 };
 ```
 
-This supports the narrow F2/A2 observation that the stored shape is
-draft/inactive/blocked with no effect intents. The excerpt is not evidence that every
-Council file lacks future or alternate execution code.
+Source: `src/missions.ts` lines 333–341 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`1d0777a6a73883c11f802066658c9e24f7326ef5bc5edc13dc21a781fad89c77`.
+
+```ts
+export function missionPrerequisites(): MissionPrerequisite[] {
+  return [
+    { code: "mission_recorded", status: "ready", message: "Mission state is recorded in plugin-private storage." },
+    { code: "compositions_pinned", status: "ready", message: "Exact immutable team and council revisions are pinned." },
+    { code: "native_review_path", status: "pending", message: "Native review handoff is not implemented in this Step A mission slice." },
+    { code: "decision_reconciliation", status: "unsupported", message: "G3 uncertain-decision canonical readback remains unqualified." },
+    { code: "runtime_budget_exposure", status: "unsupported", message: "G4 task/period reservation and in-flight exposure remain unqualified; dispatch is disabled." },
+  ];
+}
+```
+
+Source: `src/missions.ts` lines 549–583 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`1d0777a6a73883c11f802066658c9e24f7326ef5bc5edc13dc21a781fad89c77`.
+
+```ts
+export async function executeMissionCommand(ctx: PluginContext, input: {
+  companyId: string;
+  missionId?: string;
+  actorUserId: string | null;
+  body: unknown;
+}) {
+  const body = asRecord(input.body);
+  if (body.command === "create" && !input.missionId) {
+    return await createMission(ctx, input.companyId, input.actorUserId, body);
+  }
+  if (body.command === "update-mandate" && input.missionId) {
+    return await updateMandate(ctx, input.companyId, input.missionId, input.actorUserId, body);
+  }
+  throw new MissionError(400, "unknown_command", "Unsupported mission command for this route");
+}
+
+function companyIdFromRequest(input: PluginApiRequestInput): string {
+  const companyId = requiredString(input.params.companyId, "companyId path parameter", 64);
+  if (companyId !== input.companyId) {
+    throw new MissionError(403, "company_scope_mismatch", "Path company does not match the host-authorized company scope");
+  }
+  return companyId;
+}
+
+export function inspectMission(mission: MissionRecord) {
+  return {
+    mission,
+    state: {
+      recorded: true,
+      compositionsPinned: true,
+      executable: false,
+    },
+    prerequisites: mission.aggregate.readiness.blockers,
+    nextAction: "Resolve and qualify G4 before adding any dispatch or activation command.",
+  };
+```
+
+Source: `src/missions.ts` lines 586–619 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`1d0777a6a73883c11f802066658c9e24f7326ef5bc5edc13dc21a781fad89c77`.
+
+```ts
+export async function handleMissionApi(input: PluginApiRequestInput, ctx: PluginContext) {
+  try {
+    const companyId = companyIdFromRequest(input);
+    const actorUserId = input.actor.actorType === "user" ? input.actor.userId ?? null : null;
+    if (input.routeKey === "missions-list") {
+      await requireOwner(ctx, companyId, actorUserId);
+      const missions = await listMissions(ctx, companyId);
+      return { status: 200, body: { missions: missions.map(inspectMission) } };
+    }
+    if (input.routeKey === "mission-read") {
+      await requireOwner(ctx, companyId, actorUserId);
+      const missionId = uuid(input.params.missionId, "missionId");
+      const mission = await getMission(ctx, companyId, missionId);
+      if (!mission) throw new MissionError(404, "mission_not_found", "Mission not found");
+      return { status: 200, body: inspectMission(mission) };
+    }
+    if (input.routeKey === "missions-command" || input.routeKey === "mission-command") {
+      const result = await executeMissionCommand(ctx, {
+        companyId,
+        missionId: input.params.missionId ? uuid(input.params.missionId, "missionId") : undefined,
+        actorUserId,
+        body: input.body,
+      });
+      const creating = input.routeKey === "missions-command" && asRecord(input.body).command === "create";
+      return { status: creating && result.outcome === "applied" ? 201 : 200, body: { ...result, inspection: inspectMission(result.mission) } };
+    }
+    return { status: 404, body: { error: "Unknown mission route" } };
+  } catch (error) {
+    if (error instanceof MissionError || error instanceof RosterError) {
+      return { status: error.status, body: { error: error.message, code: error.code, details: error.details } };
+    }
+    throw error;
+  }
+}
+```
+
+These mission excerpts support the narrow F2/A2/F5 observations: limits are declared,
+the stored shape is draft/inactive/blocked with no effect intents, prerequisites name
+decision reconciliation and budget exposure as unqualified, and the shown command
+dispatcher implements only create/update-mandate while inspection stays non-executable.
+They are not evidence that every Council file lacks future or alternate execution code.
 
 Source: `src/manifest.ts` lines 102–109 at
 `bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
@@ -320,7 +446,9 @@ This is the implemented route set relevant to the audited mission/decision paths
 does not contain the richer proposed `/issues/:issueId/council/...` family and keeps
 the production decision and foundation probe as separate routes.
 
-Source: `src/worker.ts` lines 21–73 at
+#### L03-SNAPSHOT-RECONCILER-EVIDENCE-001
+
+Source: `src/worker.ts` lines 21–82 at
 `bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
 `8c5ea9fc33495d73f801b5ab722dca6887680764ab56c3f66bd837f8d87281a5`.
 
@@ -378,6 +506,15 @@ export async function handleDecision(input: PluginApiRequestInput, context: Plug
     runId,
     ...decision,
   });
+  return {
+    status: result.nativeStatus,
+    body: {
+      integration: "plugin route -> Paperclip secret_ref -> public issue PATCH",
+      councilAgentId: config.councilAgentId,
+      runId,
+      ...result,
+    },
+  };
 ```
 
 Source: `src/decision-adapter.ts` lines 52–67 at
@@ -403,17 +540,83 @@ function decisionPatch(input: CouncilDecisionInput) {
 }
 ```
 
-Together these excerpts show the production handler's two result verdicts, actor/run
-and current issue checks, approval preflight, dispatch, and mapping to native
-`in_progress`/`done`. On this shown path there is no approach-direction payload,
-mission-version claim, durable decision intent, reservation or uncertainty reconciler;
-that bounded absence is why F1/F3/F5 remain dependencies rather than runtime claims.
+Source: `src/decision-adapter.ts` lines 69–100 at
+`bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
+`a53b42643f7638a5571ec6c8e1c802c0e7cb3904c12b65cfa5cbcce816c5658b`.
 
-Source: `src/delivery-manifest.ts` lines 93–115 at
+```ts
+/**
+ * The only adapter that emits council decisions. It deliberately uses the
+ * qualified public issue API instead of ctx.issues.update or direct storage.
+ */
+export async function emitCouncilDecision(
+  ctx: PluginContext,
+  config: CouncilConfig,
+  input: CouncilDecisionInput,
+): Promise<CouncilDecisionResult> {
+  const apiKey = await ctx.secrets.resolve(config.councilApiKey, {
+    companyId: input.companyId,
+    configPath: "councilApiKey",
+  });
+  const patch = decisionPatch(input);
+  const response = await fetch(`${config.apiBaseUrl}/api/issues/${input.issueId}`, {
+    method: "PATCH",
+    headers: {
+      "content-type": "application/json",
+      authorization: `Bearer ${apiKey}`,
+      "x-paperclip-run-id": input.runId,
+    },
+    body: JSON.stringify(patch.body),
+    signal: AbortSignal.timeout(15_000),
+  });
+  const nativeResponse = await response.json().catch(() => null);
+  return {
+    verdict: input.verdict,
+    requestedIssueStatus: patch.requestedIssueStatus,
+    nativeStatus: response.status,
+    nativeResponse,
+  };
+}
+```
+
+Together these excerpts show the production handler's two result verdicts, actor/run
+and current issue checks, approval preflight, one public PATCH dispatch, immediate
+response forwarding, and mapping to native `in_progress`/`done`. On these shown paths
+there is no approach-direction payload, mission-version claim, durable decision intent,
+reservation or post-response uncertainty reconciler; that bounded absence is why
+F1/F3/F5 remain dependencies rather than runtime claims.
+
+#### L03-SNAPSHOT-CANDIDATE-EVIDENCE-003
+
+Source: `src/delivery-manifest.ts` lines 69–115 at
 `bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
 `c0f94f78b52118e5b1117a0228c051c99f3e8d5612836d6ea5a6220d42766390`.
 
 ```ts
+function verifyWorkProducts(issue: Issue, manifest: DeliveryManifest): void {
+  // The current SDK does not expose a listWorkProducts operation. Some host
+  // issue projections include them; check those when the projection is present.
+  const candidates = issue.workProducts?.filter((product) => product.type === "commit" || product.type === "branch");
+  if (!candidates?.length) return;
+  const current = candidates.filter((product) => !["archived", "closed", "failed", "merged"].includes(product.status));
+  const primary = current.filter((product) => product.isPrimary);
+  const readyForReview = current.filter((product) => product.status === "ready_for_review");
+  const approvalCandidates = primary.length ? primary : readyForReview.length ? readyForReview : current;
+  const matches = approvalCandidates.length > 0 && approvalCandidates.every((product) => {
+    const metadata = product.metadata ?? {};
+    const repository = metadata.repo ?? metadata.repository;
+    const branch = metadata.branch ?? metadata.headRef;
+    const base = metadata.baseCommit;
+    const head = metadata.sha ?? metadata.commit ?? metadata.approvedCommit;
+    if (typeof repository !== "string" || typeof branch !== "string" || typeof head !== "string") return false;
+    return repositoryIdentity(repository) === repositoryIdentity(manifest.repository)
+      && branch === manifest.branch
+      && head === manifest.approvedCommit
+      && (base === undefined || base === manifest.baseCommit);
+  });
+  if (!matches) throw new ApprovalPreflightError("Candidate work product does not match delivery-manifest repository, branch, base or head");
+}
+
 export async function verifyApprovalCandidate(
   ctx: PluginContext,
   issue: Issue,
@@ -439,7 +642,7 @@ export async function verifyApprovalCandidate(
 }
 ```
 
-Source: `src/foundation-probe.ts` lines 120–151 at
+Source: `src/foundation-probe.ts` lines 120–184 at
 `bc6d71fa6ede8f239c7990af1885dc07cccc7c18`; full-file SHA-256
 `a312903693386811b58d8e8c3343914a2684b6c1428afc880560e2e35425e84a`.
 
@@ -476,13 +679,46 @@ export async function verifyCandidateAttachment(
   if (sha256 !== attachment.sha256 || sha256 !== input.expectedSha256) {
     throw new Error("Candidate attachment SHA-256 mismatch");
   }
+
+  const root = await mkdtemp(resolve(tmpdir(), "paperclip-council-candidate-"));
+  try {
+    const bundlePath = resolve(root, "candidate.bundle");
+    const repositoryPath = resolve(root, "repository.git");
+    await writeFile(bundlePath, bytes, { mode: 0o600 });
+    await git(["init", "--bare", repositoryPath], root);
+    await git(["bundle", "verify", bundlePath], repositoryPath);
+    await git([
+      "fetch",
+      bundlePath,
+      "refs/heads/candidate:refs/council/candidate",
+      "refs/heads/base:refs/council/base",
+    ], repositoryPath);
+    const observedCandidate = await git(["rev-parse", "refs/council/candidate^{commit}"], repositoryPath);
+    const observedBase = await git(["rev-parse", "refs/council/base^{commit}"], repositoryPath);
+    if (observedCandidate !== candidateCommit || observedBase !== baseCommit) {
+      throw new Error("Candidate bundle refs do not match the declared commits");
+    }
+    await git(["merge-base", "--is-ancestor", baseCommit, candidateCommit], repositoryPath);
+    return {
+      attachmentId: attachment.attachmentId,
+      byteSize: bytes.byteLength,
+      sha256,
+      baseCommit,
+      candidateCommit,
+      relationship: "base-is-ancestor",
+      isolatedInspection: true,
+    } as const;
+  } finally {
+    await rm(root, { recursive: true, force: true });
+  }
+}
 ```
 
 The first excerpt performs the complete production approval preflight call: parsed
 delivery manifest, exact approved commit, attachment ownership/hash metadata and the
-conditional `verifyWorkProducts` check. The second begins the separate probe's byte
-verifier and shows bounded content retrieval plus byte-size and SHA-256 validation;
-the source index pins the rest of that function, including Git-bundle/ref validation.
+conditional `verifyWorkProducts` check. The second is the separate probe's byte
+verifier: bounded content retrieval, byte-size/SHA-256 validation and isolated
+Git-bundle/ref validation.
 The production approval handler calls only `verifyApprovalCandidate`, while the
 manifest registers `foundation-probe` separately. These excerpts therefore
 substantiate F4's integration boundary without presenting the probe as production
