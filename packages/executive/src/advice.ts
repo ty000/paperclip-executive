@@ -71,6 +71,7 @@ export interface AdviceRepository {
     status: "failed" | "outcome_unknown",
     error: string,
     runId?: string | null,
+    sessionId?: string | null,
   ): Promise<void>;
 }
 
@@ -256,6 +257,7 @@ export class AdviceService {
           ? `Dispatch may have reached Paperclip: ${safeError(error)}`
           : `Session creation outcome is unknown: ${safeError(error)}`,
         runId,
+        sessionId,
       );
     }
     return (await this.repository.get(companyId, created.contextId)) ?? created;
