@@ -338,6 +338,12 @@ not assumed interchangeable. Test the selected adapter's completion format befor
 enabling automatic recovery. If an ID was lost, reconcile exact context/session
 correlation; multiple matches remain ambiguous.
 
+The session list exposes neither task keys nor last-run identifiers [PC02, PC03].
+If session creation succeeds but its returned ID is lost before any run exists,
+the current SDK and permitted core reads cannot reliably recover that session.
+Keep the operation outcome unknown and require explicit reconciliation; do not
+infer identity from list order or blindly repeat creation.
+
 Persist recovered output before synthesis; do not rerequest model work solely to
 rebuild UI text. Manual resume is the H1 control surface. Recovery on worker startup
 may reconcile state but must not silently restart business actions. UI streams are
