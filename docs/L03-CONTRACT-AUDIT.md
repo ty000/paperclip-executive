@@ -15,7 +15,7 @@ contracts, integration sequence and acceptance evidence.
 | F4 | Normal approval checks a delivery manifest, exact requested commit and attachment metadata. Bundle-byte verification exists in the foundation probe but is not wired into the approval handler. Candidate work-product checking is conditional on a projection that the pinned SDK issue read does not provide. | Council must bind a stored submission and verified bytes to the decision, then revalidate the current subject before application. A manifest alone does not close exact-result acceptance. |
 | F5 | Draft mandate limits are declarations. Canonical correction/consultation accounting and atomic shared admission reservations are not implemented by that storage. | Council owns durable counters/reservations and reconciliation; host/native controls must qualify the selected operating limits. Unknown spend/exposure cannot authorize another call. |
 | F6 | L02 parses finding structure, not the truth of criterion/evidence references. Its historical real output included references outside the supplied arrays. | The decision consumer must resolve references against the frozen criteria/evidence and reject unsupported acceptance claims. Do not rewrite historical advice or treat parser success as validated evidence. |
-| F7 | Catalogue, package, installed distribution, loaded instructions and live identities are separate dependencies. There is no selected authorized runtime target for this audit. | Use provisional role references; final integration and qualification must pin the merged agents lot and independently verify runtime availability. |
+| F7 | The catalogue/profile/skill source dependency is now merged and pinned at E-AG. Package, installed distribution, loaded instructions, provisioned identities and live runtime remain separate evidence layers; there is no selected authorized runtime target for this audit. | Final integration must consume E-AG on current main and independently verify actual provisioning, loading, identities and runtime availability. Stable profile IDs are source identifiers, not native agent UUIDs. |
 
 These findings block dependent L03 capabilities, not completion of this audit.
 No claim of V1 completion, collective judgment quality, universal bypass resistance,
@@ -30,7 +30,8 @@ fetching or changing that repository.
 
 | Ref | Path / branch / exact SHA | Owner, version and status |
 | --- | --- | --- |
-| E | `/home/davy-lp/.codex/worktrees/l03-contract-audit/paperclip-executive`, `codex/l03-contract-audit`, base `ccd02e1f594b5fe6083d4c2f1c1ad7533bc7f54e` | Executive contribution/contracts/UI. Canonical merged L02, [PR #4](https://github.com/ty000/paperclip-executive/pull/4), package `@paperclip-executive/executive` 0.1.0, manifest 0.2.0; PRD/TAD 0.2, Backlog/L02 plan/report 0.1. Package version alone does not identify L02. New documentary commits are descendants of this base. |
+| E | `/home/davy-lp/.codex/worktrees/l03-contract-audit/paperclip-executive`, `codex/l03-contract-audit`, base `ccd02e1f594b5fe6083d4c2f1c1ad7533bc7f54e` | Executive contribution/contracts/UI. Canonical merged L02, [PR #4](https://github.com/ty000/paperclip-executive/pull/4), package `@paperclip-executive/executive` 0.1.0, manifest 0.2.0; at this audited L02 base, PRD/TAD 0.2 and Backlog/L02 plan/report 0.1. Package version alone does not identify L02. New documentary commits are descendants of this base. |
+| E-AG | Remote `ty000/paperclip-executive`, merged `main` commit `504c3c5e8c36afb3cda15bc7f964abbf3247e2b8`, PR source head `99446b605e032590a1d7fe07efd99f91ff615614` | [PR #6](https://github.com/ty000/paperclip-executive/pull/6) merged. Immutable sources: [L03 handoff](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/AGENT-HANDOFF-L03.md), [PRD 0.3](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/PRD.md), [TAD 0.3](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/TAD.md), [Backlog 0.2](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/BACKLOG.md), and [catalogue envelope](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/packages/executive/config/agent-catalog.json). Contract `executive-agent-catalog.v1`; declarative envelope `paperclip-executive.agent-catalog.v1`; catalogue 1.0.0; `executive` profile 1.1.0; other 17 profiles and eight skills 1.0.0. Only `executive` remains manifest-managed. Package 0.1.0 / manifest 0.2.0 mismatch is unchanged. Source availability is satisfied; current-main integration, provisioning/loading/identity readback and runtime qualification remain pending. |
 | E-old | `/home/davy-lp/workspace/paperclip-executive`, `codex/l02-plan`, `404d62d0c374b73ce21072e0cf71469b9be506ec` | Clean but older planning checkout; not the implementation baseline. Other historical worktrees: `executive-h1` at `6b157f8b57967cf7695a155df7fab72e03028e3c`, `l02-review` at `9b1554d6aa0d8b242885c862a2d550538b9a09f7`, `ci-tests-fallow` at `ed5b23f84f05c1343169ceab3ec0cb736499d613`; none reused or modified. |
 | C | `/home/davy-lp/.codex/worktrees/council-agent-profiles/paperclip-council`, `codex/council-agent-profiles`, `bc6d71fa6ede8f239c7990af1885dc07cccc7c18` = remote `origin/main` at initial inspection | Council mandate, composition, result decision and application owner. Retained executable baseline (unchanged in final C-policy main), standalone package 0.3.0, SDK/shared 2026.916.1; [PR #8](https://github.com/ty000/paperclip-council/pull/8) merged. Untracked `agents/`, `provisioning/`, `skills/` belong to concurrent work and are not accepted source evidence. Inspect committed objects. |
 | C-old | `/home/davy-lp/workspace/paperclip-council`, `codex/product-prd-roadmap`, `365809efdf190010f818a25b938bad59ebd4f33c` | Historical documentary checkout, untracked `docs/reviews/` preserved. Local `main` is older still (`307101af5f3f28e57db52d6ec4a8725e1a7b9544`). Neither is selected as current implementation. |
@@ -48,15 +49,12 @@ chosen by directory name. Relevant merged lineage: manifest gate PR #3 at
 `2cc12cdad643afb78dd9b7cbcd384f2501c8595f`, then missions PR #8 at C.
 
 An Executive `agent-catalog` worktree was initially observed at E, with no tracked
-diff; it disappeared from `git worktree list` during the audit. No inference about
-completion or merge is made from that lifecycle change. A later metadata check found [Executive agents PR #6](https://github.com/ty000/paperclip-executive/pull/6),
-draft at `82e8338bccf6ca05880941d287946238c33484e6`, branch
-`codex/executive-agent-assets`. Its sole published file at that snapshot is
-[AGENT-HANDOFF-L03.md](https://github.com/ty000/paperclip-executive/blob/82e8338bccf6ca05880941d287946238c33484e6/docs/AGENT-HANDOFF-L03.md):
-provisional `executive-agent-catalog.v1`, asset version 1.0.0, 18 intended distinct
-profiles and an explicit richer-opinion/L02 compatibility boundary. The handoff was
-read; unpublished profile assets and runtime loading were not inferred. The dependency
-still needs the final merged commit and validated assets, not a worktree name.
+diff; it disappeared from `git worktree list` during the audit. No completion was
+inferred from that lifecycle event. The dependency was later resolved through the
+immutable merged E-AG objects: PR #6 merged at `504c3c5e8c36afb3cda15bc7f964abbf3247e2b8`.
+Its handoff preserves the L02 schema/enums and explicitly separates source assets from
+runtime provisioning/loading. The merge supplies final source references, not native
+profile UUIDs, installed instructions, active identities or execution evidence.
 
 ## 3. Contract and evidence matrix
 
@@ -187,8 +185,8 @@ decision API, budget service or execution permission.
 
 | Discrepancy | Disposition and responsible owner |
 | --- | --- |
-| Executive historical backlog describes only the embedded prototype; Council main now includes standalone roster/mission storage. | This audit pins C. Executive documentation owner should refresh parent-source references in a later authorized change, coordinated with the agents lot; no parent document is edited here. |
-| Existing Executive documents defer extra agents or describe a one-reviewer starting slice; current owner request wants a broad catalogue and several distinct opinions. | Current request governs this framing. Agents lot owns catalogue/profile revisions; Council owns versioned composition and one final authority. Do not freeze L03 to one generalist or copy a competing profile list. |
+| E's audited L02-base backlog described the embedded prototype and older delivery order, while C already had standalone roster/mission storage. | E-AG's merged PRD 0.3, TAD 0.3 and Backlog 0.2 now identify the agents prerequisite and Council/host dependencies. This removes the parent-document discrepancy without changing E's historical L02 proof or proving integration. C remains the pinned executable Council baseline. |
+| Older Executive parents deferred extra agents or described a one-reviewer starting slice, while the owner requested a broad catalogue and several distinct opinions. | E-AG now records the broad conditional composition and canonical merged catalogue. There is no material parent-design conflict: Council still owns versioned composition and one final authority; the catalogue supplies source profiles only and is not copied here. |
 | Council TAD's proposed API and aggregate exceed implemented draft-only missions. | Source code/manifest are implementation truth. Mark executable workflow absent; assign changes explicitly to Council. |
 | Initial main budget wording differed from C-policy; PR #10 merged during audit. | Documentary policy alignment is now merged at `ee262eed`; source behavior remains unchanged. Qualify the accepted admission policy before activation; no runtime guarantee follows from the merge. |
 | Council foundation byte verification can look like a production approval guarantee. | Keep probe evidence separate; wire and qualify it in the real decision path before closing F4. |

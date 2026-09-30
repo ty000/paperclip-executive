@@ -5,9 +5,11 @@ handoff and dependency plan; it does not authorize implementation, another chat,
 agent activation or a provider call. [Contract audit](L03-CONTRACT-AUDIT.md) defines
 E/C/H versions, source evidence and findings F1–F7 used below.
 
-Product parents: [BK-02-A and the L03 portion of BK-04-A](BACKLOG.md#2-prioritized-product-items),
-[PRD 0.2](PRD.md) B03/B05 and EXE-04/05/06/08/09/12/14/15/16.
-Architecture: [TAD 0.2](TAD.md), especially AD-02–06, AD-08–09 and AD-12.
+Product parents: [BK-02-A and the L03 portion of BK-04-A](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/BACKLOG.md#2-prioritized-product-items),
+[PRD 0.3](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/PRD.md)
+B03/B05 and EXE-04/05/06/08/09/12/14/15/16. Architecture:
+[TAD 0.3](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/TAD.md),
+especially AD-02–06, AD-08–09 and AD-12.
 The current request permits a broad profile catalogue and several distinct opinions;
 the earlier single-generalist starting recommendation is not a topology limit.
 
@@ -126,10 +128,10 @@ and status enums must be selected and tested by the owning implementation.
 | Dependency / order | Owner and components | Minimum change and exit evidence | Parallelism / blocking point |
 | --- | --- | --- | --- |
 | D-H / 1 | Paperclip `server/src/routes/issues.ts`, native `issue_execution_decisions` service/schema projection and shared types; SDK only if consumer needs it | Inspect supported reads at the final selected revision; if still insufficient, expose company/caller-authorized decision ID/correlation, actor/run, body, stage, outcome and applied effect matching the exact stored intent; derive any needed round/submission correlation explicitly rather than assume an existing round field. Tests for unauthorized reads, lost-response success, late completion, ambiguity, mismatch and drift. Preserve native auth and no-blind-retry semantics. | Can proceed independently of agents and Executive UI. Blocks confirmed-effect recovery and final qualification. DEC-G3-01 is the recorded Council policy basis; separate host scope/base/review remains required. |
-| D-LIMIT / 1 | Council `src/missions.ts`, private additive migration/store, native run-control adapter; host owner if a specific missing primitive is demonstrated | Implement atomic task/period admission and durable approach-correction/result-correction/consultation/concurrency/retry counts. Keep correction counters separately observable while charging them to one overall mission budget/envelope; no subject/version transition replenishes it. Retain reservations across crashes and settle late/unknown usage. Qualify selected per-run bounds. Owner-bound continuation is the separate DEP-OWNER requirement within D-C/D-RUNTIME, not a claim closed by G4. Use C-policy's now-merged prudent G4 wording; no assumed absolute charge cap. | Contract/tests can proceed without final catalogue. Required policy/control evidence gates affected dispatch; do not postpone to L04. |
+| D-LIMIT / 1 | Council `src/missions.ts`, private additive migration/store, native run-control adapter; host owner if a specific missing primitive is demonstrated | Implement atomic task/period admission and durable approach-correction/result-correction/consultation/concurrency/retry counts. Keep correction counters separately observable while charging them to one overall mission budget/envelope; no subject/version transition replenishes it. Retain reservations across crashes and settle late/unknown usage. Qualify selected per-run bounds. Owner-bound continuation is the separate DEP-OWNER requirement within D-C/D-RUNTIME, not a claim closed by G4. Use C-policy's now-merged prudent G4 wording; no assumed absolute charge cap. | The merged source catalogue is available, but these Council contract/tests remain independently gated. Required policy/control evidence gates affected dispatch; do not postpone to L04. |
 | D-C / 2 | Council `src/missions.ts`, `worker.ts`, `manifest.ts`, `contracts.ts`, `decision-adapter.ts`, `delivery-manifest.ts`, reusable foundation verifier, private migrations, focused tests/UI | Extend draft aggregate into bounded execution: versioned typed delegated approach direction (the host board-only Decisions API is reserved for owner decisions, not routine Council authorization), explicit A1-revise-A2 invalidation/fresh-direction transition, immutable result submissions/opinion slots, one final reviewer, command receipts, separate bounded approach/result correction transitions and durable decision/effect intent. Validate mandate/subject at claim and application; guard legacy route on governed roots. Wire bounded byte verification into real approval. Read back native effects through D-H; persist an unambiguous intent/subject correlation in the supported native decision body or a separately qualified host field, not an invented accepted PATCH member. | Develop pure state/adapter fixtures against pinned contracts while D-H/D-LIMIT advance. Full integration requires their actual APIs. Do not claim all Council V1 or Council L2/L3 complete from this Executive slice. |
-| D-E / 3 | Executive `packages/executive/src/contribution.ts`, `contribution-repository.ts`, `worker.ts`, `manifest.ts`, `ui/index.tsx`, tests; additive migration only if bindings cannot fit existing store | Bind contribution to Council slot/context/mandate references and actual profile/method version. Implement explicit scoped reserved-slot invocation/readback; retain one physical dispatcher and existing idempotency/unknown states. Resolve criterion/evidence references; display canonical Council observations without duplicating decisions. | Fixtures and observation UI can proceed against explicitly proposed contract types. Wiring waits for D-C/D-H; final profile attribution waits for D-AG. Preserve L02 owner action unless deliberately integrated; reconcile package/manifest version identity before final integration. |
-| D-AG / parallel, before integration freeze | Agents lot, Executive/Council catalogue/profile/provisioning owners | Publish merged source revision plus stable role/method IDs, instruction/skill versions/hashes, output-format compatibility and composition mapping. Verify provisioned distinct identities and loaded runtime artifacts separately. See section 5. | Audit, contracts and deterministic tests need not wait. Final integration/qualification uses merged version. This documentary PR and L03 implementation must not merge before the agents dependency is satisfied under the current request. |
+| D-E / 3 | Executive `packages/executive/src/contribution.ts`, `contribution-repository.ts`, `worker.ts`, `manifest.ts`, `ui/index.tsx`, tests; additive migration only if bindings cannot fit existing store | Bind contribution to Council slot/context/mandate references and actual profile/method version. Implement explicit scoped reserved-slot invocation/readback; retain one physical dispatcher and existing idempotency/unknown states. Resolve criterion/evidence references; display canonical Council observations without duplicating decisions. | Fixtures and observation UI can proceed against explicitly proposed contract types. Wiring waits for D-C/D-H. Source profile attribution consumes pinned E-AG; actual agent identity/loading attribution waits for runtime readback. Preserve L02 owner action unless deliberately integrated; reconcile package/manifest version identity before final integration. |
+| D-AG / source merged; integration gate remains | Agents lot, Executive/Council catalogue/profile/provisioning owners | E-AG at `504c3c5e8c36afb3cda15bc7f964abbf3247e2b8` publishes the stable role/method sources, catalogue envelope and updated parent documents. Integrate current main, pin selected profile/skill source versions and verify provisioned distinct identities plus loaded runtime artifacts separately. See section 5. | Source availability is satisfied. Final integration/qualification must consume the merged objects and prove actual loading/identity; the source merge alone does not qualify runtime or remove D-H/D-LIMIT/D-C. |
 | D-RUNTIME / 4 | Operator plus host/Council/Executive owners | Select exact instance/distribution/builds, authenticated actors, native issue/policy, numeric bounds, measurement sources and addressed owner. Then execute only separately authorized qualification cases and record sanitized persisted/native readback. | Blocks runtime qualification, not source audit or deterministic work. No inherited development credentials or guessed instance. |
 | D-Q / 5 | Integration owner | Rebase/re-pin all final candidates, reconcile agents/policy dependencies, run focused deterministic checks and authorized actual-host journey; review evidence and draft PRs. | Completion requires every L03-A row at declared evidence tier. No automatic merge, release or V1 declaration. |
 
@@ -145,28 +147,31 @@ inference from package version strings.
 
 ## 5. Dependency contract with the agents lot
 
-The provisional [agents handoff](https://github.com/ty000/paperclip-executive/blob/82e8338bccf6ca05880941d287946238c33484e6/docs/AGENT-HANDOFF-L03.md)
-is now published in draft [PR #6](https://github.com/ty000/paperclip-executive/pull/6)
-at `82e8338bccf6ca05880941d287946238c33484e6`: contract
-`executive-agent-catalog.v1`, asset version 1.0.0, 18 intended distinct profiles.
-Use its `software-executor`, `council-reviewer` and selected advisor profile references
-provisionally; resolve the final names/versions from that document after merge.
-This is a dependency reference, not a second catalogue. Preserve broad profile choice and multiple
-separate opinions. Exact catalogue size, profile names and instruction text belong to
-the agents lot; do not copy its `AGENTS.md` files into these documents.
+The final [agents handoff](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/AGENT-HANDOFF-L03.md)
+and [canonical catalogue](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/AGENT-CATALOG.md)
+are merged through [PR #6](https://github.com/ty000/paperclip-executive/pull/6) at
+`504c3c5e8c36afb3cda15bc7f964abbf3247e2b8` (source head
+`99446b605e032590a1d7fe07efd99f91ff615614`). Contract
+`executive-agent-catalog.v1` uses declarative envelope
+`paperclip-executive.agent-catalog.v1`, catalogue 1.0.0, `executive` profile 1.1.0,
+and the other 17 profiles plus all eight skills at 1.0.0. Only `executive` is
+manifest-managed; the other profiles are packaged source assets, not provisioned
+agents. Use the merged `software-executor`, `council-reviewer` and selected advisor
+source references without inventing native profile UUIDs. This is a dependency
+reference, not a second catalogue; do not copy its `AGENTS.md` files here.
 
 | Required handoff | Acceptance by L03 | Still unknown at audit |
 | --- | --- | --- |
-| Merged repository commit(s), catalogue revision, stable profile IDs and versions | Immutable references resolve to actual merged artifacts; pin the version consumed by final integration. | PR #6 is identified; final merge SHA, completed catalogue/assets and validation remain pending. |
-| Instruction entrypoint and supporting skill IDs/content hashes; method version/provenance | Role instructions, methods, execution config and ticket data remain separate; preserve customization and licensing. `reconcile()` alone does not prove new defaults loaded. | Proposed profile entrypoint is `packages/executive/profiles/<id>/AGENTS.md`; final files, supporting skill hashes and loaded-content receipts remain pending. |
+| Merged repository commit(s), catalogue revision, stable profile IDs and versions | Immutable E-AG references resolve to merged artifacts at `504c3c5`; final integration pins the selected versions above. | Source availability is satisfied. Consumption by an L03 candidate rebased/integrated with current main remains pending. |
+| Instruction entrypoint and supporting skill IDs/content hashes; method version/provenance | Final source entrypoints are `packages/executive/profiles/<id>/AGENTS.md`; the merged [skill registry](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/AGENT-SKILLS.md) supplies eight 1.0.0 source keys. Role instructions, methods, execution config and ticket data remain separate; preserve customization and licensing. | Installed library records, effective assignments, loaded instruction hashes and runtime receipts remain unknown. `reconcile()` manages only `executive` and does not prove new defaults loaded. |
 | Contribution format/version and evidence-reference rules | Explicit compatibility with `prepared-ticket-contribution.v1` or a versioned migration; actual agent/profile/method/session/run attribution and scoped context. | Handoff confirms L02 enums remain `product`, `technical`, `delivery_cost`; richer L03 opinion mapping/schema and semantic reference encoding still need implementation. |
-| Composition mapping | Existing distinct executor/final reviewer plus selected advisor identities and required/optional slots; Council pins roster revisions and completion rules. One final authority, no inferred consensus. | Actual IDs, required slots for reference ticket and unavailable-profile handling. |
-| Provisioning/loading prerequisites | Native company/role/permission, adapter/model/effort, workspace and bounded controls verified; installation/configuration/loading/activation separately reported. No automatic reset/hiring. | Target runtime, identities, account/model availability and effective configuration. |
+| Composition mapping | Existing distinct executor/final reviewer plus selected advisor identities and required/optional slots; Council pins roster revisions and completion rules. One final authority, no inferred consensus. | Stable source profile IDs now exist; actual company-scoped agent IDs, required slots for the reference ticket and unavailable-profile handling remain runtime/integration work. Source IDs are not native UUIDs. |
+| Provisioning/loading prerequisites | Follow the merged [provisioning procedure](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/AGENT-PROVISIONING.md): verify native company/role/permission, adapter/model/effort, workspace and bounded controls; report installation/configuration/loading/activation separately. No automatic reset/hiring. | Target runtime, identities, account/model availability, installed skills, loaded instructions and effective configuration remain unknown. |
 
-Merge order is a gate, not a reason to stop useful work: D-H, D-LIMIT, D-C contract
-work, D-E fixtures and this framing can progress now. Rebase the final integration on
-the merged agents version, check instruction/format compatibility, then qualify its
-runtime availability. A merge receipt alone cannot prove that agents loaded the files.
+The source-merge gate is satisfied. D-H, D-LIMIT, D-C contract work, D-E fixtures and
+this framing can proceed, but final integration must consume current main at E-AG,
+check instruction/format compatibility, then qualify actual runtime availability.
+A merge receipt alone cannot prove that agents loaded the files.
 
 The handoff preserves L02 method `paperclip-executive.prepared-ticket-review@1.0.0`
 and profile revision `paperclip-executive-l02`. Its richer opinion semantics are not
@@ -288,9 +293,9 @@ not runtime configuration; future effective settings remain unknown until observ
 
 **Start gates:** a bounded source slice may start after its owner authorizes the
 perimeter and prerequisite contracts are explicit. Final integration waits for actual
-D-H/D-C/D-LIMIT APIs and merged D-AG versions. Runtime dispatch additionally waits for
-D-RUNTIME and qualified controls; merge waits for the agents dependency and required
-review/qualification at the declared milestone.
+D-H/D-C/D-LIMIT APIs and must consume the merged E-AG versions on current main. Runtime
+dispatch additionally waits for D-RUNTIME and qualified controls; merge waits for the
+remaining integration review/qualification at the declared milestone.
 
 **Stop gates:** missing authority/current subject; stale or revoked mandate; required
 opinion absent or incompatible; unavailable limit/readback control; exhausted or
@@ -315,13 +320,15 @@ Executive actions, Council draft-only state, host-native transaction versus miss
 full readback, board-only Decisions semantics, observed-spend versus reservation
 accounting, agents dependency and L04 boundaries; it is not review proof for later
 corrections to this document.
-All 22 local or immutable source document links resolved (Git objects, with remote
-readback for the newly merged Council policy); all ten audit axes and eight acceptance
-rows were checked at that head. This correction adds the eleventh qualification case;
-current-head review must recheck all eleven. Whitespace checks passed. No
+All 22 local or immutable source document links resolved at that head (Git objects,
+with remote readback for the newly merged Council policy); all ten audit axes and eight
+acceptance rows were checked there. Later corrections add E-AG immutable references and
+the eleventh qualification case; current-head review must recheck the links and all
+eleven cases. Whitespace checks passed. No
 implementation/runtime tests are claimed for this documentation-only diff.
 
 The audit may close with integration blocked. **Ready under dependencies** means the
 missing work and qualification gates are concrete; it does not mean ready to activate,
-L03 implemented, Council V1 complete or runtime contracts qualified. Keep this PR draft
-and do not merge automatically while the agents dependency is unresolved.
+L03 implemented, Council V1 complete or runtime contracts qualified. The agents source
+dependency is merged; current-main integration, D-H/D-LIMIT/D-C, runtime and required
+review/qualification gates remain. Keep this PR draft and do not merge automatically.
