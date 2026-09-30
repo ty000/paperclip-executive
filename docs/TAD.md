@@ -42,7 +42,7 @@ The AD identifiers are retained; wording is revised for the new journeys.
 | AD-02 | Run model work through Paperclip agents/sessions. | Preserve visible identities and run records; no hidden provider loop in the worker. | EXE-02, EXE-08 |
 | AD-03 | Executive produces contributions; Council owns the mandate, verdict, and decision effect. | Prevent two acceptance authorities; model text never directly grants permission. | EXE-05, EXE-06, EXE-15 |
 | AD-04 | Native issues own work; Council owns supervision records; Executive stores only bindings, input snapshots, contributions, and dispatch correlation it needs. | Avoid a second initiative/task/acceptance system. | EXE-01, EXE-04, EXE-06 |
-| AD-05 | Persist before dispatch; use revision checks, stable operation keys, and readback. | No cross-system transaction is assumed; ambiguous outcomes require reconciliation. | EXE-08, EXE-09, EXE-15 |
+| AD-05 | Persist before dispatch; use revision checks, stable operation keys, and a one-attempt receipt. | No cross-system transaction is assumed; ambiguous outcomes remain indeterminate and hold dependent work without resend. | EXE-08, EXE-09, EXE-15 |
 | AD-06 | Apply verdict effects through the qualified Council/native path under its authenticated actor. | Executive must not reproduce Council's decision writer or fall back to privileged SDK writes. | EXE-05, EXE-15 |
 | AD-07 | Use bounded context packets and selected methods, without vector storage. | A prepared ticket supplies the initial context; no upstream memory stack required. | EXE-01, EXE-10, EXE-11 |
 | AD-08 | Bind existing agents first; provision selected profiles separately from activation and preserve customizations. | Prepare distinct product, engineering, quality, delivery and economic contributors; bind identities separately from activation. | EXE-02, EXE-11, EXE-12 |
@@ -67,7 +67,7 @@ flowchart TD
   Council --> Methods[Selected Executive methods]
   Council --> Contributions[Selected Executive specialist contributions]
   Contributions --> Council
-  Council --> Decision[Recorded verdict and qualified native effect]
+  Council --> Decision[Recorded verdict and persistent effect observation]
   Decision --> Execution
   Decision --> Owner[Owner escalation when required]
   Issue --> View[Compact supervision view]
@@ -78,7 +78,7 @@ flowchart TD
 | --- | --- | --- |
 | Intake integration | Linear-to-Paperclip mapping and source capture; later synchronization if selected. | Review decisions or Executive-specific authority. |
 | Paperclip execution | Native issue lifecycle, assigned implementation runs, progress evidence. | Self-acceptance of executor output. |
-| Council | Canonical mandate, review identity, findings, decisions, correction counters, stopping policy, application and readback of effects. | Implicit merge/deploy authority or unqualified alternate-path guarantees. |
+| Council | Canonical mandate, review identity, findings, decisions, correction counters, stopping policy, one-attempt application receipts and effect observations. | Implicit merge/deploy authority or unqualified alternate-path guarantees. |
 | Executive package | Adapted profiles/methods, bounded contribution production, provenance, and an inspection surface. | A second Council, automatic hiring, or competing acceptance records. |
 | Executive worker | Validated context preparation, optional contribution dispatch, persisted operation correlation and result references. | Provider SDK calls, native issue mutation on behalf of Council, or authorization inferred from text. |
 | Host | Authentication, company isolation, permitted storage/reads, sessions, run controls and budgets where supported. | Automatic enforcement of every proposed mandate or cost cap. |
@@ -109,7 +109,7 @@ dependency rather than silently expanding this repository's scope.
 | Checkpoint | Stable trigger ID; kind `plan`, `progress`, or `result`; issue/run; context and mandate revisions; reason; progress/evidence references; known usage and missing measurements. | Authenticated execution/host source; correlation and deduplication precede any model call. |
 | Review subject | Checkpoint plus exact result reference/version and evidence set; repository/commit and artifact identity when reviewing code. | Council checks the current subject before recording and applying a verdict. A mutable branch name alone is insufficient. |
 | Contribution request/result | Review ID; question; selected perspective; permitted context; session/run; attempt; attributable finding, rationale, evidence, assumptions and limitations. | Executive validates terminal structured output; no recursive specialist fan-out. |
-| Council decision observation | Canonical decision ID/revision; subject; authorized actor; outcome; findings; next action; application status and readback reference. | Council owns recording/application. Executive can display a verified observation but cannot manufacture acceptance. |
+| Council decision observation | Canonical decision ID/revision; subject; authorized actor/run; operation/content identity; claimed attempt; outcome; actual native status/response/reference; application status; uncertainty hold; authenticated human disposition; next action. | Council owns recording/application. Executive can display the persistent receipt but cannot manufacture acceptance. Human acknowledgement/abandonment is not native success. |
 
 Conceptual outcomes include proceed within mandate, correction required, accepted,
 escalate, or suspend. Map them explicitly to the selected Council/native API during
@@ -210,7 +210,10 @@ same key is rejected. Track `prepared`, `dispatching`, `observed_success`,
 `observed_failure`, or `outcome_unknown`. A crash, lease expiry or missing callback
 must not cause automatic replay of an operation whose effect is uncertain.
 
-For decision application, query Council/native state before retrying. For sessions,
+For decision application, return the Council receipt before considering any further
+action. A possibly sent attempt is never retried automatically; missing or ambiguous
+native evidence keeps the company/issue held even after authenticated owner
+acknowledgement or abandonment. For sessions,
 persist the returned IDs and terminal output. The pinned SDK's live event stream
 has no proven replay contract; allowed reads of `heartbeat_runs` may support recovery,
 but final output extraction is adapter-specific [PC03, PC06]. Lost session identity
@@ -219,7 +222,9 @@ or multiple matches remain ambiguous; never select by list order.
 L01 currently marks in-flight work `outcome_unknown` after restart and lacks automatic
 recovery of missed terminal output. Its tests do not qualify recovery for this new
 workflow. Implement only the needed reconciliation path and test it with the selected
-adapter; manual resolution of genuinely ambiguous effects must remain possible.
+adapter. Authenticated owner acknowledgement or abandonment of a genuinely ambiguous
+effect must remain possible, but it neither proves native success nor clears the
+uncertainty hold for dependent work.
 
 Changed ticket snapshots, criteria, mandates, or results invalidate affected pending
 reviews. Council must recheck the current subject/mandate at decision application,
@@ -246,7 +251,8 @@ Required integration checks before supervised activation:
 - Preserve Council's applicable delegation profile, including reserved product
   trade-offs, infrastructure cost changes and both task and period budget limits.
 - Apply decisions only through the qualified Council/native contract, with the
-  expected actor and exact subject. Confirm the recorded decision and native effect.
+  expected actor and exact subject. Preserve the one-attempt receipt and actual native
+  observation; confirm an effect only from matching evidence.
 - Verify that the covered continuation/completion path cannot silently proceed when
   a required Council decision is missing, stale, denied or unapplied.
 - Test relevant alternative executor paths before any bypass-resistance claim;
@@ -322,14 +328,15 @@ The existing G identifiers are retained with revised scope.
 
 | Gate | Required evidence | Blocks |
 | --- | --- | --- |
-| G01 — Council authority and effect | Distinct authenticated identities; exact subject/mandate; allowed and denied decisions; confirmed native effect; selected alternate paths; revocation/in-flight handling. | Claims of enforced supervision and version-bound acceptance. |
-| G02 — Durable execution and controls | Real sessions/output; duplicate and concurrent signals; restart/missed event reconciliation; persisted counters; qualified checkpoint/timeout and selected-limit enforcement; uncertain effects. | Autonomous continuation and B04 readiness. |
+| G01 — Council authority and effect | Distinct authenticated identities; exact subject/mandate; allowed and denied decisions; persistent one-attempt receipt; matching native evidence when effect is called confirmed; selected alternate paths; revocation/in-flight handling. | Claims of enforced supervision and version-bound acceptance. |
+| G02 — Durable execution and controls | Real sessions/output; duplicate and concurrent signals; restart/missed event handling; persisted uncertainty holds and counters; qualified checkpoint/timeout and selected-limit enforcement; authenticated human disposition remains separate from native success. | Autonomous continuation and B04 readiness. |
 | G03 — Profile and method fidelity | Provenance/licensing, preservation of customization, selected runtime instructions/skills and actual contribution attribution. | Claims that adapted executive methods are loaded and usable. |
 | G04 — Product value and envelope | Reference ticket, criteria, mandate/thresholds, minimal sufficient review, real correction/re-review, drift and stopping case, time/usage and interventions compared with simpler review. | Usable-release and net-value claims. |
 
 Use deterministic tests for validation, classification, state/revision checks and
 budget accounting. Then qualify the narrow integration on an authorized disposable
-host with real actors, persistence and native readback. Finally exercise a bounded
+host with real actors, persistence, receipt readback and actual observations from
+existing supported native interfaces. Finally exercise a bounded
 real-agent development journey. Synthetic verdicts prove neither review judgment
 nor the real correction workflow; the prior bridge experiment is not a substitute.
 
@@ -338,7 +345,7 @@ nor the real correction workflow; the prior bridge experiment is not a substitut
 | EXE-01, EXE-03 | Ticket snapshot, plan checkpoint; AD-07/10/11. | Prepared ticket reused; overlarge plan reduced without new upstream planning. |
 | EXE-02, EXE-11 | Selected methods and conditional contributions; AD-02/08. | Distinct selected opinions are attributable; non-relevance is explicit and customization survives. |
 | EXE-04, EXE-07 | Exact subject/evidence and separate outcome; AD-03/05. | Changed result cannot inherit acceptance; business effect remains unknown when unmeasured. |
-| EXE-05, EXE-06, EXE-15 | Council ownership and native readback; AD-03/04/06. | Denied/stale/unapplied decision cannot be displayed as applied acceptance. |
+| EXE-05, EXE-06, EXE-15 | Council ownership, one-attempt receipt and native observation; AD-03/04/05/06. | Denied, stale or indeterminate application cannot be displayed as applied acceptance; owner disposition cannot manufacture success. |
 | EXE-08, EXE-09 | Journal, reconciliation, persisted limits; AD-05/12. | Restart does not replay effects or reset a correction budget; stop is observable. |
 | EXE-10, EXE-12 | Scoped context, authenticated identity, readiness and UI; AD-01/07/09. | Cross-company or supplied-content authority is refused; lifecycle states remain distinct. |
 | EXE-13, EXE-14, EXE-16 | Material signals, finding classes and measured review overhead; AD-09/10/12. | Drift affects the next iteration; optional polish does not block; review cost stays visible. |
@@ -354,7 +361,7 @@ Automated Linear ingestion can follow without changing supervision ownership.
 
 Before implementation, resolve only what that slice requires:
 
-1. The selected Council/host revision and narrow contribution/decision-readback API.
+1. The selected Council/host revision and narrow contribution/decision-receipt contract over the existing public issue API.
 2. The host/orchestrator checkpoint, independent timeout and stop mechanism.
 3. Canonical attempt/counter checks for serial dispatch and the selected limits.
 4. Exact result/evidence identity and decision-time version checks.
