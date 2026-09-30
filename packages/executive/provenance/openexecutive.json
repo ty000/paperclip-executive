@@ -1,0 +1,41 @@
+{
+  "upstream": "https://github.com/SenteLabsAI/OpenExecutive",
+  "revision": "13da433bc6f3ae97e78bb8c90f06bb5e49953447",
+  "license": "Apache-2.0",
+  "notice": "Open Executive, Copyright 2025 Open Executive Contributors",
+  "derivedFiles": [
+    {
+      "destination": "profiles/executive/AGENTS.md",
+      "destinationSha256": "46c9eafe8ff6547f4503079a58636fe380dc3af58f83aad6ad67ba9053fb146a",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/prompts/executive_persona.py",
+          "sha256": "92581439488b66e36cddbd387a6f87fbea55cc63d87cbcfc1804f5b594d68875"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/cache_manager.py",
+          "sha256": "489544be85537950fb6d0e787b30d3913ddf4758da01607a2715cbf20ce3346b"
+        },
+        {
+          "path": "packages/core/openexecutive/orchestrator/executive.py",
+          "sha256": "5674dd7dc7c861a4cc7ae8d5e93a15d3546d6892c085e7e88b3edf3bc1bee9df"
+        },
+        {
+          "path": "packages/core/openexecutive/orchestrator/router.py",
+          "sha256": "d44ddbef984b5f38087de42f50b0e56faca40a13ddf04457079f3ebfbe6bc5d8"
+        }
+      ],
+      "changes": [
+        "Removed fictional biography and credential claims",
+        "Removed proactive actions, external delivery, hidden memory, and specialist fan-out",
+        "Added Paperclip advice-only authority and structured output boundaries"
+      ],
+      "unreproducedCapabilities": [
+        "OpenExecutive Python routing loop",
+        "specialist registry and parallel consultation",
+        "episodic memory and knowledge retrieval",
+        "email, alerts, scheduler, workflows, and provider defaults"
+      ]
+    }
+  ]
+}
