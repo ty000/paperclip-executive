@@ -1,28 +1,29 @@
 # Paperclip Executive — Technical Architecture Document
 
-Version: 0.2 — September 30, 2026.
+Version: 0.3 — September 30, 2026.
 
-Status: revised architecture derived from PRD 0.2; supervision contracts are
+Status: revised architecture derived from PRD 0.3; supervision contracts are
 proposed and require implementation and runtime qualification.
 
 ## 1. Authority, baseline, and change from version 0.1
 
-The [PRD 0.2](PRD.md) owns product requirements. This TAD covers B03 (proportionate
+The [PRD 0.3](PRD.md) owns product requirements. This TAD covers B03 (proportionate
 execution direction), B04 (in-flight drift response), and B05 (bounded result review)
 for a prepared software development ticket. Council supervision is now central.
 Version 0.1's AD-10, manual and Council-independent H1, is explicitly superseded.
 Historical B01 advice and B02 broad initiative coordination are not relabeled as
 implemented supervision. The existing advice feature may remain available.
 
-Only PRD/TAD are revised here. [Roadmap 0.1](ROADMAP.md) still contains the earlier
+This revision aligns agent preparation with the canonical catalogue and its L03
+merge dependency. [Roadmap 0.1](ROADMAP.md) still contains the earlier
 horizons; its Council deferral and B01/B02 ordering do not govern this design.
-No backlog or sprint plan is introduced by this document.
+The L02 sprint plan remains historical; the current backlog records the agents prerequisite.
 
 | Source | Baseline | Evidence boundary |
 | --- | --- | --- |
-| Executive | `6b157f8b57967cf7695a155df7fab72e03028e3c`; [L01 report](IMPLEMENTATION-L01.md), package manifest and worker | Direct advice through native sessions, persisted attribution, one adapted profile; no Council integration. |
-| Product requirements | PRD 0.2 in this change | Owner's clarified direction; not runtime evidence. |
-| Council | [PRD 0.2 at `365809e`](https://github.com/ty000/paperclip-council/blob/365809efdf190010f818a25b938bad59ebd4f33c/docs/PRD.md) | Supervision responsibilities, acceptance semantics, proportionality, and owner-specific delegation rules; no assumed integration API. |
+| Executive | `ccd02e1f594b5fe6083d4c2f1c1ad7533bc7f54e` (L02 PR #4); [L02 report](IMPLEMENTATION-L02.md), manifest and worker. Historical L01 base: `6b157f8`. | Direct advice and prepared-ticket contribution through native sessions; L02 evidence remains scoped, with no Council decision integration. |
+| Product requirements | PRD 0.3 in this change | Owner's clarified direction; not runtime evidence. |
+| Council | [PRD 0.3 at `bc6d71f`](https://github.com/ty000/paperclip-council/blob/bc6d71fa6ede8f239c7990af1885dc07cccc7c18/docs/PRD.md) | Supervision responsibilities, acceptance semantics, proportionality, and owner-specific delegation rules; no assumed integration API. |
 | Paperclip | `61b3fd57a695614dc4a37e2303f426a34a9795cf` | Native contracts documented from the prior source inspection; source references retained below, not a fresh deployed-host audit. |
 | OpenExecutive | `13da433bc6f3ae97e78bb8c90f06bb5e49953447` | Candidate instructions and methods, not a backend dependency. |
 
@@ -44,7 +45,7 @@ The AD identifiers are retained; wording is revised for the new journeys.
 | AD-05 | Persist before dispatch; use revision checks, stable operation keys, and readback. | No cross-system transaction is assumed; ambiguous outcomes require reconciliation. | EXE-08, EXE-09, EXE-15 |
 | AD-06 | Apply verdict effects through the qualified Council/native path under its authenticated actor. | Executive must not reproduce Council's decision writer or fall back to privileged SDK writes. | EXE-05, EXE-15 |
 | AD-07 | Use bounded context packets and selected methods, without vector storage. | A prepared ticket supplies the initial context; no upstream memory stack required. | EXE-01, EXE-10, EXE-11 |
-| AD-08 | Bind existing agents first; provision selected profiles separately from activation and preserve customizations. | One executor and one distinct Council reviewer can start; specialists are conditional. | EXE-02, EXE-11, EXE-12 |
+| AD-08 | Bind existing agents first; provision selected profiles separately from activation and preserve customizations. | Prepare distinct product, engineering, quality, delivery and economic contributors; bind identities separately from activation. | EXE-02, EXE-11, EXE-12 |
 | AD-09 | Extend the existing plugin page with a compact supervision view and native issue/Council links. | Show decisions and next actions without a parallel project board. | EXE-12, EXE-16 |
 | AD-10 | Use bounded execution checkpoints and material signals for supervision, with automatic continuation only inside the mandate. | Replaces manual Council-independent H1; avoids both final-review-only detection and constant model polling. | EXE-03, EXE-09, EXE-13 |
 | AD-11 | Start at an existing Paperclip issue with a supplied Linear source snapshot/reference. | Prove supervision before automating intake; full Linear synchronization stays outside Executive. | EXE-01, EXE-06 |
@@ -64,7 +65,7 @@ flowchart TD
   Execution --> Checkpoint[Plan, material progress signal, or result]
   Checkpoint --> Council[Council review and mandate]
   Council --> Methods[Selected Executive methods]
-  Council --> Contributions[Optional Executive specialist contributions]
+  Council --> Contributions[Selected Executive specialist contributions]
   Contributions --> Council
   Council --> Decision[Recorded verdict and qualified native effect]
   Decision --> Execution
@@ -130,8 +131,9 @@ context required for the review; preserve references for further permitted inspe
 
 1. Bind the existing issue and captured ticket context to the Council mandate.
    Check identity separation, required limits, owner destination and path readiness.
-2. Persist and review the executor's short plan (B03). A single Council reviewer
-   using the selected methods may suffice; skip unnecessary specialist dispatch.
+2. Persist and review the executor's short plan (B03). Use the catalogue's proposed distinct opinions and one accountable Council
+   reviewer;
+   explicitly omit irrelevant expertise and enforce the selected consultation limits.
 3. Release a bounded execution segment only after the applicable direction is
    recorded and its continuation effect is confirmed. Execution remains native.
 4. At a material checkpoint, evaluate deterministic triggers before scheduling
@@ -266,7 +268,7 @@ workflow, not an automatic switch to advisory mode.
 
 Retain the adapted L01 Executive profile and its provenance as existing material;
 do not claim it is already a qualified Council reviewer. Review-specific methods
-are selected for their ability to answer the three PRD perspectives. Candidate
+are selected for their ability to answer the five default review perspectives and conditional expertise. Candidate
 upstream sources include product prioritization, strategy/scoping and operations
 methods [OE01, OE02]. A technical proportionality method may need original authoring
 or another reviewed source; do not fabricate an OpenExecutive origin.
@@ -334,7 +336,7 @@ nor the real correction workflow; the prior bridge experiment is not a substitut
 | PRD requirements | Architecture coverage | Discriminating validation |
 | --- | --- | --- |
 | EXE-01, EXE-03 | Ticket snapshot, plan checkpoint; AD-07/10/11. | Prepared ticket reused; overlarge plan reduced without new upstream planning. |
-| EXE-02, EXE-11 | Selected methods and conditional contributions; AD-02/08. | One reviewer suffices; needed specialist is attributable and customization survives. |
+| EXE-02, EXE-11 | Selected methods and conditional contributions; AD-02/08. | Distinct selected opinions are attributable; non-relevance is explicit and customization survives. |
 | EXE-04, EXE-07 | Exact subject/evidence and separate outcome; AD-03/05. | Changed result cannot inherit acceptance; business effect remains unknown when unmeasured. |
 | EXE-05, EXE-06, EXE-15 | Council ownership and native readback; AD-03/04/06. | Denied/stale/unapplied decision cannot be displayed as applied acceptance. |
 | EXE-08, EXE-09 | Journal, reconciliation, persisted limits; AD-05/12. | Restart does not replay effects or reset a correction budget; stop is observable. |
@@ -360,8 +362,14 @@ Before implementation, resolve only what that slice requires:
 
 These are explicit qualification dependencies, not permission to build a generic
 connector framework, second Council engine, scheduler, learning system or every
-future profile. A later backlog/sprint plan must trace to PRD 0.2 and this TAD;
+future profile. A later backlog/sprint plan must trace to PRD 0.3 and this TAD;
 roadmap 0.1's old sequence is not an implementation instruction.
+
+The [agent catalogue](AGENT-CATALOG.md), [skill registry](AGENT-SKILLS.md),
+[provisioning procedure](AGENT-PROVISIONING.md) and [L03 handoff](AGENT-HANDOFF-L03.md)
+are the canonical prepared-asset references. L03 may inspect contracts and design
+independent tests in parallel, but must integrate the merged agents lot and qualify
+its exact versions before merging. This revision adds no panel runtime or L03 code.
 
 ## 12. Source references
 

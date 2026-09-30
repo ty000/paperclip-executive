@@ -6,7 +6,7 @@
   "derivedFiles": [
     {
       "destination": "profiles/executive/AGENTS.md",
-      "destinationSha256": "e526255d6c021098d5b88d9e6a8ab8b2d1f842b7bf77f3ce930b1b8dda2fb51e",
+      "destinationSha256": "336bf0ae078d7cebee9222a45bd977da151ba83158eb6b3739600981ed413d22",
       "sources": [
         {
           "path": "packages/core/openexecutive/prompts/executive_persona.py",
@@ -29,13 +29,326 @@
         "Removed fictional biography and credential claims",
         "Removed proactive actions, external delivery, hidden memory, and specialist fan-out",
         "Added Paperclip advice-only authority and structured output boundaries",
-        "Added a bounded L02 prepared-ticket review method with proportional findings and no Council authority"
+        "Added a bounded L02 prepared-ticket review method with proportional findings and no Council authority",
+        "Version 1.1.0 separates reusable skills while retaining self-contained L01/L02 fallback and exact output contracts"
       ],
       "unreproducedCapabilities": [
         "OpenExecutive Python routing loop",
         "specialist registry and parallel consultation",
         "episodic memory and knowledge retrieval",
         "email, alerts, scheduler, workflows, and provider defaults"
+      ]
+    },
+    {
+      "destination": "skills/direct-advice/SKILL.md",
+      "destinationSha256": "ada811c5cb8d10394d84ee73fcca17197a635950f7c0c3fe75907436112af986",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/prompts/executive_persona.py",
+          "sha256": "92581439488b66e36cddbd387a6f87fbea55cc63d87cbcfc1804f5b594d68875"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/cache_manager.py",
+          "sha256": "489544be85537950fb6d0e787b30d3913ddf4758da01607a2715cbf20ce3346b"
+        }
+      ],
+      "changes": [
+        "Extracted bounded direct-advice procedure",
+        "Removed autonomous actions, routing, hidden memory, provider defaults, and external delivery"
+      ],
+      "unreproducedCapabilities": [
+        "OpenExecutive orchestration",
+        "provider selection",
+        "episodic memory",
+        "external delivery"
+      ]
+    },
+    {
+      "destination": "profiles/product/AGENTS.md",
+      "destinationSha256": "2b9158b84262c01e1e6435641eea8cffc7d35af46f22941a2b8cd7e87aede9e1",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/product.py",
+          "sha256": "37a86812e049224469bff0a434c9975549e8c1861523dcca98b8f757eac09f6a"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted CPO guidance into a bounded advisory charter",
+        "Removed biography, model choice, autonomous research, and universal benchmark claims"
+      ],
+      "unreproducedCapabilities": [
+        "OpenExecutive specialist registry",
+        "provider defaults",
+        "autonomous consultation"
+      ]
+    },
+    {
+      "destination": "profiles/operations/AGENTS.md",
+      "destinationSha256": "9bd712592350ad80b4dfcde906357f41d4f884dd6252916408bb036f73e10b77",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/operations.py",
+          "sha256": "89752cbd5f5d7c0636f75dfb0735fcb777e0c0fe3ae2923f919c6bc88c7da81a"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted COO guidance into reliability and operability review questions",
+        "Removed workflow execution and provider defaults"
+      ],
+      "unreproducedCapabilities": [
+        "OpenExecutive workflow engine",
+        "external vendor actions"
+      ]
+    },
+    {
+      "destination": "profiles/economics/AGENTS.md",
+      "destinationSha256": "867dc76590c9b893a3bb7b256e4a9ad3c3856f4a88f3eec6cca62284c784a7e1",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/finance.py",
+          "sha256": "15e4a72de2cc93b86ab03b3a63a1d2f746555d7645b66cebc3ea2005bdbafc31"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted CFO guidance into supplied-number resource analysis",
+        "Removed fundraising defaults, model choice, and spending authority"
+      ],
+      "unreproducedCapabilities": [
+        "financial-system access",
+        "provider defaults",
+        "transactions"
+      ]
+    },
+    {
+      "destination": "profiles/strategy/AGENTS.md",
+      "destinationSha256": "20a741ec91908069aff16d44276e6c298117022939dccb124c4cd1856877283c",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/strategy.py",
+          "sha256": "146c21bc7208023cfb9c09343d7eb235fe8d9a9b9afbd9fb5c24a2d02aa4be20"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted CSO guidance into ticket-level strategic-fit questions",
+        "Removed scale assumptions, model choice, and commitment authority"
+      ],
+      "unreproducedCapabilities": [
+        "market research",
+        "partnership execution",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "profiles/marketing/AGENTS.md",
+      "destinationSha256": "f1090ccf3e9ceb587f106d688dcb9db12eb5fe3ac8bd9d70afbd44b7018f62f9",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/marketing.py",
+          "sha256": "7e33c2ace2edeeeb76a4139e53ea87463a2f893a560a8d462c031f6768c1b514"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted CMO guidance into positioning and launch review",
+        "Removed campaign execution, outreach, and provider defaults"
+      ],
+      "unreproducedCapabilities": [
+        "campaign delivery",
+        "external communications",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "profiles/sales-customer/AGENTS.md",
+      "destinationSha256": "e0e494a753308275e7efeb6650ea7e8e317f7d73fc17709cd5bdf06d9c82cd7e",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/sales.py",
+          "sha256": "ba7cb5f6985d77f2340d7109cf8a06f88277c0571bc56dc3b44e8618ee83232e"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted sales guidance into supplied-evidence customer perspective",
+        "Removed outreach, CRM mutation, negotiation, and provider defaults"
+      ],
+      "unreproducedCapabilities": [
+        "pipeline integrations",
+        "customer contact",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "profiles/organization-talent/AGENTS.md",
+      "destinationSha256": "5b5173293722c0addf611b94cea1f1586bae9e6e206f07868e84e45d2a1c97f6",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/hr_talent.py",
+          "sha256": "2ef479a15aae99ede6631a30c6ad3ab4cb8971b2a20c67435cdbfcde7cb57c85"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted CHRO guidance into organization and adoption review",
+        "Removed employment actions, personal-data access, and provider defaults"
+      ],
+      "unreproducedCapabilities": [
+        "HRIS access",
+        "employment actions",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "profiles/legal-compliance/AGENTS.md",
+      "destinationSha256": "19697017be121f35c4c73a2540ce031c7145a8b219a52ef830370da50f539f34",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/legal.py",
+          "sha256": "f95776c71b1ef6bf828ca1782a43985ebf4bbed4413acbf52690a9caf066aea0"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted General Counsel guidance into issue spotting and escalation",
+        "Removed binding advice, representations, and provider defaults"
+      ],
+      "unreproducedCapabilities": [
+        "licensed legal advice",
+        "filings",
+        "counterparty contact",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "profiles/board-communications/AGENTS.md",
+      "destinationSha256": "82d071961bf5c02904ab9eb74c7075f5f62a59e1f1e0e7d653e82fe065030149",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/board_comms.py",
+          "sha256": "05f1e5c6cd371163ef18e37f1dbae4b89cfac1e807202a76331dbaf976f7985f"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Converted board guidance into bounded unsent drafting",
+        "Removed investor outreach, delivery, and provider defaults"
+      ],
+      "unreproducedCapabilities": [
+        "board or investor contact",
+        "external delivery",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "profiles/quality/AGENTS.md",
+      "destinationSha256": "735729682a7a22478956e862d34c47d91ade60294721669a8a0576136a5625c5",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/quality_judge.py",
+          "sha256": "fd79cb3dd7fa830447970bbe8296faa8b3582058861f1da4abbda8797b7a778e"
+        },
+        {
+          "path": "packages/core/openexecutive/prompts/committee_prompts.py",
+          "sha256": "3c1b62d71843f8c63778eeb89273e521c77bffd7c8e92e409f4e5adf8d042cb1"
+        }
+      ],
+      "changes": [
+        "Converted quality-judge separation into evidence-focused advisory review",
+        "Removed editable runtime Council and provider behavior"
+      ],
+      "unreproducedCapabilities": [
+        "OpenExecutive committee runtime",
+        "live prompt overrides",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "profiles/data-experimentation/AGENTS.md",
+      "destinationSha256": "a926adf95953b01e013b1f58cc7b6e26bf9e4bb7b54f595d5f502a06e231cc1b",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/agents/research_council.py",
+          "sha256": "5fd0935e895e1456f298eb33bfa27a64d9ef6b547685fa04ea5feb3789f7fe00"
+        }
+      ],
+      "changes": [
+        "Used research/evaluation separation only as design input for a new measurement charter",
+        "Did not port research fan-out, retrieval, model controls, or provider behavior"
+      ],
+      "unreproducedCapabilities": [
+        "seven-specialist research fan-out",
+        "web retrieval",
+        "model override",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "skills/stakeholder-communication/SKILL.md",
+      "destinationSha256": "ea61fdf4b613efc5ba0265d23eb893e917a9477a3931f4881347af453cf21660",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "Extracted a shared evidence-bound drafting method",
+        "Removed sending, publishing, outreach, and autonomous delivery"
+      ],
+      "unreproducedCapabilities": [
+        "external delivery",
+        "integration access",
+        "provider defaults"
+      ]
+    },
+    {
+      "destination": "skills/specialist-advisory/SKILL.md",
+      "destinationSha256": "92dbd9552ccfd2b42351eb8b93469f562a43255ce77ddf14bddc9ed6c133128d",
+      "sources": [
+        {
+          "path": "packages/core/openexecutive/prompts/domain_prompts.py",
+          "sha256": "17bf8c3b07550cafcbc952a72556fa1f17fa8f65aca62023e3c33f305bb65889"
+        }
+      ],
+      "changes": [
+        "New shared Paperclip method informed by upstream separation of domain perspectives",
+        "Adds explicit relevance, evidence classification and no-decision authority boundary"
+      ],
+      "unreproducedCapabilities": [
+        "specialist fan-out",
+        "provider defaults",
+        "upstream routing"
       ]
     }
   ]

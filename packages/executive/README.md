@@ -61,3 +61,18 @@ The Executive profile adapts selected OpenExecutive material at revision
 `13da433bc6f3ae97e78bb8c90f06bb5e49953447`. See `profiles/executive/AGENTS.md`,
 `provenance/openexecutive.json`, `NOTICE`, and `LICENSES/Apache-2.0.txt`. The surrounding project
 remains MIT-licensed; the adapted profile retains its Apache-2.0 obligations.
+
+## Prepared development agents
+
+The package also distributes 18 versioned role profiles, eight reusable source
+skills and an inactive declarative catalogue in `config/`. They are prepared assets;
+installing this package does not hire these profiles or import/assign their skills.
+The runtime manifest still declares only the existing paused `executive` agent.
+
+See the repository's [canonical catalogue](../../docs/AGENT-CATALOG.md),
+[skill registry](../../docs/AGENT-SKILLS.md),
+[provisioning procedure](../../docs/AGENT-PROVISIONING.md), and
+[L03 handoff](../../docs/AGENT-HANDOFF-L03.md). Run `pnpm validate:agent-catalog` to check
+prepared assets and `pnpm test` for L01/L02 regressions plus catalogue validation.
+The package version and runtime manifest version remain their historical values;
+the prepared catalogue carries its own explicit version and provenance.

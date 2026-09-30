@@ -1,6 +1,6 @@
 # Paperclip Executive — PRD
 
-Version: 0.2 — September 30, 2026.
+Version: 0.3 — September 30, 2026.
 
 Status: revised product direction; requirements for a future usable journey, not a
 claim that the current package implements or qualifies it.
@@ -49,20 +49,19 @@ it does not authorize agents to redefine the objective or expand their authority
 | Council | Own the supervision mandate, review, correction or acceptance decision, and its confirmed effect in the covered workflow. | Executive must not duplicate or bypass this responsibility. |
 | Paperclip host | Execute agents and provide native work, identities, permissions, and run records. | Platform features alone do not demonstrate an integrated supervision guarantee. |
 
-Three perspectives guide the initial review:
+The default proposed composition brings five distinct opinions to a development
+ticket: product, architecture/engineering, quality, delivery/capacity and economics.
+The accountable Council reviewer synthesizes them and owns the decision under the
+mandate. Security, UX, operations and other expertise join when the ticket makes
+their question relevant. An explicit not-relevant response is valid; no profile
+must manufacture a finding. The owner prefers broader coverage over a systematically
+minimal team. This supersedes the earlier default of one generalist applying all
+perspectives; it does not require a panel engine, voting or unlimited consultations.
 
-| Perspective | Useful question |
-| --- | --- |
-| Product | Does this work satisfy the intended user need and acceptance criteria without adding unrelated scope? |
-| Technical | Is the design and verification sufficient for the actual change and its risks? |
-| Delivery and economics | Is the next iteration worth its likely time and resource cost, and is there a simpler sufficient path? |
-
-These are perspectives, not a requirement to deploy three agents or hold a meeting
-for every ticket. Start with a reviewer distinct from the executor; it may apply
-several perspectives. Consult an additional specialist only for an identified
-question likely to change the decision. Do not describe one reviewer using several
-perspectives as a demonstrated multidisciplinary council. Executive need not become
-an additional permanent coordinator above an existing orchestrator and Council.
+The [canonical agent catalogue](AGENT-CATALOG.md) defines prepared profiles,
+responsibilities, consultation limits and overlap boundaries. Preparation is separate
+from provisioning, loading and execution. Executive synthesis remains optional and
+does not create another decision authority above Council.
 
 ## 3. Reference input and core journeys
 
@@ -87,8 +86,8 @@ A source update does not silently replace the mandate or approve a changed resul
 
 Before implementation, the executor proposes a short approach linked to the ticket.
 The designated reviewer checks product fit, a sufficient technical approach, and
-expected effort within the mandate. A small, clear ticket can receive a short direct
-review; specialists and a separate executive synthesis are not mandatory.
+expected effort within the mandate. A small, clear ticket receives concise opinions from the selected composition;
+a separate Executive synthesis is optional and review depth stays proportionate.
 
 The outcome is an attributable direction to proceed, a targeted plan correction,
 or an escalation naming the missing decision. It is not acceptance of code that
@@ -132,8 +131,8 @@ budget exhaustion does not turn a noncompliant result into an acceptable one.
 ## 4. First useful scope and exclusions
 
 The first useful journey covers B03–B05 for one prepared ticket, with one executor
-and one distinct accountable Council reviewer. Product, technical, and delivery
-perspectives must be available; multiple specialist agents are conditional.
+and one distinct accountable Council reviewer, supported by the proposed five-opinion
+composition. Additional expertise is conditional; all consultation work is bounded.
 
 The first implementation slice may begin with an existing Paperclip issue and a
 supplied Linear reference/context snapshot. Automated Linear ingestion, bidirectional
@@ -192,6 +191,7 @@ a business improvement, authorize a merge, or prove deployment.
 
 ## 6. Requirements and acceptance criteria
 
+Version 0.3 updates EXE-02 for the broader agent-preparation preference.
 These requirements replace the initial advice/initiative framing. The EXE IDs remain
 stable where their intent carries forward; their wording is revised in version 0.2.
 EXE-13 through EXE-16 are new. B01/B02 remain historical journey identifiers and are
@@ -200,7 +200,7 @@ not reused for B03–B05.
 | ID | Requirement | Observable criterion |
 | --- | --- | --- |
 | EXE-01 | Prepared context | The reviewer can identify objective, criteria, exclusions, source, and decisive unknowns without reconstructing a full conversation. |
-| EXE-02 | Selective perspectives | A direct review can suffice; every specialist answers a specific question with attributed evidence, assumptions, and dissent. |
+| EXE-02 | Selective perspectives | The proposed default collects distinct relevant opinions; every specialist answers a specific question with attributed evidence, assumptions, and dissent. |
 | EXE-03 | Proportionate direction | B03 yields a sufficient plan, targeted correction, or explicit blocker without recreating upstream planning. |
 | EXE-04 | Identified submission | Review targets an exact result and evidence version; an update cannot inherit previous acceptance. |
 | EXE-05 | Explicit authority | Covered actions proceed under the mandate; denied or out-of-scope actions remain blocked without a privileged fallback. |
@@ -241,7 +241,7 @@ this revision does not create a new design system.
 
 | Scenario | Expected result |
 | --- | --- |
-| Small sufficient implementation | One accountable reviewer can accept without mandatory specialist calls or cosmetic correction. |
+| Small sufficient implementation | Distinct concise opinions inform one accountable reviewer; not-relevant responses and zero findings are valid, and cosmetic correction is optional. |
 | Overengineered plan | Review points to the actual need and proposes a smaller sufficient approach. |
 | Drift before final submission | A checkpoint or host signal surfaces the drift and affects the next authorized iteration. |
 | Material result defect | V1 receives a specific correction; V2 is reviewed against preserved criteria and affected behavior. |
@@ -268,8 +268,8 @@ are promised by this document.
 | Source | Reference | Evidence boundary |
 | --- | --- | --- |
 | Owner clarification and update request, September 30, 2026 | This conversation: autonomous development from prepared Linear tickets, supervised by executive perspectives in Council | Product direction and authorization to revise PRD/TAD; no runtime activation. |
-| Executive implementation | Repository baseline `6b157f8b57967cf7695a155df7fab72e03028e3c`; [L01 report](IMPLEMENTATION-L01.md), `packages/executive/src/manifest.ts` and `worker.ts` | Existing direct-advice package and adapted Executive profile; no B03–B05 implementation or qualification. |
-| Council product definition | [PRD 0.2 at `365809e`](https://github.com/ty000/paperclip-council/blob/365809efdf190010f818a25b938bad59ebd4f33c/docs/PRD.md) | Ownership of supervision, proportionate review, delegated decisions, and existing owner-specific limits; not proof of an Executive integration. |
+| Executive implementation | Current source base `ccd02e1f594b5fe6083d4c2f1c1ad7533bc7f54e` (merged L02 PR #4); [L02 report](IMPLEMENTATION-L02.md). Historical L01 base `6b157f8` and [report](IMPLEMENTATION-L01.md) remain separate. | Direct advice plus prepared-ticket contribution and scoped L02 evidence; no complete B03–B05 supervision qualification. |
+| Council product definition | [PRD 0.3 at `bc6d71f`](https://github.com/ty000/paperclip-council/blob/bc6d71fa6ede8f239c7990af1885dc07cccc7c18/docs/PRD.md) | Ownership of supervision, proportionate review, delegated decisions, and existing owner-specific limits; not proof of an Executive integration. |
 | Paperclip source baseline | [Revision `61b3fd5`](https://github.com/paperclipai/paperclip/tree/61b3fd57a695614dc4a37e2303f426a34a9795cf) | Native contracts recorded in the TAD; compatibility with a future target requires verification. |
 | OpenExecutive source baseline | [Revision `13da433`](https://github.com/SenteLabsAI/OpenExecutive/tree/13da433bc6f3ae97e78bb8c90f06bb5e49953447) | Candidate profiles/methods; no full upstream runtime dependency selected. |
 
@@ -285,9 +285,9 @@ place. New methods authored for this workflow must not be mislabeled as upstream
 [ROADMAP.md](ROADMAP.md) is still version 0.1 and has not been revised here. Its H3
 placement of optional Council and its B01/B02-first sequence are superseded by this
 PRD for current scope. Other scenarios remain deferred ideas, not commitments.
-No versioned backlog or sprint plan was found in this repository's local history
-at the inspected baseline. [TAD 0.2](TAD.md) is the architecture companion; a future
-backlog must derive from this revised PRD rather than the old horizon order.
+The [backlog](BACKLOG.md) and historical [L02 sprint plan](SPRINT-PLAN-L02.md)
+now exist. [TAD 0.3](TAD.md) is the architecture companion; L03 planning must
+consume the merged [agent handoff](AGENT-HANDOFF-L03.md), not the old horizon order.
 
 ## 10. Decisions required for the first implementation slice
 
@@ -295,7 +295,8 @@ backlog must derive from this revised PRD rather than the old horizon order.
 2. Set the mandate, measurable operating limits, stopping thresholds, and owner destination.
 3. Qualify the narrow Executive-to-Council contribution and decision-effect boundary.
 4. Select the progress signals/checkpoints that make B04 effective on the target host.
-5. Select only the methods and, if justified, additional specialists needed for that ticket.
+5. Adopt the proposed five-opinion composition within explicit limits; record relevance
+   and select conditional expertise for ticket-specific questions.
 
 These decisions refine the pilot; they do not reopen the choice to use native
 Paperclip execution or make a full OpenExecutive port a prerequisite.

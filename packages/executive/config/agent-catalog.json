@@ -1,0 +1,185 @@
+{
+  "$schema": "./agent-catalog.schema.json",
+  "schemaVersion": "paperclip-executive.agent-catalog.v1",
+  "catalogVersion": "1.0.0",
+  "sourceContract": {
+    "repository": "paperclip",
+    "commit": "61b3fd57a695614dc4a37e2303f426a34a9795cf"
+  },
+  "agents": [
+    {
+      "profileId": "software-executor",
+      "profileVersion": "1.0.0",
+      "instructionsSource": "profiles/software-executor/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": {
+        "name": "Software Executor", "role": "engineer", "title": "Software Executor",
+        "capabilities": "Implements bounded software tickets and returns replayable evidence for independent review.",
+        "desiredSkills": ["paperclip-executive.implementation-execution"],
+        "adapterType": "codex_local",
+        "adapterConfig": { "engine": "acp", "model": "gpt-6-sol", "modelReasoningEffort": "high", "mode": "persistent", "nonInteractivePermissions": "deny" },
+        "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } },
+        "budgetMonthlyCents": 0,
+        "permissions": { "canCreateAgents": false, "canCreateSkills": false }
+      },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": {
+        "workspace": "isolated-project-write",
+        "tools": ["Paperclip issue read/comment", "scoped repository filesystem and Git", "project validation commands"],
+        "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding", "repository credentials only when explicitly required"],
+        "authorization": ["assigned ticket", "bounded write scope", "separate approval for publish, deploy, or external effects"]
+      },
+      "skills": [{ "key": "paperclip-executive.implementation-execution", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "council-reviewer", "profileVersion": "1.0.0", "instructionsSource": "profiles/council-reviewer/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": {
+        "name": "Council Reviewer", "role": "general", "title": "Generalist Council Reviewer",
+        "capabilities": "Synthesizes specialist evidence and records a Council decision within the granted mandate.",
+        "desiredSkills": ["paperclip-executive.council-decision-review"], "adapterType": "codex_local",
+        "adapterConfig": { "engine": "acp", "model": "gpt-6-astra", "modelReasoningEffort": "high", "mode": "persistent", "nonInteractivePermissions": "deny" },
+        "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0,
+        "permissions": { "canCreateAgents": false, "canCreateSkills": false }
+      },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "project-read-only", "tools": ["Paperclip issue, decision, and work-product readback"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["explicit Council mandate", "decision write only through the authorized Council surface"] },
+      "skills": [{ "key": "paperclip-executive.council-decision-review", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "executive", "profileVersion": "1.1.0", "instructionsSource": "profiles/executive/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": {
+        "name": "Executive Advisor", "role": "general", "title": "Executive Advisor",
+        "capabilities": "Provides bounded executive advice and prepared-ticket contributions without decision authority.",
+        "desiredSkills": ["paperclip-executive.direct-advice", "paperclip-executive.prepared-ticket-review"], "adapterType": "codex_local",
+        "adapterConfig": { "engine": "acp", "model": "gpt-6-sol", "modelReasoningEffort": "high", "mode": "persistent", "nonInteractivePermissions": "deny" },
+        "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0,
+        "permissions": { "canCreateAgents": false, "canCreateSkills": false }
+      },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip session input and attributable result persistence"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["explicit consultation request", "no external action authority"] },
+      "skills": [{ "key": "paperclip-executive.direct-advice", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.stakeholder-communication", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "product", "profileVersion": "1.0.0", "instructionsSource": "profiles/product/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Product Advisor", "role": "pm", "title": "Product and CPO Advisor", "capabilities": "Assesses user value, scope, acceptance criteria, and product risk for prepared tickets.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "project-read-only", "tools": ["Paperclip ticket and evidence read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.stakeholder-communication", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "architecture", "profileVersion": "1.0.0", "instructionsSource": "profiles/architecture/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Architecture Advisor", "role": "cto", "title": "Architecture and Engineering Advisor", "capabilities": "Assesses technical design, interfaces, operability, and implementation feasibility.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-6-sol", "modelReasoningEffort": "high", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "project-read-only", "tools": ["Paperclip ticket/evidence read", "read-only repository inspection"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "quality", "profileVersion": "1.0.0", "instructionsSource": "profiles/quality/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Quality Advisor", "role": "qa", "title": "Quality and QA Advisor", "capabilities": "Assesses acceptance coverage, regressions, test evidence, and residual quality risk.", "desiredSkills": ["paperclip-executive.specialist-advisory", "paperclip-executive.evidence-review"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "project-read-only", "tools": ["Paperclip evidence read", "read-only test and artifact inspection"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no test execution unless separately authorized"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "ux-accessibility", "profileVersion": "1.0.0", "instructionsSource": "profiles/ux-accessibility/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "UX Accessibility Advisor", "role": "designer", "title": "UX and Accessibility Advisor", "capabilities": "Assesses user journeys, interaction states, accessibility, and design-system fit.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "project-read-only", "tools": ["Paperclip ticket/evidence read", "design artifact inspection when supplied"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no browser or Figma mutation by default"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "security-privacy", "profileVersion": "1.0.0", "instructionsSource": "profiles/security-privacy/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Security Privacy Advisor", "role": "security", "title": "Security and Privacy Advisor", "capabilities": "Assesses threat, privacy, access-control, secret-handling, and supply-chain risk.", "desiredSkills": ["paperclip-executive.specialist-advisory", "paperclip-executive.risk-review"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-6-sol", "modelReasoningEffort": "high", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "project-read-only", "tools": ["Paperclip ticket/evidence read", "read-only security-relevant source inspection"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding", "no secrets in configuration"], "authorization": ["advisory output only", "no credential, policy, or production mutation"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "required" }]
+    },
+    {
+      "profileId": "operations", "profileVersion": "1.0.0", "instructionsSource": "profiles/operations/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Operations Advisor", "role": "devops", "title": "Operations and SRE Advisor", "capabilities": "Assesses reliability, observability, rollout, recovery, and operational readiness.", "desiredSkills": ["paperclip-executive.specialist-advisory", "paperclip-executive.risk-review"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "project-read-only", "tools": ["Paperclip ticket/evidence read", "read-only operational artifact inspection"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no deployment or infrastructure mutation"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "required" }]
+    },
+    {
+      "profileId": "delivery", "profileVersion": "1.0.0", "instructionsSource": "profiles/delivery/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Delivery Advisor", "role": "general", "title": "Delivery and COO Advisor", "capabilities": "Assesses sequencing, dependencies, capacity, coordination, and delivery confidence.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip ticket, dependency, and evidence read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no task assignment or schedule commitment"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "economics", "profileVersion": "1.0.0", "instructionsSource": "profiles/economics/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Economics Advisor", "role": "cfo", "title": "Economics and CFO Advisor", "capabilities": "Assesses cost, resource use, opportunity cost, and economic proportionality.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip ticket, estimate, and evidence read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no spending authority"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "strategy", "profileVersion": "1.0.0", "instructionsSource": "profiles/strategy/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Strategy Advisor", "role": "general", "title": "Strategy and CSO Advisor", "capabilities": "Assesses strategic fit, prioritization, alternatives, reversibility, and portfolio effects.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip ticket, roadmap, and evidence read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no prioritization decision authority"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "data-experimentation", "profileVersion": "1.0.0", "instructionsSource": "profiles/data-experimentation/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Data Experimentation Advisor", "role": "researcher", "title": "Data, Measurement, and Experimentation Advisor", "capabilities": "Assesses metrics, instrumentation, experiment design, data quality, and inference limits.", "desiredSkills": ["paperclip-executive.specialist-advisory", "paperclip-executive.evidence-review"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "project-read-only", "tools": ["Paperclip ticket/evidence read", "read-only data contract inspection"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no production data access by default"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "required" }]
+    },
+    {
+      "profileId": "marketing", "profileVersion": "1.0.0", "instructionsSource": "profiles/marketing/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Marketing Advisor", "role": "cmo", "title": "Marketing and CMO Advisor", "capabilities": "Assesses positioning, audience fit, launch implications, messaging risk, and market learning.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip ticket and supplied research read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no publication or campaign action"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.stakeholder-communication", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "sales-customer", "profileVersion": "1.0.0", "instructionsSource": "profiles/sales-customer/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Sales Customer Advisor", "role": "general", "title": "Sales and Customer Advisor", "capabilities": "Assesses customer impact, adoption, commercial friction, and feedback-loop needs.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip ticket and supplied customer evidence read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no customer contact or commercial commitment"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.evidence-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.stakeholder-communication", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "organization-talent", "profileVersion": "1.0.0", "instructionsSource": "profiles/organization-talent/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Organization Talent Advisor", "role": "general", "title": "Organization, Talent, and CHRO Advisor", "capabilities": "Assesses ownership, incentives, capacity, change impact, and organizational risk.", "desiredSkills": ["paperclip-executive.specialist-advisory"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip ticket and supplied organizational context read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory output only", "no personnel action or sensitive-record access"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.stakeholder-communication", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "legal-compliance", "profileVersion": "1.0.0", "instructionsSource": "profiles/legal-compliance/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Legal Compliance Advisor", "role": "general", "title": "Legal and Compliance Advisor", "capabilities": "Flags legal, regulatory, contractual, licensing, and records-governance questions for qualified review.", "desiredSkills": ["paperclip-executive.specialist-advisory", "paperclip-executive.risk-review"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-6-sol", "modelReasoningEffort": "high", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip ticket and supplied policy/contract evidence read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["advisory issue spotting only", "qualified human review required", "no legal approval or filing"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.risk-review", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.stakeholder-communication", "version": "1.0.0", "assignment": "conditional" }]
+    },
+    {
+      "profileId": "board-communications", "profileVersion": "1.0.0", "instructionsSource": "profiles/board-communications/AGENTS.md",
+      "lifecycle": { "defaultState": "paused", "automaticProvisioning": false, "automaticActivation": false },
+      "nativeHireDraft": { "name": "Board Communications Advisor", "role": "general", "title": "Board Communications Advisor", "capabilities": "Structures evidence-grounded board updates while preserving uncertainty, dissent, and decision ownership.", "desiredSkills": ["paperclip-executive.specialist-advisory", "paperclip-executive.stakeholder-communication"], "adapterType": "codex_local", "adapterConfig": { "engine": "acp", "model": "gpt-5.6-sol", "modelReasoningEffort": "medium", "mode": "oneshot", "nonInteractivePermissions": "deny" }, "runtimeConfig": { "heartbeat": { "enabled": false, "wakeOnDemand": false } }, "budgetMonthlyCents": 0, "permissions": { "canCreateAgents": false, "canCreateSkills": false } },
+      "nativePermissionPatch": { "canCreateAgents": false, "canCreateSkills": false, "canAssignTasks": false },
+      "requirements": { "workspace": "none", "tools": ["Paperclip ticket, decision, and supplied evidence read"], "authentication": ["distinct Paperclip agent identity", "operator-selected Codex provider binding"], "authorization": ["drafting only", "no board distribution or decision authority"] },
+      "skills": [{ "key": "paperclip-executive.specialist-advisory", "version": "1.0.0", "assignment": "required" }, { "key": "paperclip-executive.prepared-ticket-review", "version": "1.0.0", "assignment": "conditional" }, { "key": "paperclip-executive.stakeholder-communication", "version": "1.0.0", "assignment": "required" }]
+    }
+  ]
+}
