@@ -1,7 +1,8 @@
 # Prepared agent assets: L03 handoff
 
-Contract ID: `executive-agent-catalog.v1`; asset version: `1.0.0`.
-Status: provisional interface published for parallel design; not runtime-qualified.
+Contract ID: `executive-agent-catalog.v1`; catalogue version: `1.0.0`.
+Status: final source contract for the agents PR; not runtime-qualified.
+The provisional interface was first published in commit `82e8338` (PR #6).
 This document becomes the handoff to the merged assets after the agents PR merges.
 L03 must pin that merge commit and the asset versions, never a provisional copy.
 
@@ -62,3 +63,34 @@ Council decision and native effect readback, correction counters, budget/stop
 controls, replay/uncertain-outcome handling and distinct executor/reviewer actors.
 No panel engine, voting, fan-out, scheduler, appeal engine or runtime provisioning
 is implemented by this catalogue.
+
+## Versioned assets to bind
+
+All listed profile IDs use `1.0.0` except the existing `executive` profile, updated
+to `1.1.0`. The runtime L02 method snapshot still uses its historical
+`paperclip-executive-l02` revision token; it is not a hash of the prepared profile.
+L03 must record actual selected profile versions/source hashes separately.
+
+All eight skill versions are `1.0.0`:
+
+- `paperclip-executive.direct-advice`
+- `paperclip-executive.prepared-ticket-review`
+- `paperclip-executive.specialist-advisory`
+- `paperclip-executive.implementation-execution`
+- `paperclip-executive.council-decision-review`
+- `paperclip-executive.risk-review`
+- `paperclip-executive.evidence-review`
+- `paperclip-executive.stakeholder-communication`
+
+Exact sources, origins and methods: [AGENT-SKILLS.md](AGENT-SKILLS.md). The
+declarative envelope is `paperclip-executive.agent-catalog.v1`, catalogue version
+`1.0.0`, at `packages/executive/config/agent-catalog.json`, validated against
+`agent-catalog.schema.json`. This envelope is not a native hire endpoint payload.
+`nativeHireDraft` must be materialized with real company-library keys, managed
+instruction contents and target configuration by the future authorized operator.
+See [provisioning](AGENT-PROVISIONING.md) for staged inactive creation and readback.
+
+Handoff acceptance: catalogue coverage, asset reference/schema/packaging checks,
+L01/L02 regression checks, synthetic scenarios and independent PR review must pass.
+Record the actual agents merge SHA from GitHub at handoff consumption. Do not
+invent a future SHA or treat a source version as a runtime library version ID.

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://paperclip-executive.local/schemas/agent-catalog.v1.json",
+  "title": "Paperclip Executive prepared agent catalogue",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "catalogVersion", "sourceContract", "agents"],
+  "properties": {
+    "$schema": { "const": "./agent-catalog.schema.json" },
+    "schemaVersion": { "const": "paperclip-executive.agent-catalog.v1" },
+    "catalogVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+    "sourceContract": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["repository", "commit"],
+      "properties": {
+        "repository": { "const": "paperclip" },
+        "commit": { "type": "string", "pattern": "^[a-f0-9]{40}$" }
+      }
+    },
+    "agents": {
+      "type": "array",
+      "minItems": 18,
+      "maxItems": 18,
+      "items": { "$ref": "#/$defs/agent" }
+    }
+  },
+  "$defs": {
+    "skill": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "version", "assignment"],
+      "properties": {
+        "key": { "type": "string", "pattern": "^paperclip-executive\\.[a-z0-9-]+$" },
+        "version": { "const": "1.0.0" },
+        "assignment": { "enum": ["required", "conditional"] }
+      }
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["profileId", "profileVersion", "instructionsSource", "lifecycle", "nativeHireDraft", "nativePermissionPatch", "requirements", "skills"],
+      "properties": {
+        "profileId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+        "profileVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "instructionsSource": { "type": "string", "pattern": "^profiles/[a-z0-9-]+/AGENTS\\.md$" },
+        "lifecycle": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["defaultState", "automaticProvisioning", "automaticActivation"],
+          "properties": {
+            "defaultState": { "const": "paused" },
+            "automaticProvisioning": { "const": false },
+            "automaticActivation": { "const": false }
+          }
+        },
+        "nativeHireDraft": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["name", "role", "title", "capabilities", "desiredSkills", "adapterType", "adapterConfig", "runtimeConfig", "budgetMonthlyCents", "permissions"],
+          "properties": {
+            "name": { "type": "string", "minLength": 1 },
+            "role": { "enum": ["ceo", "cto", "cmo", "cfo", "security", "engineer", "designer", "pm", "qa", "devops", "researcher", "general"] },
+            "title": { "type": "string", "minLength": 1 },
+            "capabilities": { "type": "string", "minLength": 1 },
+            "desiredSkills": { "type": "array", "items": { "type": "string", "pattern": "^paperclip-executive\\.[a-z0-9-]+$" }, "uniqueItems": true },
+            "adapterType": { "const": "codex_local" },
+            "adapterConfig": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["engine", "model", "modelReasoningEffort", "mode", "nonInteractivePermissions"],
+              "properties": {
+                "engine": { "const": "acp" },
+                "model": { "enum": ["gpt-6-astra", "gpt-6-sol", "gpt-5.6-sol"] },
+                "modelReasoningEffort": { "enum": ["medium", "high"] },
+                "mode": { "enum": ["persistent", "oneshot"] },
+                "nonInteractivePermissions": { "const": "deny" }
+              }
+            },
+            "runtimeConfig": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["heartbeat"],
+              "properties": {
+                "heartbeat": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": ["enabled", "wakeOnDemand"],
+                  "properties": { "enabled": { "const": false }, "wakeOnDemand": { "const": false } }
+                }
+              }
+            },
+            "budgetMonthlyCents": { "const": 0 },
+            "permissions": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["canCreateAgents", "canCreateSkills"],
+              "properties": { "canCreateAgents": { "const": false }, "canCreateSkills": { "const": false } }
+            }
+          }
+        },
+        "nativePermissionPatch": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["canCreateAgents", "canCreateSkills", "canAssignTasks"],
+          "properties": {
+            "canCreateAgents": { "const": false },
+            "canCreateSkills": { "const": false },
+            "canAssignTasks": { "const": false }
+          }
+        },
+        "requirements": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["workspace", "tools", "authentication", "authorization"],
+          "properties": {
+            "workspace": { "enum": ["none", "project-read-only", "isolated-project-write"] },
+            "tools": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+            "authentication": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+            "authorization": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+          }
+        },
+        "skills": { "type": "array", "items": { "$ref": "#/$defs/skill" }, "minItems": 1 }
+      }
+    }
+  }
+}
