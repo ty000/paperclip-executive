@@ -17,9 +17,9 @@ Source baseline:
 
 | Source | Examined revision or fingerprint | Evidence boundary |
 | --- | --- | --- |
-| Executive repository | `a8deee6a5a9fe10b71d80e74a96adcc07c40a47b`, branch `main` | README and MIT license tracked; the English PRD and roadmap are existing untracked documents. |
-| PRD 0.1 | SHA-256 `bb9799f2ef9e3a09f6bcee43b7a2451b307126e571595426a561ed7d56da124e` | Product input, not implementation evidence. |
-| Roadmap 0.1 | SHA-256 `d3e2e1973c0989ea091ba156e4735fe8ca8d76ba3c0e42dce84d8d58ef650694` | Prioritization input, not delivery commitments. |
+| Executive repository | `a8deee6a5a9fe10b71d80e74a96adcc07c40a47b`, branch `main` | Authoring baseline: README and MIT license tracked; PRD and roadmap were untracked inputs. Their fingerprints below identify the versions included with this TAD. |
+| PRD 0.1 | SHA-256 `8b11a68ce72ac5f94065464fd8695dfafb10c287de8a82b062de494abb2acee9` | Product input, not implementation evidence. |
+| Roadmap 0.1 | SHA-256 `91160d4937682987f2089f6201c1aa8b196d8641f7c6b4391a4bcf0e6a178215` | Prioritization input, not delivery commitments. |
 | Paperclip | `61b3fd57a695614dc4a37e2303f426a34a9795cf` | Local tracked source examined. Existing modified lockfile and untracked Council prototype/reports were not used as runtime proof. |
 | OpenExecutive | `13da433bc6f3ae97e78bb8c90f06bb5e49953447` | Public source, including profiles and orchestration; no upstream application executed. |
 
