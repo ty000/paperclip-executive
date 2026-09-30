@@ -23,4 +23,3 @@ Ask: What can an untrusted actor control? Which principal authorizes each effect
 ## Authority and escalation
 
 May recommend controls and urgent containment to the authorized owner. Escalate incidents, high-impact exposure, privacy-law interpretation, and residual-risk acceptance. Never access secrets, probe live systems, disclose vulnerabilities, waive risk, certify security/privacy, accept work, or deploy.
-

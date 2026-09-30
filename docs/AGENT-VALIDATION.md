@@ -34,7 +34,7 @@ L02 or L03; acceptance is the six deliverables and checks in the owner mission.
 
 ## Review ledger
 
-Global correction/reslice bound: **5** (owner supplied). Remaining: **3**.
+Global correction/reslice bound: **5** (owner supplied). Remaining: **1**.
 Initial authoring is not a remediation cycle. Correction batch 1 reserves one pass
 before edits for the preliminary independent documentary findings below.
 
@@ -89,10 +89,58 @@ Final assembly results: catalogue/native-schema validation and six negative case
 pass; independent JSON Schema Draft 2020-12 validation passes; all 18 profile/config
 reference sets agree; 15 upstream source/destination provenance mappings agree.
 The exact package dry-run contains 2 configuration files, 18 AGENTS.md profiles,
-8 SKILL.md methods and 1 validator. Existing tests pass 37/37, typecheck/build pass,
+8 SKILL.md methods and 2 validation scripts (entry point and schema helper). Existing tests pass 37/37, typecheck/build pass,
 and both repository-root static audit and package Fallow verdict pass after the
 validator correction (zero complexity findings). The package audit retains only
 the pre-existing non-error `tslib` observation. No UI changed.
 
 Independent catalogue review found no further issues outside CAT-01..04, now
-addressed. Final configuration review and exact-head GitHub review are pending.
+addressed. Independent configuration review is recorded below. This report is a
+source-checkpoint record; exact-head GitHub review, CI and final merge evidence
+are maintained on [PR #6](https://github.com/ty000/paperclip-executive/pull/6),
+so pending review at a historical checkpoint must not be read as current PR state.
+
+Correction batch 3 reserves one pass before final validator/formatting edits:
+
+- CFG-VAL-001 / GitHub thread `PRRT_kwDOU0PAhM6nrpF1` (introduced, P2, actionable): the package validator read only schema
+  identity while full JSON Schema was checked independently. Add an executable
+  dependency-free validator for the shipped schema vocabulary, rejecting unsupported
+  constraints; add a discriminating schema-only negative case. Do not add runtime
+  code, dependencies or weaken the native checks. Re-run schema and Fallow gates.
+- FMT-01 (introduced, advisory): remove surplus EOF blank lines in new assets so
+  the base-to-head diff check is clean; refresh affected provenance hashes.
+
+Prior independent reviews confirmed all CAT-01..04 fixes at `4824832`. GitHub
+Tests/Fallow CI passed on that head; the initial contextualized review request
+was posted at 2026-09-30T19:34:06Z. A revised candidate requires fresh head-bound
+review evidence; the prior request cannot stand in for it.
+
+GitHub review `5371094243` on `4824832` independently raised the same missing
+schema evaluation (thread `PRRT_kwDOU0PAhM6nrpF1`, comment `4148579993`), already
+covered by CFG-VAL-001 in correction batch 3. It is one causal fix, not an extra
+correction cycle. The schema helper evaluates only the shipped vocabulary and
+rejects unsupported keywords; it is not advertised as a general JSON Schema
+implementation. Final review results and thread resolution are recorded on PR #6.
+
+Correction batch 4 reserves one pass for CFG-VAL-002 (introduced, P2): the bounded
+schema evaluator rejected unknown keyword names but not unsupported keyword value
+forms. A boolean property schema or schema-valued additionalProperties could be
+ignored. Add fail-closed schema-shape preflight and discriminating negative cases.
+
+Repeated-category sweep: cover every supported schema keyword and value shape,
+local reference rules and reference siblings, scalar equality/array uniqueness
+limits, invalid schema nodes and malformed patterns. Reject unsupported forms
+rather than silently generalizing the helper. Preserve native Zod checks and
+actual catalogue validation. No dependency or runtime expansion. Review ROI: one
+shared-schema correctness issue remains; finish this bounded sweep before another
+GitHub review request. The previous head is not merge-ready.
+
+Final bounded-schema sweep: the independent reviewer closed CFG-VAL-002 with
+no remaining P0/P1/P2 on configuration/schema correctness. A positive schema
+exercises the supported vocabulary; 34 negative schema-shape cases plus the
+actual catalogue's schema-only drift case pass alongside the six native/catalogue
+negative cases. `pnpm test` (37 existing tests plus actual catalogue/schema checks),
+independent Draft 2020-12 validation, base-to-candidate diff check and Fallow pass.
+The new helper and entry point are both packaged. Catalogue/profile review fixes
+remain intact; formatting changes are semantic no-ops with refreshed hashes.
+No further local correction is required at this checkpoint.

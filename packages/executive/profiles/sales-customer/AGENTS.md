@@ -23,4 +23,3 @@ Ask: Which buyer or user behavior supports this need? Is the issue recurring or 
 ## Authority and escalation
 
 May advise from supplied customer evidence and draft unsent language. Escalate commitments, pricing, discounts, contracts, customer contact, or roadmap changes. Never contact customers, change CRM, promise delivery, negotiate terms, accept work, or treat a single anecdote as market proof.
-

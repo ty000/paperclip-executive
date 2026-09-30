@@ -5,6 +5,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 import { createAgentHireSchema, updateAgentPermissionsSchema } from "@paperclipai/shared";
+import { validateJsonSchemaSubset } from "./validate-json-schema-subset.mjs";
 
 const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const configPath = path.join(packageRoot, "config", "agent-catalog.json");
@@ -245,13 +246,80 @@ function runSelfTests(catalog) {
   }
 }
 
+function runSchemaEvaluationSelfTest(schema, catalog) {
+  const invalid = clone(catalog);
+  invalid.$schema = "./wrong-schema.json";
+  const findings = validateJsonSchemaSubset(schema, invalid);
+  if (!findings.some((entry) => entry.path === ".$schema" || entry.path === "$.$schema")) fail("SCHEMA_NEGATIVE_CASE_NOT_CAUGHT", "$schema const drift");
+}
+
+function runSchemaShapeSelfTests() {
+  const validSchema = {
+    $schema: "https://json-schema.org/draft/2020-12/schema", $id: "urn:test", title: "bounded",
+    $defs: { scalar: { type: "string", const: "ok", enum: ["ok"], pattern: "^ok$", minLength: 2 } },
+    type: "object", required: ["name", "tags"], additionalProperties: false,
+    properties: {
+      name: { $ref: "#/$defs/scalar" },
+      tags: { type: "array", items: { type: "string" }, minItems: 1, maxItems: 2, uniqueItems: true },
+    },
+  };
+  const validFindings = validateJsonSchemaSubset(validSchema, { name: "ok", tags: ["a", "b"] });
+  if (validFindings.length > 0) fail("SCHEMA_SUPPORTED_SHAPES_REJECTED", validFindings.map((entry) => `${entry.path}:${entry.keyword}`).join(", "));
+
+  const cases = [
+    ["schema false", false, "schema"],
+    ["schema null", null, "schema"],
+    ["schema array", [], "schema"],
+    ["unknown keyword", { type: "string", format: "email" }, "unsupported"],
+    ["$schema shape", { $schema: 1 }, "$schema"],
+    ["$id shape", { $id: 1 }, "$id"],
+    ["title shape", { title: [] }, "title"],
+    ["$defs shape", { $defs: [] }, "$defs"],
+    ["$defs node", { $defs: { bad: false } }, "schema"],
+    ["properties shape", { properties: [] }, "properties"],
+    ["properties node", { properties: { bad: false } }, "schema"],
+    ["unknown ref", { $defs: {}, $ref: "#/$defs/missing" }, "$ref"],
+    ["external ref", { $ref: "https://example.test/schema" }, "$ref"],
+    ["ref sibling", { $defs: { item: { type: "string" } }, $ref: "#/$defs/item", minLength: 1 }, "$ref"],
+    ["ref cycle", { $defs: { a: { $ref: "#/$defs/b" }, b: { $ref: "#/$defs/a" } }, $ref: "#/$defs/a" }, "$ref"],
+    ["array type", { type: ["string", "null"] }, "type"],
+    ["unknown type", { type: "date" }, "type"],
+    ["required shape", { required: "name" }, "required"],
+    ["required entries", { required: [1] }, "required"],
+    ["required duplicates", { required: ["name", "name"] }, "required"],
+    ["enum shape", { enum: "x" }, "enum"],
+    ["enum objects", { enum: [{}] }, "enum"],
+    ["enum duplicates", { enum: ["x", "x"] }, "enum"],
+    ["const object", { const: {} }, "const"],
+    ["additionalProperties schema", { additionalProperties: {} }, "additionalProperties"],
+    ["items boolean", { type: "array", items: false }, "items"],
+    ["minLength shape", { minLength: -1 }, "minLength"],
+    ["pattern shape", { pattern: 1 }, "pattern"],
+    ["pattern syntax", { pattern: "[" }, "pattern"],
+    ["minItems shape", { minItems: -1 }, "minItems"],
+    ["maxItems shape", { maxItems: 1.5 }, "maxItems"],
+    ["item bounds", { minItems: 2, maxItems: 1 }, "minItems/maxItems"],
+    ["uniqueItems shape", { uniqueItems: "true" }, "uniqueItems"],
+    ["unique object items", { type: "array", items: { type: "object" }, uniqueItems: true }, "uniqueItems"],
+  ];
+  for (const [name, candidate, keyword] of cases) {
+    const findings = validateJsonSchemaSubset(candidate, null);
+    if (!findings.some((entry) => entry.keyword === keyword)) fail("SCHEMA_SHAPE_CASE_NOT_CAUGHT", `${name} expected ${keyword}`);
+  }
+}
+
 const catalog = JSON.parse(await readFile(configPath, "utf8"));
 const schema = JSON.parse(await readFile(schemaPath, "utf8"));
 if (schema.$id !== "https://paperclip-executive.local/schemas/agent-catalog.v1.json") fail("SCHEMA_ID", String(schema.$id));
+validateJsonSchemaSubset(schema, catalog).forEach((entry) => fail("JSON_SCHEMA", `${entry.path} ${entry.keyword}: ${entry.message}`));
 validateCatalog(catalog);
 await validatePackageFiles();
 if (!configOnly) await validateAssets(catalog);
-if (selfTest) runSelfTests(catalog);
+if (selfTest) {
+  runSelfTests(catalog);
+  runSchemaEvaluationSelfTest(schema, catalog);
+  runSchemaShapeSelfTests();
+}
 
 if (failures.length > 0) {
   console.error(`agent catalog validation failed (${failures.length})`);

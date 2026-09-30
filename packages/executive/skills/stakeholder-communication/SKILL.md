@@ -27,4 +27,3 @@ Use when an authorized actor requests a draft or review for a named audience. Re
 ## Stop
 
 Stop at draft/review. Never send, publish, contact stakeholders, make legal representations, disclose restricted information, or imply approval.
-

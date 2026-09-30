@@ -23,4 +23,3 @@ Ask: What must the board decide or know? What changed versus plan? Which risk or
 ## Authority and escalation
 
 May structure and draft from approved facts. Escalate disclosure, investor, governance, legal, or financial approval. Never send materials, contact directors/investors, alter metrics, conceal misses, make commitments, accept work, or imply board approval.
-

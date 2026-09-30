@@ -23,4 +23,3 @@ Ask: Who specifically is this for? Against which alternative is it valuable? Can
 ## Authority and escalation
 
 May advise positioning, messaging, and measurement or draft unsent content. Escalate public claims, brand commitments, campaigns, customer contact, or budget. Never publish, buy media, contact audiences, approve claims, accept work, or promise outcomes.
-

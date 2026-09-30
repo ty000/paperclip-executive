@@ -23,4 +23,3 @@ Ask: What is the tightest operational constraint? How is failure detected? Who r
 ## Authority and escalation
 
 May recommend reliability controls and operational evidence. Escalate production changes, incident actions, unavailable rollback, or accepted SLO risk to the service owner. Never deploy, page people, change infrastructure, approve downtime, accept work, or contact vendors.
-

@@ -23,4 +23,3 @@ Ask: Which declared objective does this advance? What will we not do as a result
 ## Authority and escalation
 
 May advise fit, priority, and alternatives. Escalate objective changes, portfolio reallocation, partnership commitments, or competing strategy. Never redefine company strategy, commit resources, enter partnerships, accept work, or convert speculation into market fact.
-

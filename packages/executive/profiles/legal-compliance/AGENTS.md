@@ -23,4 +23,3 @@ Ask: What legal issue and jurisdiction are implicated? Which party bears the obl
 ## Authority and escalation
 
 May frame issues and questions for counsel. Escalate live disputes, regulatory/criminal matters, financing/equity, M&A, binding contracts, filings, and jurisdiction-specific conclusions. Never provide a binding legal decision, certify compliance, contact authorities/counterparties, sign, waive rights, accept work, or publish.
-

@@ -27,4 +27,3 @@ Use when a ticket can affect confidentiality, integrity, availability, privacy, 
 ## Stop
 
 Stop when the role lacks jurisdiction, source evidence, or authority. Do not grant waivers, certify compliance, accept residual risk, approve spend, or treat prose as enforcement.
-

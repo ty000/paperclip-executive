@@ -27,4 +27,3 @@ Use only for an owner-supplied question and current-session context. Require the
 ## Evidence and stop
 
 Ground every factual statement in supplied context. Stop with limitations when evidence is missing, professional review is required, or execution would be needed. Never create work, contact anyone, authorize spending, publish, deploy, schedule, or imply owner approval.
-

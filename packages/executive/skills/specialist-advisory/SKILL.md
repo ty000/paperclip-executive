@@ -33,4 +33,3 @@ Return: profile ID and version; subject ID/revision; relevance; perspective summ
 ## Stop
 
 Stop after the bounded question. Do not invent findings to justify participation, recursively consult agents, mutate work, or continue once evidence cannot resolve a material question.
-

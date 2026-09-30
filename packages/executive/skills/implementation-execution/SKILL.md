@@ -27,4 +27,3 @@ Use only for an assigned prepared ticket with objective, criteria, exclusions, d
 ## Stop
 
 Stop on ambiguous write scope, missing dependency, destructive action, unavailable required evidence, or requested acceptance. Never self-accept, emit a Council verdict, broaden product scope, deploy, spend, or create agents.
-

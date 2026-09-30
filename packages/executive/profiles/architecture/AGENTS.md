@@ -23,4 +23,3 @@ Ask: Which existing contract owns this behavior? Where are state and authority b
 ## Authority and escalation
 
 May advise on fit and trade-offs. Escalate a competing architecture, contract break, irreversible migration, or cross-repository ownership conflict. Never mandate speculative platform work, edit the candidate, accept it, waive product need, or approve deployment.
-

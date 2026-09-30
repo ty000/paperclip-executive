@@ -41,7 +41,7 @@
     },
     {
       "destination": "skills/direct-advice/SKILL.md",
-      "destinationSha256": "726204b3274666956b6dc5b9024579ac1e79ea62f838249992615b15d5645db9",
+      "destinationSha256": "ada811c5cb8d10394d84ee73fcca17197a635950f7c0c3fe75907436112af986",
       "sources": [
         {
           "path": "packages/core/openexecutive/prompts/executive_persona.py",
@@ -65,7 +65,7 @@
     },
     {
       "destination": "profiles/product/AGENTS.md",
-      "destinationSha256": "574bc33c117b922151bca82adf577957e8286d943b7e25efb1f781a002c38972",
+      "destinationSha256": "2b9158b84262c01e1e6435641eea8cffc7d35af46f22941a2b8cd7e87aede9e1",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/product.py",
@@ -88,7 +88,7 @@
     },
     {
       "destination": "profiles/operations/AGENTS.md",
-      "destinationSha256": "13bba34baf8d7b015065d83f430451d7e52a0d16b54755337a226c3c62961e00",
+      "destinationSha256": "9bd712592350ad80b4dfcde906357f41d4f884dd6252916408bb036f73e10b77",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/operations.py",
@@ -110,7 +110,7 @@
     },
     {
       "destination": "profiles/economics/AGENTS.md",
-      "destinationSha256": "2bb9d91c95175cfeb62ae405b9b79f7f340c4a35c8b4f91de67a84ac927e37d1",
+      "destinationSha256": "867dc76590c9b893a3bb7b256e4a9ad3c3856f4a88f3eec6cca62284c784a7e1",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/finance.py",
@@ -133,7 +133,7 @@
     },
     {
       "destination": "profiles/strategy/AGENTS.md",
-      "destinationSha256": "c849236d4c0122cb061f175270a2b726fce37868bba1e88499a4e82ccd3ac5e0",
+      "destinationSha256": "20a741ec91908069aff16d44276e6c298117022939dccb124c4cd1856877283c",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/strategy.py",
@@ -156,7 +156,7 @@
     },
     {
       "destination": "profiles/marketing/AGENTS.md",
-      "destinationSha256": "90040d499311a7099e8b5f14c0e38efe1470f145eed843cc493b61d579ef3ef2",
+      "destinationSha256": "f1090ccf3e9ceb587f106d688dcb9db12eb5fe3ac8bd9d70afbd44b7018f62f9",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/marketing.py",
@@ -179,7 +179,7 @@
     },
     {
       "destination": "profiles/sales-customer/AGENTS.md",
-      "destinationSha256": "731529a9832cf48e0d7e147ca0afa17ab36a971ab9b5937e7b71c18120df978c",
+      "destinationSha256": "e0e494a753308275e7efeb6650ea7e8e317f7d73fc17709cd5bdf06d9c82cd7e",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/sales.py",
@@ -202,7 +202,7 @@
     },
     {
       "destination": "profiles/organization-talent/AGENTS.md",
-      "destinationSha256": "893a8817e4695fdf39a87bea917d40f3bbac8be7d545a9a9e0eae8b77a8ca244",
+      "destinationSha256": "5b5173293722c0addf611b94cea1f1586bae9e6e206f07868e84e45d2a1c97f6",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/hr_talent.py",
@@ -225,7 +225,7 @@
     },
     {
       "destination": "profiles/legal-compliance/AGENTS.md",
-      "destinationSha256": "a551dc7b74a03975fd5d3c7cac78114ffc1d60e901fb7ce4ec9c322f0524160a",
+      "destinationSha256": "19697017be121f35c4c73a2540ce031c7145a8b219a52ef830370da50f539f34",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/legal.py",
@@ -249,7 +249,7 @@
     },
     {
       "destination": "profiles/board-communications/AGENTS.md",
-      "destinationSha256": "b6185ca2e9dd3bfe9f7fa701ef1f11b1bef0a7593b78caea9d628467068e6fea",
+      "destinationSha256": "82d071961bf5c02904ab9eb74c7075f5f62a59e1f1e0e7d653e82fe065030149",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/board_comms.py",
@@ -272,7 +272,7 @@
     },
     {
       "destination": "profiles/quality/AGENTS.md",
-      "destinationSha256": "2910e394dd294137a7e4f88461ed602a1c0fda57dfb14d2970c757a9b8d6b85d",
+      "destinationSha256": "735729682a7a22478956e862d34c47d91ade60294721669a8a0576136a5625c5",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/quality_judge.py",
@@ -295,7 +295,7 @@
     },
     {
       "destination": "profiles/data-experimentation/AGENTS.md",
-      "destinationSha256": "a817acebfc6130ee0ae051ee88a36ee72688aeab3c9f03514381ccb10d06aec0",
+      "destinationSha256": "a926adf95953b01e013b1f58cc7b6e26bf9e4bb7b54f595d5f502a06e231cc1b",
       "sources": [
         {
           "path": "packages/core/openexecutive/agents/research_council.py",
@@ -315,7 +315,7 @@
     },
     {
       "destination": "skills/stakeholder-communication/SKILL.md",
-      "destinationSha256": "eb52657973279765b3aa3067daca15c72e300cf1984a31ce92f17ddfc9a85bd2",
+      "destinationSha256": "ea61fdf4b613efc5ba0265d23eb893e917a9477a3931f4881347af453cf21660",
       "sources": [
         {
           "path": "packages/core/openexecutive/prompts/domain_prompts.py",
@@ -334,7 +334,7 @@
     },
     {
       "destination": "skills/specialist-advisory/SKILL.md",
-      "destinationSha256": "e6efd77098e2a1f5a4c6eaa079277590b8902824734fd4a9cc4459fc5cb7afc4",
+      "destinationSha256": "92dbd9552ccfd2b42351eb8b93469f562a43255ce77ddf14bddc9ed6c133128d",
       "sources": [
         {
           "path": "packages/core/openexecutive/prompts/domain_prompts.py",

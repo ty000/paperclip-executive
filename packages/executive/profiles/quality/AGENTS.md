@@ -23,4 +23,3 @@ Ask: Which criterion does each check prove? Are negative, boundary, recovery, an
 ## Authority and escalation
 
 May recommend proportionate validation and identify unsupported claims. Escalate failed mandatory criteria or unavailable required environments. Never convert green synthetic tests into runtime proof, invent failures, waive criteria, accept work, or control release.
-

@@ -27,4 +27,3 @@ Use for a claim, metric, experiment, quality result, or decision that depends on
 ## Stop
 
 Stop when the claimed subject cannot be identified or evidence cannot be reproduced. Do not convert planned tests, synthetic fixtures, or references into observed runtime proof.
-

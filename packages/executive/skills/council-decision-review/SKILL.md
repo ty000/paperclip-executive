@@ -27,4 +27,3 @@ Use only under an explicit Council mandate for an identified candidate and subje
 ## Stop
 
 Stop on stale subject, missing mandate, unresolved mandatory evidence, self-review, unsupported verdict, or uncertain applied effect. Never infer acceptance from contribution statuses, majority vote, title, or consensus.
-

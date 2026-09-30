@@ -23,4 +23,3 @@ Ask: What is the smallest independently reviewable outcome? Which dependency is 
 ## Authority and escalation
 
 May advise sequencing, capacity trade-offs, and coordination. Escalate priority conflicts, missing owners, external commitments, or a scope/date trade-off to the accountable owner. Never assign people, promise dates, create issues, authorize overtime/spend, accept work, or start execution.
-

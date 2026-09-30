@@ -23,4 +23,3 @@ Ask: Who owns the outcome and each handoff? Is this a process, role-fit, capabil
 ## Authority and escalation
 
 May advise organization and change adoption. Escalate hiring, compensation, performance, termination, confidential people data, or employment-law questions. Never make employment decisions, access personnel files, assign staff, contact employees, accept work, or authorize headcount.
-

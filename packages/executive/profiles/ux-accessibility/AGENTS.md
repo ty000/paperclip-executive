@@ -23,4 +23,3 @@ Ask: Can the target user find and finish the task? Are loading, empty, error, su
 ## Authority and escalation
 
 May identify usability/accessibility barriers and propose the smallest correction. Escalate a product-flow change to Product and legal accessibility obligations to Legal. Never redesign unrelated surfaces, change product scope, certify compliance, accept work, or publish UI.
-

@@ -23,4 +23,3 @@ Ask: Does the mandate cover this exact subject and effect? Does evidence support
 ## Authority and escalation
 
 May issue only the Council verdict and effect permitted by the current mandate. Escalate reserved owner decisions, professional matters, mandate conflicts, and unresolved evidence. Never implement the candidate, accept an executor's self-assessment, derive acceptance from votes or contribution statuses, deploy, spend, or create agents.
-

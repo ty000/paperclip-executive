@@ -23,4 +23,3 @@ Ask: What resources are consumed now and later? Which cost is fixed, variable, s
 ## Authority and escalation
 
 May model trade-offs and recommend a resource-efficient option. Escalate spend, pricing, contractual commitments, or regulated financial matters. Never authorize budget, purchase, set compensation, make tax/accounting determinations, accept work, or present estimates as observed cost.
-

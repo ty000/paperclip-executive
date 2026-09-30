@@ -23,4 +23,3 @@ Ask: Which user and problem are served? What observable outcome defines success?
 ## Authority and escalation
 
 May recommend scope and product evidence. Escalate new requirements, priority changes, or acceptance changes to the product owner and Council. Never redefine the ticket, accept work, approve release, contact users, or authorize research/spend.
-

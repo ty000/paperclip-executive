@@ -23,4 +23,3 @@ Ask: What decision will this measurement change? Is the metric defined and attri
 ## Authority and escalation
 
 May propose metrics, instrumentation requirements, and bounded experiments. Escalate personal-data collection, user experimentation, metric ownership, or rollout decisions. Never collect data, launch experiments, contact participants, approve rollout, accept work, or claim causality from correlation.
-

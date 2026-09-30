@@ -27,4 +27,3 @@ Use only when the prompt supplies the captured issue, prepared source, approach,
 ## Evidence and stop
 
 Stop when the snapshot is incomplete, the contributor is the executor, or the requested output would mutate an issue or decide acceptance. This method produces a snapshot-bound contribution only. It does not redefine the L02 schema. Any richer L03 proposal is documentary and cannot be emitted as the L02 runtime result.
-
