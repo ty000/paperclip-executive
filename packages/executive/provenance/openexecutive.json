@@ -6,7 +6,7 @@
   "derivedFiles": [
     {
       "destination": "profiles/executive/AGENTS.md",
-      "destinationSha256": "46c9eafe8ff6547f4503079a58636fe380dc3af58f83aad6ad67ba9053fb146a",
+      "destinationSha256": "e526255d6c021098d5b88d9e6a8ab8b2d1f842b7bf77f3ce930b1b8dda2fb51e",
       "sources": [
         {
           "path": "packages/core/openexecutive/prompts/executive_persona.py",
@@ -28,7 +28,8 @@
       "changes": [
         "Removed fictional biography and credential claims",
         "Removed proactive actions, external delivery, hidden memory, and specialist fan-out",
-        "Added Paperclip advice-only authority and structured output boundaries"
+        "Added Paperclip advice-only authority and structured output boundaries",
+        "Added a bounded L02 prepared-ticket review method with proportional findings and no Council authority"
       ],
       "unreproducedCapabilities": [
         "OpenExecutive Python routing loop",

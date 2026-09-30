@@ -1,0 +1,2 @@
+# Private, disposable Paperclip development instance (database, logs and secrets).
+.paperclip-dev/
