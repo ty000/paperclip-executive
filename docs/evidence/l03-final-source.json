@@ -1,0 +1,38 @@
+{
+  "schema_version": "l03-final-source.v1",
+  "source_commits": {
+    "Executive": "38cb838",
+    "Council": "dcbb34a"
+  },
+  "trees": {
+    "Executive_package": "cc232239613a3ca1cf2a4f9addf1b55ab586d1a7",
+    "Council_src": "7810c83ca4a7c0523ae2304f397a497dfc8225b8",
+    "Council_migrations": "8877bd944d1cf16af4b37d86bbfa497a9642bad5"
+  },
+  "installed_candidates": [
+    {
+      "key": "paperclip-executive.executive",
+      "id": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
+      "path": "/home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/packages/executive",
+      "version": "0.3.0",
+      "status": "ready",
+      "workerSha256": "89e78dbae8fac0e7fdcd9df606bf447fc41073b733ae5db5390954c791f168ad",
+      "manifestSha256": "c5d4d05d80ec2818c4dc7e519196667ab31dd63bbdfe0dcc9d3c69505b181042"
+    },
+    {
+      "key": "private.paperclip-council",
+      "id": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+      "path": "/home/davy-lp/workspace/paperclip-council-l03",
+      "version": "0.5.0",
+      "status": "ready",
+      "workerSha256": "63c25765162f570b69a68d71f13a1911260e2008876367bf6e09dea21378c533",
+      "manifestSha256": "45be80beed3b88139e03e5b8f902c217c610e565e15398863d4aeba9d20e5fc5"
+    }
+  ],
+  "host_commit": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+  "base_ancestry": {
+    "Executive": "9797a1208b47edfae2eb1f97bbac9a70adafdb81",
+    "Council": "9ae33f13968be4d8d5d20dc511deb2215c552ab0"
+  },
+  "note": "Source commits identify the final production edits. Later documentation/evidence commits do not change these package source trees or installed bundle hashes."
+}

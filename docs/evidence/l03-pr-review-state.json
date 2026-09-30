@@ -1,0 +1,55 @@
+{
+  "observedAt": "2026-09-30T22:38:13.809655+00:00",
+  "scope": "read-only final PR state; no new review request because global bound is zero",
+  "repositories": {
+    "council": {
+      "pullRequest": {
+        "url": "https://github.com/ty000/paperclip-council/pull/16",
+        "headRefOid": "b0218475e0cf64678091017c9bc1ad70033ccf6e",
+        "isDraft": true,
+        "reviewThreads": {
+          "nodes": []
+        },
+        "reviews": {
+          "nodes": []
+        },
+        "comments": {
+          "nodes": [
+            {
+              "author": {
+                "login": "ty000"
+              },
+              "body": "@codex review\n\nReview the entire current PR at head 6006a17d997008157ee59e151f70a4f504635326, in review-only mode.\n\nObjective: make a pinned L03 mission usable from executor approach through separately attributed Executive opinions, explicit Council direction, one native wake, immutable bundle review, and bounded correction with a fresh decision. See docs/L03-GOVERNANCE.md and the full diff.\n\nScope: private additive migration 005, L03 authority/state transitions and CAS counters, the authenticated event bridge, native runtime routes, real byte verification and operator UI. The merged decision receipt implementation and migration 004 must remain the only result-application journal. No Paperclip/native-schema changes, automatic Linear sync, provider activation, publication or deployment are in scope.\n\nPrioritize demonstrable authorization bypasses, wrong subject/mandate bindings, missing required opinions, duplicate physical dispatch, lost-response retries, budget replenishment across restart, invalid correction transitions, receipt-content mismatches, and UI claims that confuse a decision with native success. A human acknowledgement must never release an uncertainty hold. Review state/schema validation and the cross-plugin contracts visible in src/l03-types.ts and src/l03-runtime.ts, not only isolated tests.\n\nValidation recorded in this PR: domain/runtime/content tests, typecheck/build, static audit, and explicit PostgreSQL CAS/restart test. Installed-host qualification and real-model usefulness/loading remain unverified here; do not infer them from green fixtures. The Executive counterpart is a separate candidate and any evidence unavailable in this PR remains unknown. Current change includes removal of unused exports and explicit test entrypoints after static audit; no earlier Codex findings have been remediated.\n\nReport actionable high-impact defects with precise affected file/line and a concrete failing scenario. Do not request unrelated orchestration expansion.\n\nPlugins/skills \u00e0 utiliser: none. Use only this PR diff, repository-visible guidance, and PR-visible evidence; no local plugins, skills, worktrees or unpublished artifacts are available.\n\nModele et effort recommandes: use the review service's configured model and effort; effective selection and available options are not observable from this request. Reassess if the available cross-repository evidence cannot establish a contract rather than guessing.\n",
+              "url": "https://github.com/ty000/paperclip-council/pull/16#issuecomment-5920356056",
+              "createdAt": "2026-09-30T21:51:35Z"
+            },
+            {
+              "author": {
+                "login": "chatgpt-codex-connector"
+              },
+              "body": "You have reached your Codex usage limits for code reviews. You can see your limits in the [Codex usage dashboard](https://chatgpt.com/codex/cloud/settings/usage).\nTo continue using code reviews, add credits to your account and enable them for code reviews in your [settings](https://chatgpt.com/codex/cloud/settings/code-review).",
+              "url": "https://github.com/ty000/paperclip-council/pull/16#issuecomment-5920357867",
+              "createdAt": "2026-09-30T21:51:43Z"
+            }
+          ]
+        }
+      }
+    },
+    "executive": {
+      "pullRequest": {
+        "url": "https://github.com/ty000/paperclip-executive/pull/9",
+        "headRefOid": "993365e5edf4fb9edcba0877db6da87be686bccd",
+        "isDraft": true,
+        "reviewThreads": {
+          "nodes": []
+        },
+        "reviews": {
+          "nodes": []
+        },
+        "comments": {
+          "nodes": []
+        }
+      }
+    }
+  }
+}

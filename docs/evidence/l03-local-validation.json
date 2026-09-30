@@ -29,5 +29,12 @@
     },
     "installed_worker_sha256": "89e78dbae8fac0e7fdcd9df606bf447fc41073b733ae5db5390954c791f168ad"
   },
-  "pending_revalidation": "Fresh final installed-host packet and rendered UI; real-profile campaign remains unauthorized."
+  "final_native_qualification": {
+    "status": "blocked",
+    "finding": "L03-HOST-003",
+    "artifact": "docs/evidence/l03-host-attempt6.json",
+    "browser": "docs/evidence/l03-host-browser-attempt6.json",
+    "browser_scope": "Actual blocked state rendered and stable after reload; no V2 or acceptance proof",
+    "real_campaign": "not launched; no provider calls"
+  }
 }

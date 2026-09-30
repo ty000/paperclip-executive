@@ -14,6 +14,12 @@
     }
   },
   "Executive": {
-    "status": "pending_first_push"
-  }
+    "head": "993365e5edf4fb9edcba0877db6da87be686bccd",
+    "status": "pass",
+    "runs": [
+      "https://github.com/ty000/paperclip-executive/actions/runs/36786309132",
+      "https://github.com/ty000/paperclip-executive/actions/runs/36786289953"
+    ]
+  },
+  "scope": "Observed CI on source-identical documentation heads before final evidence publication; final publication CI must be read separately."
 }

@@ -107,7 +107,7 @@
         "tests": 54,
         "typecheck": "pass",
         "independent_review": "finished/failed/cancelled path valid; interrupted native event absent documented residual HOST002",
-        "host": "fresh packet pending",
+        "host": "Final attempt6 confirms terminal observation bridge; historical attempt3 retained.",
         "exact_package_static": "fail on broader introduced complexity"
       }
     },
@@ -159,7 +159,7 @@
           "introduced_duplication_advisory": 4
         },
         "installed_hash": "89e78dbae8fac0e7fdcd9df606bf447fc41073b733ae5db5390954c791f168ad",
-        "qualification": "fresh final packet running"
+        "qualification": "Final attempt6 FAIL: missing correction executor run (HOST003); browser blocked-state rendering passes."
       }
     }
   ],
@@ -195,5 +195,14 @@
     "state": "global_bound_exhausted",
     "remaining": 0,
     "effect": "No later correction, reslice or new GitHub review request. Finish current validation and deliver reviewable candidates with unresolved evidence explicit."
+  },
+  "terminal_outcome": "fail-terminal",
+  "terminal_evidence": "docs/evidence/l03-terminal.json",
+  "review_roi_record": {
+    "cycles": 6,
+    "new_threads": 0,
+    "repeated_threads": 0,
+    "decision": "freeze",
+    "diagnosis": "Global bound exhausted; actual-host correction continuation missing, required real-profile evidence and current-head remote review absent. Unit/source review did not prove native wake continuation."
   }
 }

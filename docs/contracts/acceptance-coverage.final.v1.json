@@ -86,8 +86,8 @@
   "criterion_coverage": [
     {
       "criterion_id": "L03-A1",
-      "disposition": "blocked",
-      "preservation_status": "parent-blocked",
+      "disposition": "included",
+      "preservation_status": "child-owned",
       "surface_ids": [
         "council-runtime",
         "council-persistence"
@@ -97,14 +97,12 @@
         "L03-A1-integration-test",
         "L03-A1-migration-test"
       ],
-      "blocker_ids": [
-        "L03-HOST-001"
-      ]
+      "blocker_ids": []
     },
     {
       "criterion_id": "L03-A2",
-      "disposition": "blocked",
-      "preservation_status": "parent-blocked",
+      "disposition": "included",
+      "preservation_status": "child-owned",
       "surface_ids": [
         "council-runtime"
       ],
@@ -112,9 +110,7 @@
         "L03-A2-automated-test",
         "L03-A2-integration-test"
       ],
-      "blocker_ids": [
-        "L03-HOST-001"
-      ]
+      "blocker_ids": []
     },
     {
       "criterion_id": "L03-A3",
@@ -128,7 +124,7 @@
         "L03-A3-integration-test"
       ],
       "blocker_ids": [
-        "L03-HOST-001"
+        "L03-HOST-003"
       ]
     },
     {
@@ -144,13 +140,13 @@
         "L03-A4-integration-test"
       ],
       "blocker_ids": [
-        "L03-HOST-001"
+        "L03-HOST-003"
       ]
     },
     {
       "criterion_id": "L03-A5",
-      "disposition": "blocked",
-      "preservation_status": "parent-blocked",
+      "disposition": "included",
+      "preservation_status": "child-owned",
       "surface_ids": [
         "council-runtime",
         "council-persistence"
@@ -160,14 +156,12 @@
         "L03-A5-integration-test",
         "L03-A5-migration-test"
       ],
-      "blocker_ids": [
-        "L03-HOST-001"
-      ]
+      "blocker_ids": []
     },
     {
       "criterion_id": "L03-A6",
-      "disposition": "blocked",
-      "preservation_status": "parent-blocked",
+      "disposition": "included",
+      "preservation_status": "child-owned",
       "surface_ids": [
         "council-persistence"
       ],
@@ -176,9 +170,7 @@
         "L03-A6-integration-test",
         "L03-A6-migration-test"
       ],
-      "blocker_ids": [
-        "L03-HOST-001"
-      ]
+      "blocker_ids": []
     },
     {
       "criterion_id": "L03-A7",
@@ -195,7 +187,6 @@
         "L03-A7-runtime-observation"
       ],
       "blocker_ids": [
-        "L03-HOST-001",
         "L03-REAL-AUTHORIZATION"
       ]
     },
@@ -213,7 +204,7 @@
         "L03-A8-browser-test"
       ],
       "blocker_ids": [
-        "L03-HOST-001"
+        "L03-HOST-003"
       ]
     }
   ],
@@ -303,8 +294,9 @@
     {
       "evidence_id": "L03-A1-integration-test",
       "kind": "integration-test",
-      "status": "blocked",
+      "status": "passed",
       "artifact_refs": [
+        "docs/evidence/l03-host-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
@@ -328,8 +320,9 @@
     {
       "evidence_id": "L03-A2-integration-test",
       "kind": "integration-test",
-      "status": "blocked",
+      "status": "passed",
       "artifact_refs": [
+        "docs/evidence/l03-host-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
@@ -346,6 +339,7 @@
       "kind": "integration-test",
       "status": "blocked",
       "artifact_refs": [
+        "docs/evidence/l03-host-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
@@ -362,6 +356,7 @@
       "kind": "integration-test",
       "status": "blocked",
       "artifact_refs": [
+        "docs/evidence/l03-host-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
@@ -376,8 +371,9 @@
     {
       "evidence_id": "L03-A5-integration-test",
       "kind": "integration-test",
-      "status": "blocked",
+      "status": "passed",
       "artifact_refs": [
+        "docs/evidence/l03-host-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
@@ -401,8 +397,9 @@
     {
       "evidence_id": "L03-A6-integration-test",
       "kind": "integration-test",
-      "status": "blocked",
+      "status": "passed",
       "artifact_refs": [
+        "docs/evidence/l03-host-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
@@ -428,6 +425,7 @@
       "kind": "integration-test",
       "status": "blocked",
       "artifact_refs": [
+        "docs/evidence/l03-host-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
@@ -445,14 +443,17 @@
       "kind": "runtime-observation",
       "status": "blocked",
       "artifact_refs": [
-        "docs/IMPLEMENTATION-L03.md"
+        "docs/L03-REAL-CAMPAIGN.md",
+        "docs/evidence/l03-preparation.json",
+        "docs/evidence/l03-host-attempt6.json"
       ]
     },
     {
       "evidence_id": "L03-A8-automated-test",
       "kind": "automated-test",
-      "status": "blocked",
+      "status": "passed",
       "artifact_refs": [
+        "docs/evidence/l03-host-browser-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
@@ -461,14 +462,16 @@
       "kind": "integration-test",
       "status": "blocked",
       "artifact_refs": [
+        "docs/evidence/l03-host-browser-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     },
     {
       "evidence_id": "L03-A8-browser-test",
       "kind": "browser-test",
-      "status": "blocked",
+      "status": "passed",
       "artifact_refs": [
+        "docs/evidence/l03-host-browser-attempt6.json",
         "docs/IMPLEMENTATION-L03.md"
       ]
     }
@@ -476,21 +479,25 @@
   "dependency_coverage": [],
   "blocking_finding_coverage": [
     {
-      "finding_id": "L03-HOST-001",
+      "finding_id": "L03-HOST-003",
       "status": "unresolved",
-      "evidence_ids": [],
+      "evidence_ids": [
+        "L03-A4-integration-test"
+      ],
       "rescope_ref": null
     },
     {
       "finding_id": "L03-REAL-AUTHORIZATION",
       "status": "unresolved",
-      "evidence_ids": [],
+      "evidence_ids": [
+        "L03-A7-runtime-observation"
+      ],
       "rescope_ref": null
     }
   ],
   "exclusions": [],
   "completion_status": {
-    "run_artifact_status": "blocked",
+    "run_artifact_status": "complete",
     "child_lot_status": "partial",
     "parent_lot_status": "partial",
     "capability_verification": "partial",
