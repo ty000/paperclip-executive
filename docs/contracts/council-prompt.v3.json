@@ -1,0 +1,53 @@
+{
+  "schema_version": "prompt-quality-compiler-implementation-envelope.v3",
+  "envelope_id": "L03-council",
+  "phase": "lot-prompt",
+  "plan_id": "L03-20260930",
+  "contract_id": "L03-implementation",
+  "parent_lot_id": "L03",
+  "child_lot_id": "L03",
+  "slice_id": null,
+  "parent_plan_ref": "sprint-ready-plan.v2.json",
+  "parent_plan_sha256": "78f73c3b6d97938e33a55e87d02d8621305edffd2895c83eedd8f4f260be8e06",
+  "coverage_manifest_ref": "acceptance-coverage.v1.json",
+  "coverage_manifest_sha256": "51a29315a8eac93584707bbe3156a4f7a8b3833851862d8cde0f02e2e8622c91",
+  "objective": "Implement and integrate the complete L03 governed approach, advice, exact-result review and bounded correction journey.",
+  "parent_objective": "Implement and integrate the complete L03 governed approach, advice, exact-result review and bounded correction journey.",
+  "criterion_ids": [
+    "L03-A1",
+    "L03-A2",
+    "L03-A3",
+    "L03-A4",
+    "L03-A5",
+    "L03-A6",
+    "L03-A7",
+    "L03-A8"
+  ],
+  "surface_ids": [
+    "council-persistence",
+    "council-runtime",
+    "council-ui",
+    "executive-bridge",
+    "operator-ui"
+  ],
+  "repository_ids": [
+    "council",
+    "executive"
+  ],
+  "exclusions": [],
+  "activation_posture": {
+    "implementation": "required-executable-path",
+    "production_activation": "default-off"
+  },
+  "migration_prewrite": {
+    "applicability": "required",
+    "contract_ref": "/home/davy-lp/workspace/paperclip-council-l03/docs/contracts/l03-migration-prewrite.json"
+  },
+  "executable_prompt": {
+    "format": "codex-worker-prompt.v1",
+    "content": "Source: user mission /home/davy-lp/.codex/attachments/9c9f97eb-38c9-48e7-96f7-e62141c82084/Texte coll\u00e9.txt; plan /home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/L03-IMPLEMENTATION-PLAN.md and contracts in /home/davy-lp/.codex/worktrees/executive-l03/paperclip-executive/docs/contracts. Read pertinent current source before changes. This is a concrete native implementation subtask of full L03, not a claim to complete the parent. Parent integrator retains all A1-A8 and actual-host/UI/real qualification obligations. No host modifications, live calls, credentials, L04, catalogue rewrite, automatic merge or parallel receipt-worktree access. English code/docs. No assumptions about undocumented host APIs. No commits/push; parent integrates. Preserve concurrent files. Send exact API/type contract early. Stop after assigned working implementation and focused tests; report blockers with evidence, no false runtime proof.\nPlugins/skills \u00e0 utiliser: git-safety base already passed (verify branch); cross-repo-governance preserve ownership; implementation-meta-flow native bounded worker; prompt-quality-compiler preserve acceptance. Read named skills if needed.\nModele et effort recommandes: implementation worker gpt-5.6-sol/high for coupled authority/persistence, mapping /home/davy-lp/.codex/shared/model-selection/model-effort-mapping.md updated 2026-09-05. Launcher exposes this selection; reassess two repeated failures without new evidence. No substitution or claimed parent setting.\nReturn files, behaviors, commands/outcomes, unresolved risks. Durable worktrees required, do not use ephemeral source checkout.\nMission: implement Council L03 domain aggregate + private SQL persistence and business tests in /home/davy-lp/workspace/paperclip-council-l03. Ownership only new src/l03.ts, src/l03-store.ts, src/l03-types.ts, tests/l03*.spec.ts, migrations/005_l03_governance.sql. Do NOT edit worker.ts, manifest.ts, existing missions.ts, decision-adapter, receipt files or UI. Parent integrates actual effects/API/UI. Migration prewrite required /home/davy-lp/workspace/paperclip-council-l03/docs/contracts/l03-migration-prewrite.json (gate passed; rerun before first persistence edit).\nRead existing missions/rosters and docs. Extend via separate additive per-mission governance table referencing existing mission identity, preserving draft/L01/L02. Implement ticket supplied context criteria immutable identity/mandate revision/expiry + authority checks, selected slot reservation with bound actor/profile/method/version/hash and criterion/evidence references, attributed opinion collection and dissent, required missing contribution refusal; approach A1 revise -> A2 new identity requiring fresh direction; proceed/revise/refuse/escalate signed by pinned finalReviewer (distinct executor), immutable result submissions and result decisions; targeted corrections only must-fix criterion gaps, optional findings never force cycles; durable distinct approach/result/consultation counters sharing admission envelope, atomic CAS preserving all reservations and unknown cost exposure. No in-memory authoritative store. Require expectedVersion and actor/company/mandate current at all mutating boundaries. Avoid generic orchestration. Use clear typed pure transition + DB CAS service parent can invoke. Expose integration hooks for actual receipt and execution uncertainty rather than implement competing receipt or uncertainty barrier. Parent will consume retained receipt; store reference only. Do not guess receipt states. Make mandatory actual-effects prerequisite explicit in transition API so callers cannot advance without matching observation. Authenticate via supplied host actor plus current ctx lookups at service boundary. Need real SQL concurrency tests if existing embedded pg available; otherwise parent handles integration harness and report unit evidence only. Announce concrete export API early.",
+    "content_sha256": "67c2b4a36751d3eab2c1dddc3d2b222343c6d92ec4808718f8018739acd58a66",
+    "target_phase": "lot-run",
+    "dispatch_posture": "prepared-not-authorized"
+  }
+}

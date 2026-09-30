@@ -1,0 +1,12 @@
+{
+  "scope": "L03 Executive and Council PR review remediation",
+  "authorization": "User selected six correction batches total on 2026-09-30",
+  "global_correction_reslice_bound": 6,
+  "global_correction_reslice_remaining": 6,
+  "remediation_cycles_completed": 0,
+  "codex_review_requests_posted": 0,
+  "consecutive_low_progress_cycles": 0,
+  "total_threads_seen": 0,
+  "unresolved_actionable_threads_remaining": 0,
+  "events": []
+}

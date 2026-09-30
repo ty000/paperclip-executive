@@ -15,6 +15,8 @@ const manifest: PaperclipPluginManifestV1 = {
     "access.members.read",
     "agent.sessions.create",
     "agent.sessions.send",
+    "events.subscribe",
+    "events.emit",
     "database.namespace.migrate",
     "database.namespace.read",
     "database.namespace.write",
