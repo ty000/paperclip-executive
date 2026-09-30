@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const home = resolve(root, ".paperclip-dev");
 const [mode, contributionId] = process.argv.slice(2);
-assert(["capture", "verify"].includes(mode) && contributionId, "Usage: node scripts/qualify-l02.mjs capture|verify <existing-contribution-id>");
+assert(["capture", "replay", "verify"].includes(mode) && contributionId, "Usage: node scripts/qualify-l02.mjs capture|replay|verify <existing-contribution-id>");
 const setup = JSON.parse(readFileSync(resolve(home, "setup-result.json"), "utf8"));
 const base = "http://127.0.0.1:3220";
 assert.equal(setup.baseUrl, base);
@@ -54,7 +54,7 @@ async function snapshot() {
 }
 const before = await snapshot();
 const baselinePath = resolve(home, `l02-${contributionId}.before.json`);
-if (mode === "capture") {
+if (mode !== "verify") {
   const c = before.contribution;
   const params = {
     requestKey: c.requestKey, issueId: c.issue.id, contributorAgentId: c.contributor.agentId,
@@ -63,7 +63,11 @@ if (mode === "capture") {
     approach: c.approach.summary, evidenceReferences: c.approach.evidenceReferences,
     decisiveUnknowns: c.approach.decisiveUnknowns, constraints: c.approach.constraints,
   };
-  writeFileSync(baselinePath, JSON.stringify(before, null, 2) + "\n", { mode: 0o600, flag: "wx" });
+  if (mode === "capture") {
+    writeFileSync(baselinePath, JSON.stringify(before, null, 2) + "\n", { mode: 0o600, flag: "wx" });
+  } else {
+    assert.deepEqual(before, JSON.parse(readFileSync(baselinePath, "utf8")), "Replay must use the preserved baseline");
+  }
   const actionPath = `/api/plugins/${setup.pluginId}/actions/submit-contribution`;
   const repeated = (await ok(actionPath, { companyId: setup.companyId, params })).data;
   assert.deepEqual(repeated, c, "Duplicate must return the unchanged persisted contribution");

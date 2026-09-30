@@ -43,6 +43,10 @@ export class SqlContributionRepository implements ContributionRepository {
     const rows = await this.db.query<Row>(`SELECT * FROM ${this.table()} WHERE company_id = $1 AND contribution_id = $2`, [companyId, contributionId]);
     return rows[0] ? map(rows[0]) : null;
   }
+  async getByRequestKey(companyId: string, requestKey: string): Promise<ContributionRecord | null> {
+    const rows = await this.db.query<Row>(`SELECT * FROM ${this.table()} WHERE company_id = $1 AND request_key = $2`, [companyId, requestKey]);
+    return rows[0] ? map(rows[0]) : null;
+  }
   async list(companyId: string): Promise<ContributionRecord[]> {
     const rows = await this.db.query<Row>(`SELECT * FROM ${this.table()} WHERE company_id = $1 ORDER BY created_at DESC LIMIT 50`, [companyId]);
     return rows.map(map);

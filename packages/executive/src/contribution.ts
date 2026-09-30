@@ -50,6 +50,7 @@ export type ContributionRecord = {
 export interface ContributionRepository {
   claim(input: Omit<ContributionRecord, "createdAt" | "updatedAt">): Promise<{ record: ContributionRecord; inserted: boolean }>;
   get(companyId: string, contributionId: string): Promise<ContributionRecord | null>;
+  getByRequestKey(companyId: string, requestKey: string): Promise<ContributionRecord | null>;
   list(companyId: string): Promise<ContributionRecord[]>;
   markInterruptedUnknown(companyId: string): Promise<void>;
   markDispatching(companyId: string, contributionId: string, sessionId: string): Promise<void>;
@@ -208,7 +209,6 @@ export class ContributionService {
     const contributor = await this.agents.get(contributorAgentId, companyId);
     if (!contributor || contributor.companyId !== companyId) throw new Error("The selected contributor does not belong to this company");
     if (contributor.id === issue.assigneeAgentId) throw new Error("The contributor must be distinct from the issue executor");
-    if (contributor.status !== "idle" && contributor.status !== "running") throw new Error("The selected contributor is not available for native dispatch");
     const issueSnapshot: IssueSnapshot = {
       id: issue.id, identifier: issue.identifier, projectId: issue.projectId, title: issue.title, description: issue.description,
       status: issue.status, executorAgentId: issue.assigneeAgentId, updatedAt: new Date(issue.updatedAt).toISOString(),
@@ -222,6 +222,12 @@ export class ContributionService {
     // content and therefore must not split one idempotency key into two hashes.
     const { status: _eligibilityStatus, ...contributorIdentity } = contributorSnapshot;
     const inputHash = this.hashInput(JSON.stringify({ issue: issueSnapshot, source, approach, contributor: contributorIdentity, method: CONTRIBUTION_METHOD }));
+    const existing = await this.repository.getByRequestKey(companyId, requestKey);
+    if (existing) {
+      if (existing.inputHash !== inputHash) throw new Error("This request key is already bound to different captured input");
+      return existing;
+    }
+    if (contributor.status !== "idle" && contributor.status !== "running") throw new Error("The selected contributor is not available for native dispatch");
     const claimed = await this.repository.claim({
       companyId, contributionId: randomUUID(), requestKey, authorUserId: userId, inputHash, inputVersion: 1,
       issue: issueSnapshot, source, approach, contributor: contributorSnapshot, method: CONTRIBUTION_METHOD,

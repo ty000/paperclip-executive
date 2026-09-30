@@ -15,6 +15,7 @@ class MemoryContributions implements ContributionRepository {
     this.records.set(record.contributionId, record); return { record, inserted: true };
   }
   async get(companyId: string, id: string) { const value = this.records.get(id); return value?.companyId === companyId ? value : null; }
+  async getByRequestKey(companyId: string, requestKey: string) { return [...this.records.values()].find((item) => item.companyId === companyId && item.requestKey === requestKey) ?? null; }
   async list(companyId: string) { return [...this.records.values()].filter((item) => item.companyId === companyId); }
   async markInterruptedUnknown(companyId: string) { for (const item of this.records.values()) if (item.companyId === companyId && ["prepared", "dispatching", "running"].includes(item.status)) this.patch(item, { status: "outcome_unknown", error: "Worker restarted before a correlated terminal contribution was durably observed" }); }
   async markDispatching(companyId: string, id: string, sessionId: string) {
@@ -97,6 +98,37 @@ describe("Paperclip Executive L02 contribution", () => {
     expect(replayAfterDispatch.contributionId).toBe(first.contributionId);
     await expect(service.submit(owner, { ...input, approach: "A changed approach" })).rejects.toThrow("different captured input");
     expect(sessions.creates).toBe(1);
+  });
+
+  it("A2 replays completed and outcome-unknown contributions after the contributor is paused", async () => {
+    for (const terminalStatus of ["completed", "outcome_unknown"] as const) {
+      const { service, sessions, repository, contributorValue } = setup();
+      const first = await service.submit(owner, input);
+      const persisted = await repository.get("company-1", first.contributionId);
+      expect(persisted).not.toBeNull();
+      repository.records.set(first.contributionId, {
+        ...persisted!, status: terminalStatus,
+        result: terminalStatus === "completed" ? validResult : null,
+      });
+      contributorValue.status = "paused";
+
+      const replay = await service.submit(owner, input);
+
+      expect(replay).toMatchObject({ contributionId: first.contributionId, status: terminalStatus });
+      expect(sessions.creates).toBe(1); expect(sessions.sends).toBe(1);
+    }
+  });
+
+  it("A2 keeps changed-input conflicts and rejects new requests while the contributor is paused without side effects", async () => {
+    const { service, sessions, repository, contributorValue } = setup();
+    await service.submit(owner, input);
+    contributorValue.status = "paused";
+
+    await expect(service.submit(owner, { ...input, approach: "A changed approach" })).rejects.toThrow("different captured input");
+    await expect(service.submit(owner, { ...input, requestKey: "new-paused-request" })).rejects.toThrow("not available");
+
+    expect(await repository.getByRequestKey("company-1", "new-paused-request")).toBeNull();
+    expect(sessions.creates).toBe(1); expect(sessions.sends).toBe(1);
   });
 
   it("A2 uses atomic SQL INSERT ON CONFLICT plus request-key readback", async () => {

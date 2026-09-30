@@ -83,11 +83,12 @@ contribution/session/run identity, and sanitized API/browser check results.
 | Check | Observed result |
 | --- | --- |
 | Existing-key identical replay through native action API | Same contribution/result; one company run before and after. |
+| Exact replay after contributor pause (review correction) | Existing contribution returned; changed approach still conflicted; no new run; contributor restored to idle. |
 | Changed approach under the same key | Explicit captured-input conflict; no new contribution or run. |
 | Completed-result persistence after host restart | Exact contribution, issue fields, executor state and run set preserved. |
 | Real Chromium interaction after restart | Completed result and run attribution visible; captured snapshot expanded; reload retained result; no uncaught page errors. |
 | Native issue/executor | EXE-2 remained `todo`, assigned to the same paused executor. |
-| Package checks | 28 tests passed; `pnpm typecheck` and `pnpm build` passed. |
+| Package checks | 30 tests passed; `pnpm typecheck` and `pnpm build` passed. |
 
 The full report is advisory. The real result included `acceptanceCriteria[2]` and
 `exclusions[2]`, although the owner had supplied one combined line per array. These
@@ -111,11 +112,24 @@ node scripts/qualify-l02-browser.mjs <contribution-id>
 ```
 
 `capture` is create-only for its baseline file and never generates a request key.
+Use `replay` with the same contribution ID to repeat duplicate/conflict checks against
+that preserved baseline; a paused contributor must still return its existing result.
 Preserve that baseline and use `verify` for subsequent readback. The browser check
 uses Playwright already installed in the host checkout; if its matching browser is
 absent, set `PAPERCLIP_BROWSER_EXECUTABLE` to an existing Chromium executable.
 Credentials, full local snapshots, logs and screenshots remain ignored in
 `.paperclip-dev/`; no credentials are published in the evidence document.
+
+## PR review correction
+
+GitHub review identified that dispatch eligibility was checked before replay lookup.
+An already completed or uncertain contribution could not be replayed after its
+contributor was paused. The company/request-key lookup now precedes availability
+validation; changed input still conflicts, and new paused-agent requests are refused
+before claiming or dispatching. Atomic claim still arbitrates concurrent new requests.
+Two regression tests cover these boundaries, and native replay with the contributor
+paused passed without adding a run. Evidence retains the real-run source hashes
+separately from the final candidate hashes; no new model run was needed for this fix.
 
 ## Remaining boundaries
 

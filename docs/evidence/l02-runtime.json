@@ -4,8 +4,8 @@
   "hostUrl": "http://127.0.0.1:3220",
   "candidateBase": "c0839fe18a8673893cc6f87cafb5d765c556d638",
   "candidateFileSha256": {
-    "packages/executive/src/contribution.ts": "6cea2ebced3f0847c7dd3aa06f98a2a925d0efa2f51efd8c2986b1c92098d223",
-    "packages/executive/src/contribution-repository.ts": "02086b8dd696cc5e48167d26704a0d3c50a4f5ad0108007d08421510f35af654",
+    "packages/executive/src/contribution.ts": "b347f8a5f08bb75577c498981e99a1ad5c99ed45bca339037c6cf32f57df66ff",
+    "packages/executive/src/contribution-repository.ts": "205d6c1ab96866a79c6ddee3600ad4b7877be460853c2e8756cc9238168e4128",
     "packages/executive/src/worker.ts": "0951b0dc12fe17d44f997fbc0d341e7188500b4a3637611996358da01af836cf",
     "packages/executive/src/ui/index.tsx": "1a05fe190c759fb9bddeec65fd2c33ed6b7af3c0bf36ae4043f883bd333542e0",
     "packages/executive/migrations/002_prepared_ticket_contributions.sql": "eb7aa2c814039f62070c1d6a676abb816f16a6102f4fb80055013728f03d5ebf"
@@ -60,6 +60,28 @@
     "One real Codex contribution; replay checks created zero new model runs.",
     "Criterion references acceptanceCriteria[2] and exclusions[2] do not resolve against the single-item supplied arrays; semantic output limitation retained for inspection.",
     "Interrupted in-flight restart and adverse callback cases covered synthetically, not by another live model run.",
-    "No Council authority, shared-instance activation, production readiness or general judgment-quality claim."
-  ]
+    "No Council authority, shared-instance activation, production readiness or general judgment-quality claim.",
+    "Real model run predates the replay-only fix; both original and final source hashes are retained. Post-fix native proof reuses that persisted result without a new model call."
+  ],
+  "realRunCandidateFileSha256": {
+    "packages/executive/src/contribution.ts": "6cea2ebced3f0847c7dd3aa06f98a2a925d0efa2f51efd8c2986b1c92098d223",
+    "packages/executive/src/contribution-repository.ts": "02086b8dd696cc5e48167d26704a0d3c50a4f5ad0108007d08421510f35af654",
+    "packages/executive/src/worker.ts": "0951b0dc12fe17d44f997fbc0d341e7188500b4a3637611996358da01af836cf",
+    "packages/executive/src/ui/index.tsx": "1a05fe190c759fb9bddeec65fd2c33ed6b7af3c0bf36ae4043f883bd333542e0",
+    "packages/executive/migrations/002_prepared_ticket_contributions.sql": "eb7aa2c814039f62070c1d6a676abb816f16a6102f4fb80055013728f03d5ebf"
+  },
+  "pausedContributorReplay": {
+    "checkedAt": "2026-09-30T16:52:05.609Z",
+    "contributionId": "7201f796-70bb-489b-9685-e400aecdd651",
+    "contributorStatusDuringReplay": "paused",
+    "replay": {
+      "checkedAt": "2026-09-30T16:52:05.601Z",
+      "mode": "replay",
+      "contributionId": "7201f796-70bb-489b-9685-e400aecdd651",
+      "runId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+      "runCount": 1,
+      "status": "pass"
+    },
+    "status": "pass"
+  }
 }
