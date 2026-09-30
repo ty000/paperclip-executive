@@ -21,6 +21,15 @@ const card: CSSProperties = { border: "1px solid #d1d5db", borderRadius: 10, pad
 const field: CSSProperties = { width: "100%", border: "1px solid #9ca3af", borderRadius: 6, padding: "8px 10px", font: "inherit" };
 const button: CSSProperties = { border: 0, borderRadius: 6, padding: "9px 14px", background: "#111827", color: "white", font: "inherit", cursor: "pointer" };
 const mutedButton: CSSProperties = { ...button, background: "#4b5563" };
+export const CONTRIBUTION_UNKNOWN_POLL_WINDOW_MS = 2 * 60 * 1000;
+
+export function contributionUnknownPollDeadline(
+  item: Pick<ContributionRecord, "status" | "sessionId" | "runId" | "updatedAt">,
+): number | null {
+  if (item.status !== "outcome_unknown" || !item.sessionId || !item.runId) return null;
+  const updatedAt = Date.parse(item.updatedAt);
+  return Number.isFinite(updatedAt) ? updatedAt + CONTRIBUTION_UNKNOWN_POLL_WINDOW_MS : null;
+}
 
 function newRequestKey(): string {
   return `advice-${globalThis.crypto?.randomUUID?.() ?? Date.now().toString(36)}`;
@@ -64,10 +73,23 @@ export function ExecutivePage({ context }: PluginPageProps) {
   }, [agentId, data?.configuration.executiveAgentId]);
 
   useEffect(() => {
-    if (!data?.requests.some((item) => ["pending", "dispatching", "running"].includes(item.status)) &&
-        !data?.contributions.some((item) => ["prepared", "dispatching", "running"].includes(item.status))) return;
+    const now = Date.now();
+    const hasActiveWork = Boolean(
+      data?.requests.some((item) => ["pending", "dispatching", "running"].includes(item.status)) ||
+      data?.contributions.some((item) => ["prepared", "dispatching", "running"].includes(item.status)),
+    );
+    const unknownDeadlines = (data?.contributions ?? [])
+      .map(contributionUnknownPollDeadline)
+      .filter((deadline): deadline is number => deadline !== null && deadline > now);
+    if (!hasActiveWork && unknownDeadlines.length === 0) return;
     const timer = globalThis.setInterval(refresh, 2500);
-    return () => globalThis.clearInterval(timer);
+    const stopTimer = !hasActiveWork
+      ? globalThis.setTimeout(() => globalThis.clearInterval(timer), Math.max(...unknownDeadlines) - now)
+      : null;
+    return () => {
+      globalThis.clearInterval(timer);
+      if (stopTimer !== null) globalThis.clearTimeout(stopTimer);
+    };
   }, [data?.requests, data?.contributions, refresh]);
 
   async function saveConfiguration(event: FormEvent) {
@@ -104,9 +126,8 @@ export function ExecutivePage({ context }: PluginPageProps) {
     try {
       await submitContribution({ requestKey: contributionKey, issueId, contributorAgentId, sourceReference, objective,
         acceptanceCriteria, exclusions, dependencies, approach, evidenceReferences, decisiveUnknowns, constraints });
-      refresh();
     } catch (caught) { setActionError(caught instanceof Error ? caught.message : "Contribution request failed"); }
-    finally { setBusy(false); }
+    finally { refresh(); setBusy(false); }
   }
 
   if (!companyId) return <div style={card}>Select a company to use Paperclip Executive.</div>;
@@ -214,7 +235,10 @@ export function ExecutivePage({ context }: PluginPageProps) {
       </section>
 
       <section style={stack} aria-labelledby="contribution-history-title">
-        <h2 id="contribution-history-title" style={{ margin: 0 }}>Contribution history</h2>
+        <div style={{ display: "flex", justifyContent: "space-between", gap: 12, flexWrap: "wrap", alignItems: "center" }}>
+          <h2 id="contribution-history-title" style={{ margin: 0 }}>Contribution history</h2>
+          <button type="button" style={mutedButton} onClick={refresh}>Refresh history</button>
+        </div>
         {data.contributions.length === 0 ? <div style={card}>No prepared-ticket contribution has been persisted for this company.</div> : null}
         {data.contributions.map((item) => (
           <article key={item.contributionId} style={card}>

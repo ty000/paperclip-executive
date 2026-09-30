@@ -88,7 +88,7 @@ contribution/session/run identity, and sanitized API/browser check results.
 | Completed-result persistence after host restart | Exact contribution, issue fields, executor state and run set preserved. |
 | Real Chromium interaction after restart | Completed result and run attribution visible; captured snapshot expanded; reload retained result; no uncaught page errors. |
 | Native issue/executor | EXE-2 remained `todo`, assigned to the same paused executor. |
-| Package checks | 36 tests passed; `pnpm typecheck` and `pnpm build` passed. |
+| Package checks | 37 tests passed; `pnpm typecheck` and `pnpm build` passed. |
 
 The full report is advisory. The real result included `acceptanceCriteria[2]` and
 `exclusions[2]`, although the owner had supplied one combined line per array. These
@@ -154,6 +154,22 @@ success. `markRunning` now requires exactly one affected row, like `markDispatch
 so a concurrent state change enters the existing uncertainty/readback path. SQL
 cardinality and service recovery regressions cover this without another dispatch.
 Zero-row terminal updates remain intentional idempotent no-ops.
+
+The next review identified two UI recovery gaps. Contribution actions now refresh
+history when they settle, including errors after partial persistence. Uncertain
+contributions with a recorded session/run are refreshed for at most two minutes
+after their persisted update, with a manual **Refresh history** action afterward.
+A Chromium check of the real React component with a synthetic plugin bridge proved
+error/history visibility, preserved inputs/key, later completion, bounded polling,
+and manual refresh without resubmission. This is synthetic UI proof, not another
+native agent run or injected host database failure. Replay it with:
+
+```sh
+PAPERCLIP_SOURCE=/path/to/paperclip node scripts/qualify-l02-ui-recovery.mjs
+```
+
+Use the same optional `PAPERCLIP_BROWSER_EXECUTABLE` setting as the native browser
+check. No testing dependency or provider credential is added.
 
 ## Remaining boundaries
 

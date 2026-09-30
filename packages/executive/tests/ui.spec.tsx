@@ -12,7 +12,7 @@ vi.mock("@paperclipai/plugin-sdk/ui", () => ({
   usePluginAction: () => bridge.action,
 }));
 
-import { ExecutivePage } from "../src/ui/index.js";
+import { CONTRIBUTION_UNKNOWN_POLL_WINDOW_MS, ExecutivePage, contributionUnknownPollDeadline } from "../src/ui/index.js";
 
 const context = {
   companyId: "company-1",
@@ -29,6 +29,17 @@ function renderText(): string {
 }
 
 describe("Executive page", () => {
+  it("bounds automatic polling to correlated recent unknown contributions", () => {
+    const now = Date.parse("2026-09-30T12:00:00.000Z");
+    const base = { status: "outcome_unknown" as const, sessionId: "session-1", runId: "run-1", updatedAt: new Date(now - 1_000).toISOString() };
+    expect(contributionUnknownPollDeadline(base)).toBe(now - 1_000 + CONTRIBUTION_UNKNOWN_POLL_WINDOW_MS);
+    expect(contributionUnknownPollDeadline({ ...base, sessionId: null })).toBeNull();
+    expect(contributionUnknownPollDeadline({ ...base, runId: null })).toBeNull();
+    expect(contributionUnknownPollDeadline({ ...base, status: "completed" })).toBeNull();
+    expect(contributionUnknownPollDeadline({ ...base, updatedAt: "invalid" })).toBeNull();
+    expect(contributionUnknownPollDeadline({ ...base, updatedAt: new Date(now - CONTRIBUTION_UNKNOWN_POLL_WINDOW_MS).toISOString() })).toBe(now);
+  });
+
   it("renders unavailable configuration and keeps advice submission disabled", () => {
     bridge.data = {
       configuration: {
@@ -105,6 +116,7 @@ describe("Executive page", () => {
     expect(output).toContain("Advisory only."); expect(output).toContain("not a Council verdict");
     expect(output).toContain("Paperclip issue ID"); expect(output).toContain("Contributor agent ID");
     expect(output).toContain("New contribution key");
+    expect(output).toContain("Refresh history");
     expect(output).toContain("LIN-42"); expect(output).toContain("Reviewer"); expect(output).toContain("executor-1");
     expect(output).toContain("project-distinctive"); expect(output).toContain("Distinctive issue description");
     expect(output).toContain("Distinctive criterion"); expect(output).toContain("Distinctive exclusion"); expect(output).toContain("Distinctive dependency");
