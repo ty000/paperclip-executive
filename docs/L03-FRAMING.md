@@ -5,6 +5,10 @@ handoff and dependency plan; it does not authorize implementation, another chat,
 agent activation or a provider call. [Contract audit](L03-CONTRACT-AUDIT.md) defines
 E/C/H versions, source evidence and findings F1–F7 used below.
 
+The accepted [V1 decision-receipt rescope](DECISION-RECEIPTS-V1.md) is the active
+authority for uncertainty handling. It replaces mandatory host API work and automatic
+recovery of ambiguous native effects for V1; the audit remains a dated observation.
+
 Product parents: [BK-02-A and the L03 portion of BK-04-A](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/BACKLOG.md#2-prioritized-product-items),
 [PRD 0.3](https://github.com/ty000/paperclip-executive/blob/504c3c5e8c36afb3cda15bc7f964abbf3247e2b8/docs/PRD.md)
 B03/B05 and EXE-04/05/06/08/09/12/14/15/16. Architecture:
@@ -51,14 +55,18 @@ exercise that composition; no voting or parallel fan-out framework is necessary.
 6. **Submit and review V2.** A new immutable subject receives its own review, focused
    on corrections and affected behavior. V1 acceptance cannot carry over. Unchanged
    findings alone cannot justify another unlimited round.
-7. **Decide and confirm effect.** The authorized final reviewer applies the stored
-   result decision through the qualified native path. Council distinguishes recorded,
-   applying, confirmed, refused and unknown observations. Executive displays the
-   canonical IDs and readback, not an independent acceptance state.
-8. **Recover or stop.** After interruption, reconcile persisted intent, native decision,
-   effect and unsettled usage before any new admission. Exhaustion blocks further work
-   and reaches the owner. Already running work remains visible until observed stopped
-   or finished. Unknown effect is never reconstructed from an agent summary.
+7. **Decide and preserve the observation.** The authorized final reviewer applies the
+   stored result decision through the existing public native path. Council claims one
+   attempt and durably distinguishes local intent, possible send, usable response,
+   confirmed effect when matching evidence exists, refusal and indeterminate outcome.
+   Executive displays that receipt and any observed native references, not an
+   independent acceptance state.
+8. **Reconcile or hold.** After interruption, reconcile the persistent receipt and
+   unsettled usage before any new admission. Missing or ambiguous evidence keeps the
+   company/issue blocked across restart and operation-key changes; no blind resend is
+   allowed. An authenticated owner may acknowledge or abandon the operation, but that
+   disposition is not native success and does not clear uncertainty. Native status,
+   comments, summaries or agent output alone do not prove the effect or a later run.
 
 A nominal sufficient approach and result may skip their respective correction paths.
 Qualification must separately exercise approach A1 → revise → A2 → fresh direction,
@@ -107,10 +115,10 @@ section 6; code-level and runtime completion are reported separately.
 | ID | Parent / TAD | Observable acceptance | Dependencies / proof |
 | --- | --- | --- | --- |
 | L03-A1 | BK-02-A; AD-03/04/05/11 | Ticket/source/criteria, mandate and participant revisions are bound; wrong company/actor or stale/revoked authority cannot release covered work. | D-C, D-E, D-AG; Q1, Q3, Q4, Q9. |
-| L03-A2 | BK-02-A; AD-02/03/06 | Attributable approach direction differs from result acceptance; only current authorized proceed plus confirmed native continuation effect releases the bounded segment. An insufficient A1 yields no release: corrected A2 is a new version under preserved criteria/current mandate, invalidates A1's direction, consumes the durable bounded approach-correction allowance and requires a fresh direction. Refusal, exhaustion or missing Council holds it. | D-C, D-H, D-LIMIT; Q1, Q3, Q5, Q6, Q11. |
+| L03-A2 | BK-02-A; AD-02/03/06 | Attributable approach direction differs from result acceptance; only current authorized proceed plus an observed matching continuation releases the bounded segment. A persisted direction, issue status, comment or summary alone does not prove a later run. An insufficient A1 yields no release: corrected A2 is a new version under preserved criteria/current mandate, invalidates A1's direction, consumes the durable bounded approach-correction allowance and requires a fresh direction. Refusal, exhaustion, indeterminate application or missing Council holds it. | D-C, D-H, D-LIMIT; Q1, Q3, Q5, Q6, Q11. |
 | L03-A3 | BK-02-A; AD-03/04/06 | Decision targets immutable commit/artifact/evidence and current mandate. Bytes and declared hashes are checked; changed result cannot inherit approval. | D-C, D-H; Q1, Q2, Q4. |
 | L03-A4 | BK-02-A and BK-04-A correction portion; AD-05/12 | V1 receives a bounded criterion-linked correction; native effect returns work; V2 is separately reviewed against preserved criteria; optional suggestions do not become blockers. | D-C, D-LIMIT; Q2, Q7, Q8. |
-| L03-A5 | BK-02-A / BK-04-A continuity; AD-05/06 | Recorded decision and confirmed effect are distinguishable. Lost response/restart reconciles canonical native identity and effect with no second mutation; ambiguous absence stays unknown. | D-H, D-C; Q5, Q6. |
+| L03-A5 | BK-02-A / BK-04-A continuity; AD-05/06 | Recorded intent, one claimed attempt, observed response and confirmed effect are distinguishable. Lost/malformed response or restart returns the persistent receipt without a second mutation; ambiguous outcome remains indeterminate and blocks the company/issue. Authenticated acknowledgement/abandonment is audited but is not native success and does not clear the hold. | D-H, D-C; Q5, Q6. |
 | L03-A6 | BK-04-A L03 portion; AD-02/05/12 | Approach correction and result correction have distinct observable counters but consume the same overall mission budget/envelope; together with consultation and retry/repair bounds they survive restart/agent changes. Reserve before dispatch, reject competing over-admission, retain in-flight exposure and reach actual owner at limit. A new subject/version creates no fresh allowance; unknown cost is visible. | D-C, D-LIMIT, D-RUNTIME; Q5, Q7, Q9, Q11. |
 | L03-A7 | BK-02-A, BK-04-A; AD-03/07/08 | Selected distinct opinions retain attribution/dissent and resolve required slots; one final reviewer decides. Contradiction, missing required opinion or invalid criterion reference cannot produce automatic acceptance. | D-AG, D-E, D-C; Q8, Q9. |
 | L03-A8 | BK-02-A / BK-04-A visibility; AD-09 | Operator can inspect exact subject, decision ID, actor/run, effect status/readback, counters/unknown usage, in-flight work and next owner/action; restart preserves these facts. | D-E, D-C, D-H; Q1, Q6, Q7, Q10. |
@@ -127,18 +135,18 @@ and status enums must be selected and tested by the owning implementation.
 
 | Dependency / order | Owner and components | Minimum change and exit evidence | Parallelism / blocking point |
 | --- | --- | --- | --- |
-| D-H / 1 | Paperclip `server/src/routes/issues.ts`, native `issue_execution_decisions` service/schema projection and shared types; SDK only if consumer needs it | Inspect supported reads at the final selected revision; if still insufficient, expose company/caller-authorized decision ID/correlation, actor/run, body, stage, outcome and applied effect matching the exact stored intent; derive any needed round/submission correlation explicitly rather than assume an existing round field. Tests for unauthorized reads, lost-response success, late completion, ambiguity, mismatch and drift. Preserve native auth and no-blind-retry semantics. | Can proceed independently of agents and Executive UI. Blocks confirmed-effect recovery and final qualification. DEC-G3-01 is the recorded Council policy basis; separate host scope/base/review remains required. |
+| D-H / 1 — V1 rescoped | Council private additive receipt storage, decision adapter and operator surface; existing public Paperclip issue PATCH only | Persist identity, exact target/content and server-derived actor/run before possible send; atomically claim one attempt; retain actual status/response/references; make identical replay observational and conflicting content a conflict. Lost, malformed or ambiguous responses remain indeterminate across restart, new keys and altered content. Owner-only acknowledgement/abandonment is authenticated and audited separately and never proves native success or clears the hold. Tests cover concurrency, restart, synthetic network faults and operator interaction. | No host change is a V1 dependency. D-H remains open until the Council receipt/hold path is implemented and qualified. Later host readback is optional evidence improvement, not automatic recovery authority. |
 | D-LIMIT / 1 | Council `src/missions.ts`, private additive migration/store, native run-control adapter; host owner if a specific missing primitive is demonstrated | Implement atomic task/period admission and durable approach-correction/result-correction/consultation/concurrency/retry counts. Keep correction counters separately observable while charging them to one overall mission budget/envelope; no subject/version transition replenishes it. Retain reservations across crashes and settle late/unknown usage. Qualify selected per-run bounds. Owner-bound continuation is the separate DEP-OWNER requirement within D-C/D-RUNTIME, not a claim closed by G4. Use C-policy's now-merged prudent G4 wording; no assumed absolute charge cap. | The merged source catalogue is available, but these Council contract/tests remain independently gated. Required policy/control evidence gates affected dispatch; do not postpone to L04. |
-| D-C / 2 | Council `src/missions.ts`, `worker.ts`, `manifest.ts`, `contracts.ts`, `decision-adapter.ts`, `delivery-manifest.ts`, reusable foundation verifier, private migrations, focused tests/UI | Extend draft aggregate into bounded execution: versioned typed delegated approach direction (the host board-only Decisions API is reserved for owner decisions, not routine Council authorization), explicit A1-revise-A2 invalidation/fresh-direction transition, immutable result submissions/opinion slots, one final reviewer, command receipts, separate bounded approach/result correction transitions and durable decision/effect intent. Validate mandate/subject at claim and application; guard legacy route on governed roots. Wire bounded byte verification into real approval. Read back native effects through D-H; persist an unambiguous intent/subject correlation in the supported native decision body or a separately qualified host field, not an invented accepted PATCH member. | Develop pure state/adapter fixtures against pinned contracts while D-H/D-LIMIT advance. Full integration requires their actual APIs. Do not claim all Council V1 or Council L2/L3 complete from this Executive slice. |
+| D-C / 2 | Council `src/missions.ts`, `worker.ts`, `manifest.ts`, `contracts.ts`, `decision-adapter.ts`, `delivery-manifest.ts`, reusable foundation verifier, private migrations, focused tests/UI | Extend draft aggregate into bounded execution: versioned typed delegated approach direction (the host board-only Decisions API is reserved for owner decisions, not routine Council authorization), explicit A1-revise-A2 invalidation/fresh-direction transition, immutable result submissions/opinion slots, one final reviewer, command receipts, separate bounded approach/result correction transitions and durable decision/effect intent. Validate mandate/subject at claim and application; guard legacy route on governed roots. Wire bounded byte verification into real approval. Implement D-H as the persistent one-attempt receipt/uncertainty hold around the existing public PATCH; never infer success from issue state, comment or summary. | Develop pure state/adapter fixtures while D-H/D-LIMIT advance. Full integration requires their actual contracts. Do not claim all Council V1 or Council L2/L3 complete from this Executive slice. |
 | D-E / 3 | Executive `packages/executive/src/contribution.ts`, `contribution-repository.ts`, `worker.ts`, `manifest.ts`, `ui/index.tsx`, tests; additive migration only if bindings cannot fit existing store | Bind contribution to Council slot/context/mandate references and actual profile/method version. Implement explicit scoped reserved-slot invocation/readback; retain one physical dispatcher and existing idempotency/unknown states. Resolve criterion/evidence references; display canonical Council observations without duplicating decisions. | Fixtures and observation UI can proceed against explicitly proposed contract types. Wiring waits for D-C/D-H. Source profile attribution consumes pinned E-AG; actual agent identity/loading attribution waits for runtime readback. Preserve L02 owner action unless deliberately integrated; reconcile package/manifest version identity before final integration. |
-| D-AG / source merged; integration gate remains | Agents lot, Executive/Council catalogue/profile/provisioning owners | E-AG at `504c3c5e8c36afb3cda15bc7f964abbf3247e2b8` publishes the stable role/method sources, catalogue envelope and updated parent documents. Integrate current main, pin selected profile/skill source versions and verify provisioned distinct identities plus loaded runtime artifacts separately. See section 5. | Source availability is satisfied. Final integration/qualification must consume the merged objects and prove actual loading/identity; the source merge alone does not qualify runtime or remove D-H/D-LIMIT/D-C. |
+| D-AG / source merged; integration gate remains | Agents lot, Executive/Council catalogue/profile/provisioning owners | E-AG at `504c3c5e8c36afb3cda15bc7f964abbf3247e2b8` publishes the stable role/method sources, catalogue envelope and updated parent documents. Integrate current main, pin selected profile/skill source versions and verify provisioned distinct identities plus loaded runtime artifacts separately. See section 5. | Source availability is satisfied. Final integration/qualification must consume the merged objects and prove actual loading/identity; the source merge alone does not qualify runtime or remove the rescoped D-H, D-LIMIT or D-C work. |
 | D-RUNTIME / 4 | Operator plus host/Council/Executive owners | Select exact instance/distribution/builds, authenticated actors, native issue/policy, numeric bounds, measurement sources and addressed owner. Then execute only separately authorized qualification cases and record sanitized persisted/native readback. | Blocks runtime qualification, not source audit or deterministic work. No inherited development credentials or guessed instance. |
 | D-Q / 5 | Integration owner | Rebase/re-pin all final candidates, reconcile agents/policy dependencies, run focused deterministic checks and authorized actual-host journey; review evidence and draft PRs. | Completion requires every L03-A row at declared evidence tier. No automatic merge, release or V1 declaration. |
 
-Prefer coherent owner-specific changes: minimal host projection; Council workflow and
-control changes; Executive consumer/UI. Split Council further only where reservation
-or host dependencies produce independently testable boundaries. Do not create empty
-schema-only increments labeled as a completed user journey.
+Prefer coherent owner-specific changes: Council receipt/workflow/control changes and
+Executive consumer/UI. No host projection is required for V1. Split Council further
+only where reservations or other independently testable dependencies justify it. Do
+not create empty schema-only increments labeled as a completed user journey.
 
 The host gap is not permission to patch Paperclip from Executive. Conversely,
 Executive cannot implement a second decision store to avoid waiting for Council.
@@ -188,12 +196,12 @@ real-agent reference journey. Do not run every adverse scenario as a paid model 
 
 | Case | Deterministic variant and assertions | Later actual-host / real evidence required |
 | --- | --- | --- |
-| Q1 Nominal | Frozen prepared context → valid advice → Council proceed → one execution intent → immutable sufficient result → recorded decision and confirmed effect. Assert no result approval is used for plan release. | Distinct authenticated actors, saved mandate/submission/opinions, native continuation/run identity and final native decision/effect readback. |
+| Q1 Nominal | Frozen prepared context → valid advice → Council proceed → one execution intent → immutable sufficient result → recorded decision, one-attempt receipt and matching observed effect. Assert no result approval is used for plan release and no persisted decision alone proves the next run. | Distinct authenticated actors, saved mandate/submission/opinions, observed continuation/run identity, final receipt and actual native response/reference available through existing supported interfaces. |
 | Q2 Correction/re-review | V1 must-fix → one claimed correction → V2 with same criteria → own decision; changed result invalidates old approval, optional polish does not loop. | One actual bounded correction and re-review with identified V1/V2 artifacts, actor/run attribution, persisted counter and both native effects. |
 | Q3 Refusal/stale authority | Wrong company/actor, missing decision, revoked/stale mandate, expired/mismatched run, Council unavailable: zero affected dispatch/mutation and no fallback. | Native authenticated negative checks and durable refusal/current-state readback; no provider invocation needed to prove refusal. |
 | Q4 Changed subject | Change commit, artifact bytes/hash, evidence revision or mandate after review; compare-and-swap loses or current subject guard rejects. | Real attachment bytes/digests and native document/work-product/current-state evidence on the selected route; prior decision remains bound to old subject. |
 | Q5 Duplicate/concurrent | Same command/key/hash returns existing receipt; changed payload conflicts; race two actors for last allowance; exactly one local winner and at most one effect attempt. | Competing actual database/bridge claims with persisted receipts, native run/decision cardinality and no extra model call from replay. No distributed exactly-once claim. |
-| Q6 Interrupted/uncertain | Fault injection before/after intent, native success with lost response, delayed callback, restart and late completion. Match decision ID/body/actor/run/subject/effect; missing/ambiguous readback stays unknown. | Deliberately lost native response after success and restart; supported canonical readback confirms same effect with no second PATCH. Inspect run/session correlation; agent summary or `done` alone is insufficient. |
+| Q6 Interrupted/uncertain | Fault injection before/after the durable claim and possible send; lost, malformed and ambiguous responses; restart, concurrent replay, new-key and changed-content bypass attempts. Exactly one sender wins, the receipt survives, and uncertainty blocks every further verdict operation for the company/issue. | Isolated PostgreSQL concurrency/restart evidence and synthetic network faults prove no second PATCH. The operator can inspect the receipt and record authenticated acknowledgement/abandonment, which does not become native success or unlock the hold. Any matching native reference is retained; issue `done`, comment, summary or agent output alone is insufficient. |
 | Q7 Limit survives resume | At correction/consultation/retry limit, resume under new process/session/agent cannot reset count; unknown/late usage retains reservation; deny competing over-admission; in-flight work visible. | Persisted counters/envelopes through restart, native control outcome and owner escalation/readback. Qualify task and period allowance together and explain residual committed-call overrun under DEC-G4-01. |
 | Q8 Contradictory opinions | Two distinct profile outputs disagree; preserve both. No majority/automatic acceptance. Invalid references or absent required opinion block dependent verdict until Council resolves/escalates under mandate. | Selected real profiles produce inspectable attributed contributions on the same subject; accountable reviewer gives evidence-based synthesis, not an invented consensus. No guaranteed disagreement is claimed from a fixture. |
 | Q9 Owner/agent dependency | Simulate missing/changed profile, incompatible output, wrong/absent owner response and stale owner consent; no silent replacement, permission widening or counters reset. | Merged version and loaded-artifact receipts, authenticated owner response bound to question/mandate/subject. Silence/system/other responder cannot approve; existing in-flight effects remain reconciled. |
@@ -292,24 +300,25 @@ Verify model/effort availability on the future launch surface. Recommendations a
 not runtime configuration; future effective settings remain unknown until observed.
 
 **Start gates:** a bounded source slice may start after its owner authorizes the
-perimeter and prerequisite contracts are explicit. Final integration waits for actual
-D-H/D-C/D-LIMIT APIs and must consume the merged E-AG versions on current main. Runtime
+perimeter and prerequisite contracts are explicit. Final integration waits for the
+rescoped D-H receipt/hold contract plus D-C/D-LIMIT contracts and must consume the
+merged E-AG versions on current main. Runtime
 dispatch additionally waits for D-RUNTIME and qualified controls; merge waits for the
 remaining integration review/qualification at the declared milestone.
 
 **Stop gates:** missing authority/current subject; stale or revoked mandate; required
-opinion absent or incompatible; unavailable limit/readback control; exhausted or
+opinion absent or incompatible; unavailable limit/receipt control; exhausted or
 unknown allowance/exposure; uncertain prior effect; unmatched authenticated identity;
 or out-of-scope dependency. Preserve state/evidence, block only dependent work and
 return the exact missing contract/owner. Never blind-retry to make a scenario green.
 
 ## 9. Documentary validation and final state
 
-Authorized changes: only `docs/L03-CONTRACT-AUDIT.md` and `docs/L03-FRAMING.md` in the
-durable Executive worktree. PRD, TAD, backlog, profiles/catalogues, other repositories,
-historical evidence and runtime configuration are preserved. Audit workers are
-read-only; the orchestrator owns the final text. Migration prewrite is not applicable
-for this documentary change.
+The original audit authorized only `docs/L03-CONTRACT-AUDIT.md` and
+`docs/L03-FRAMING.md`. The subsequent V1 rescope separately authorizes this decision
+record and targeted contradiction fixes in PRD, TAD and backlog. Profiles/catalogues,
+other repositories, historical evidence and runtime configuration remain preserved.
+Migration prewrite is not applicable for this documentary change.
 
 Validation comprises source identity/PR checks, the ten-axis contract matrix,
 BK-02/BK-04 acceptance/dependency mapping, pinned source-path checks, whitespace/link
@@ -330,5 +339,6 @@ implementation/runtime tests are claimed for this documentation-only diff.
 The audit may close with integration blocked. **Ready under dependencies** means the
 missing work and qualification gates are concrete; it does not mean ready to activate,
 L03 implemented, Council V1 complete or runtime contracts qualified. The agents source
-dependency is merged; current-main integration, D-H/D-LIMIT/D-C, runtime and required
-review/qualification gates remain. Keep this PR draft and do not merge automatically.
+dependency is merged; current-main integration, the rescoped D-H receipt/hold,
+D-LIMIT/D-C, runtime and required review/qualification gates remain. Keep this PR draft
+and do not merge automatically.

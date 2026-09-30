@@ -5,6 +5,13 @@ This is a source and documentary audit, not an implementation or a fresh runtime
 qualification. The companion [L03 framing](L03-FRAMING.md) assigns the missing
 contracts, integration sequence and acceptance evidence.
 
+> **Subsequent decision — 2026-09-30.** The accepted
+> [V1 decision-receipt rescope](DECISION-RECEIPTS-V1.md) replaces mandatory D-H host
+> API work and automatic recovery of ambiguous native effects for V1 with a persistent
+> Council one-attempt receipt, an uncertainty hold and authenticated owner disposition.
+> The findings below remain the dated observation of the revisions inspected by this
+> audit. This annotation does not turn them into implementation or runtime success.
+
 ## 1. Material findings
 
 | ID | Finding at the inspected revisions | Consequence / owner |

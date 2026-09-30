@@ -46,7 +46,7 @@ it does not authorize agents to redefine the objective or expand their authority
 | Upstream planning and Linear intake | Supply a prepared ticket and preserve its source identity and context. | Intake and synchronization are platform integration concerns, not an Executive connector catalogue. |
 | Paperclip executor or orchestrator | Implement the authorized ticket, report progress and blockers, and submit a verifiable result. | Cannot grant itself delegated acceptance or silently expand the ticket. |
 | Executive profiles and methods | Supply concise product, technical, and delivery/economic analysis to the review. | A contribution is neither a verdict nor permission to act. |
-| Council | Own the supervision mandate, review, correction or acceptance decision, and its confirmed effect in the covered workflow. | Executive must not duplicate or bypass this responsibility. |
+| Council | Own the supervision mandate, review, correction or acceptance decision, its one-attempt receipt and its effect observation in the covered workflow. | Executive must not duplicate or bypass this responsibility. |
 | Paperclip host | Execute agents and provide native work, identities, permissions, and run records. | Platform features alone do not demonstrate an integrated supervision guarantee. |
 
 The default proposed composition brings five distinct opinions to a development
@@ -213,7 +213,7 @@ not reused for B03–B05.
 | EXE-12 | Actual state visible | Installed, configured, loaded, activated, executed, decision recorded, and effect confirmed remain distinguishable. |
 | EXE-13 | In-flight drift response | A configured progress/limit signal triggers B04 before another avoidable iteration, without mandatory review of every tool call. |
 | EXE-14 | Finding proportionality | Must-fix findings cite a criterion or material risk; useful-now/deferred suggestions do not silently become acceptance blockers. |
-| EXE-15 | Applied Council decision | The governed workflow exposes the recorded verdict and confirmed native effect; pending or uncertain application is not acceptance. |
+| EXE-15 | Applied Council decision | The governed workflow exposes the recorded verdict, one-attempt receipt and actual native observation. A confirmed effect requires matching evidence; pending or indeterminate application is not acceptance and blocks dependent work. |
 | EXE-16 | Supervision value visible | Execution and review time, available cost/usage, corrections, interventions, and useful outcome are distinguishable; missing measurements stay explicit. |
 
 Model conclusions distinguish facts, assumptions, and judgment. Adapt fictional
@@ -249,11 +249,12 @@ this revision does not create a new design system.
 | Repeated correction or exhausted limit | No further affected dispatch; concise escalation with current evidence and in-flight status. |
 | Specialist failure or disagreement | No invented consensus; a sufficient bounded decision or explicit escalation. |
 | Changed source, result, or mandate | The change is visible; stale authorization or acceptance is not applied to the new version. |
-| Duplicate submission or restart | Recover the recorded operation/effect before retrying; ambiguous state stays unknown. |
+| Duplicate submission or restart | Return the persistent operation receipt; do not resend a possibly attempted effect. Ambiguous state stays indeterminate and holds dependent work. |
 | Unauthorized action or unavailable Council | No silent acceptance bypass or automatic downgrade to advisory operation. |
 
 Qualification requires a real, authorized Paperclip/Council journey with distinct
-executor/reviewer identities, persisted evidence, and native decision readback.
+executor/reviewer identities, persisted evidence, and the Council receipt plus actual
+native observations available through existing supported interfaces.
 Mocks can validate contracts, not authority or the usefulness of an executive review.
 The real journey must include a correction and a bounded stopping case.
 
