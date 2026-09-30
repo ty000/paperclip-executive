@@ -1,0 +1,19 @@
+{
+  "schema_version": "l03-ci.v1",
+  "Council": {
+    "head": "b0218475e0cf64678091017c9bc1ad70033ccf6e",
+    "status": "pass",
+    "runs": [
+      "https://github.com/ty000/paperclip-council/actions/runs/36785335013",
+      "https://github.com/ty000/paperclip-council/actions/runs/36785331446"
+    ],
+    "superseded_failure": {
+      "run": "https://github.com/ty000/paperclip-council/actions/runs/36784335510",
+      "cause": "introduced control-validation complexity against push base",
+      "remediation_batch": 5
+    }
+  },
+  "Executive": {
+    "status": "pending_first_push"
+  }
+}

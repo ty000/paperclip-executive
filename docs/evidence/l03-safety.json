@@ -1,0 +1,505 @@
+{
+  "schemaVersion": "paperclip-executive.l03-safety.v1",
+  "observedAt": "2026-09-30T21:52:02.720Z",
+  "authorization": {
+    "providerCalls": false,
+    "agentResumeOrWake": false,
+    "writes": "seven L03 agent safety patches plus one isolated fixture repository/project"
+  },
+  "runtime": {
+    "base": "http://127.0.0.1:3220",
+    "hostCommit": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+    "instance": "executive-dev",
+    "schedulerEnabled": false
+  },
+  "candidates": [
+    {
+      "id": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
+      "key": "paperclip-executive.executive",
+      "version": "0.3.0",
+      "status": "ready",
+      "health": {
+        "pluginId": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
+        "status": "ready",
+        "healthy": true,
+        "checks": [
+          {
+            "name": "registry",
+            "passed": true,
+            "message": "Plugin found in registry"
+          },
+          {
+            "name": "manifest",
+            "passed": true,
+            "message": "Manifest is valid"
+          },
+          {
+            "name": "status",
+            "passed": true,
+            "message": "Current status: ready"
+          }
+        ]
+      }
+    },
+    {
+      "id": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+      "key": "private.paperclip-council",
+      "version": "0.5.0",
+      "status": "ready",
+      "health": {
+        "pluginId": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+        "status": "ready",
+        "healthy": true,
+        "checks": [
+          {
+            "name": "registry",
+            "passed": true,
+            "message": "Plugin found in registry"
+          },
+          {
+            "name": "manifest",
+            "passed": true,
+            "message": "Manifest is valid"
+          },
+          {
+            "name": "status",
+            "passed": true,
+            "message": "Current status: ready"
+          }
+        ]
+      }
+    }
+  ],
+  "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+  "agents": [
+    {
+      "id": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+      "profileId": "product",
+      "status": "paused",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "safety": {
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "acpNetworkAccessRequested": "false",
+        "acpNetworkAccessReadback": "plain binding present; value redacted by native configuration API",
+        "timeoutSec": 300,
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "instructions": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "sha256": "2b9158b84262c01e1e6435641eea8cffc7d35af46f22941a2b8cd7e87aede9e1"
+      },
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        }
+      ],
+      "skillSnapshot": {
+        "supported": true,
+        "mode": "ephemeral",
+        "configured": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "state": "configured",
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40"
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "state": "configured",
+            "currentVersionId": null
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "63e53a4a-1c89-4490-9739-05699be031fa",
+      "profileId": "architecture",
+      "status": "paused",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "safety": {
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "acpNetworkAccessRequested": "false",
+        "acpNetworkAccessReadback": "plain binding present; value redacted by native configuration API",
+        "timeoutSec": 300,
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "instructions": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "sha256": "3819827feb94e524ae1684acd39b09b20e2fb3933a2c9ed1dfa4497c188778c7"
+      },
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        }
+      ],
+      "skillSnapshot": {
+        "supported": true,
+        "mode": "ephemeral",
+        "configured": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "state": "configured",
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40"
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "state": "configured",
+            "currentVersionId": null
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+      "profileId": "quality",
+      "status": "paused",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "safety": {
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "acpNetworkAccessRequested": "false",
+        "acpNetworkAccessReadback": "plain binding present; value redacted by native configuration API",
+        "timeoutSec": 300,
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "instructions": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "sha256": "735729682a7a22478956e862d34c47d91ade60294721669a8a0576136a5625c5"
+      },
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        },
+        {
+          "catalogKey": "paperclip-executive.evidence-review",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review"
+        }
+      ],
+      "skillSnapshot": {
+        "supported": true,
+        "mode": "ephemeral",
+        "configured": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/evidence-review",
+            "state": "configured",
+            "currentVersionId": "adad26c4-0eae-4437-abb9-b3ab1dc85f3b"
+          },
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "state": "configured",
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40"
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "state": "configured",
+            "currentVersionId": null
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+      "profileId": "delivery",
+      "status": "paused",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "safety": {
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "acpNetworkAccessRequested": "false",
+        "acpNetworkAccessReadback": "plain binding present; value redacted by native configuration API",
+        "timeoutSec": 300,
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "instructions": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "sha256": "f9e766853d1b272dc6ec0ac878168d074718360df4d70f891bb86560fa5928d7"
+      },
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        }
+      ],
+      "skillSnapshot": {
+        "supported": true,
+        "mode": "ephemeral",
+        "configured": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "state": "configured",
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40"
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "state": "configured",
+            "currentVersionId": null
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+      "profileId": "economics",
+      "status": "paused",
+      "model": "gpt-5.6-sol",
+      "effort": "medium",
+      "safety": {
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "acpNetworkAccessRequested": "false",
+        "acpNetworkAccessReadback": "plain binding present; value redacted by native configuration API",
+        "timeoutSec": 300,
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "instructions": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "sha256": "867dc76590c9b893a3bb7b256e4a9ad3c3856f4a88f3eec6cca62284c784a7e1"
+      },
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.specialist-advisory",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory"
+        }
+      ],
+      "skillSnapshot": {
+        "supported": true,
+        "mode": "ephemeral",
+        "configured": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/specialist-advisory",
+            "state": "configured",
+            "currentVersionId": "1c880fba-a7d4-4a59-ba65-aa970de40d40"
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "state": "configured",
+            "currentVersionId": null
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "9acab613-9c24-45df-8f26-e600fc61d615",
+      "profileId": "software-executor",
+      "status": "paused",
+      "model": "gpt-6-sol",
+      "effort": "high",
+      "safety": {
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "acpNetworkAccessRequested": "false",
+        "acpNetworkAccessReadback": "plain binding present; value redacted by native configuration API",
+        "timeoutSec": 300,
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 2,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "instructions": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "sha256": "cfd8a242fcd265b51c3de596fdf54f4b9988ff45769cb0a9c5752ee45471b6ae"
+      },
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.implementation-execution",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution"
+        }
+      ],
+      "skillSnapshot": {
+        "supported": true,
+        "mode": "ephemeral",
+        "configured": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/implementation-execution",
+            "state": "configured",
+            "currentVersionId": "a587ea09-47b9-4739-9608-4351b7f17d25"
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "state": "configured",
+            "currentVersionId": null
+          }
+        ],
+        "warnings": []
+      }
+    },
+    {
+      "id": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+      "profileId": "council-reviewer",
+      "status": "paused",
+      "model": "gpt-6-astra",
+      "effort": "high",
+      "safety": {
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "acpNetworkAccessRequested": "false",
+        "acpNetworkAccessReadback": "plain binding present; value redacted by native configuration API",
+        "timeoutSec": 600,
+        "heartbeat": {
+          "enabled": false,
+          "maxDailyRuns": 3,
+          "wakeOnDemand": false,
+          "maxConcurrentRuns": 1,
+          "maxDailyCostCents": 100
+        }
+      },
+      "instructions": {
+        "mode": "managed",
+        "entryFile": "AGENTS.md",
+        "sha256": "d8554631eee98ef6ac243ddb175de197f71ccaa1378f62d199be2e336c461ac9"
+      },
+      "requiredSkills": [
+        {
+          "catalogKey": "paperclip-executive.council-decision-review",
+          "companyKey": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review"
+        }
+      ],
+      "skillSnapshot": {
+        "supported": true,
+        "mode": "ephemeral",
+        "configured": [
+          {
+            "key": "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review",
+            "state": "configured",
+            "currentVersionId": "2717910b-1ed1-42c3-b9a5-4a76065641ab"
+          },
+          {
+            "key": "paperclipai/paperclip/paperclip",
+            "state": "configured",
+            "currentVersionId": null
+          }
+        ],
+        "warnings": []
+      }
+    }
+  ],
+  "fixture": {
+    "root": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/l03-real",
+    "commit": "53d784e2373cc7715da1c86e34dfbc6fe8795322",
+    "clean": true,
+    "intentionallyUnimplemented": true,
+    "baselineTest": {
+      "command": "npm test",
+      "expectedStatus": "failing",
+      "observedExitCode": 1
+    },
+    "expectedNominalRuns": 10,
+    "initialCampaignRetryPolicy": "none"
+  },
+  "project": {
+    "id": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+    "name": "L03 Campaign Budget Fixture",
+    "status": "planned",
+    "workspaceId": "d571118e-f2ab-49a7-a0a0-1de84c61d8ec",
+    "workspaceCwd": "/home/davy-lp/workspace/paperclip-executive/.paperclip-dev/l03-real",
+    "workspaceDesiredState": "manual",
+    "executionWorkspacePolicy": {
+      "enabled": true,
+      "sharedWorkspaceConcurrency": "serialize",
+      "defaultMode": "shared_workspace",
+      "allowIssueOverride": false,
+      "defaultProjectWorkspaceId": "d571118e-f2ab-49a7-a0a0-1de84c61d8ec",
+      "workspaceStrategy": {
+        "type": "project_primary",
+        "baseRef": "53d784e2373cc7715da1c86e34dfbc6fe8795322"
+      },
+      "runtimePolicy": {
+        "desiredState": "manual"
+      }
+    }
+  },
+  "issue": {
+    "id": "a378ad22-d01b-43f7-99d8-785076310607",
+    "identifier": "EXEA-1",
+    "title": "Implement the L03 campaign budget allocator",
+    "status": "backlog",
+    "assigneeAgentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+    "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+    "projectWorkspaceId": "d571118e-f2ab-49a7-a0a0-1de84c61d8ec",
+    "executionWorkspacePreference": null,
+    "baselineCommit": "53d784e2373cc7715da1c86e34dfbc6fe8795322",
+    "releaseBlockedOn": [
+      "explicit campaign approval",
+      "roster configuration",
+      "mission configuration",
+      "mandate configuration and readback"
+    ]
+  },
+  "preservation": {
+    "l02CompanyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+    "l02RunId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+    "l02AgentIdsBefore": [
+      "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+      "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+      "f49ad183-bb22-47f1-a235-ee3309b21e02"
+    ],
+    "l02AgentIdsAfter": [
+      "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+      "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+      "f49ad183-bb22-47f1-a235-ee3309b21e02"
+    ],
+    "l02RunIdsBefore": [
+      "2285549d-f090-4f92-ad46-64c2bce1d3cd"
+    ],
+    "l02RunIdsAfter": [
+      "2285549d-f090-4f92-ad46-64c2bce1d3cd"
+    ],
+    "unchanged": true
+  },
+  "runReadback": {
+    "l03RunCount": 0,
+    "queuedOrRunning": false
+  },
+  "proof": {
+    "installed": "verified for Executive 0.3.0 and Council 0.5.0 registry/health",
+    "desired": "verified for instructions and required skill assignments",
+    "loaded": "unverified until an authorized exact-profile run observes the effective mount",
+    "activated": "false; every agent remains paused and automatic wake paths are disabled",
+    "executed": "false; no L03 run or provider call exists"
+  }
+}

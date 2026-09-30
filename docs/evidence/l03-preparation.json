@@ -1,6 +1,6 @@
 {
   "schemaVersion": "paperclip-executive.l03-preparation.v1",
-  "checkedAt": "2026-09-30T21:23:37.173Z",
+  "checkedAt": "2026-09-30T21:49:17.126Z",
   "operation": "prepare isolated dormant L03 company, skills, and seven agent profiles without provider calls",
   "authorization": {
     "instance": "executive-dev",
@@ -41,7 +41,7 @@
   },
   "plugin": {
     "id": "2f5ead19-69e1-4065-9fe4-93bd7699e510",
-    "version": "0.2.0",
+    "version": "0.3.0",
     "status": "ready",
     "candidateInstallOrUpgradeAttempted": false
   },
@@ -238,7 +238,13 @@
         "instructionsEntryFile": "AGENTS.md",
         "instructionsBundleMode": "managed",
         "nonInteractivePermissions": "deny",
-        "dangerouslyBypassApprovalsAndSandbox": true
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -391,7 +397,13 @@
         "instructionsEntryFile": "AGENTS.md",
         "instructionsBundleMode": "managed",
         "nonInteractivePermissions": "deny",
-        "dangerouslyBypassApprovalsAndSandbox": true
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -549,7 +561,13 @@
         "instructionsEntryFile": "AGENTS.md",
         "instructionsBundleMode": "managed",
         "nonInteractivePermissions": "deny",
-        "dangerouslyBypassApprovalsAndSandbox": true
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -707,7 +725,13 @@
         "instructionsEntryFile": "AGENTS.md",
         "instructionsBundleMode": "managed",
         "nonInteractivePermissions": "deny",
-        "dangerouslyBypassApprovalsAndSandbox": true
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -860,7 +884,13 @@
         "instructionsEntryFile": "AGENTS.md",
         "instructionsBundleMode": "managed",
         "nonInteractivePermissions": "deny",
-        "dangerouslyBypassApprovalsAndSandbox": true
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -1013,7 +1043,13 @@
         "instructionsEntryFile": "AGENTS.md",
         "instructionsBundleMode": "managed",
         "nonInteractivePermissions": "deny",
-        "dangerouslyBypassApprovalsAndSandbox": true
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
       },
       "runtimeConfig": {
         "heartbeat": {
@@ -1154,7 +1190,7 @@
         "mode": "persistent",
         "model": "gpt-6-astra",
         "engine": "acp",
-        "timeoutSec": 300,
+        "timeoutSec": 600,
         "paperclipSkillSync": {
           "desiredSkills": [
             "company/ba82ae5f-292f-4c13-a02a-70ddef6cb22b/council-decision-review"
@@ -1166,12 +1202,18 @@
         "instructionsEntryFile": "AGENTS.md",
         "instructionsBundleMode": "managed",
         "nonInteractivePermissions": "deny",
-        "dangerouslyBypassApprovalsAndSandbox": true
+        "dangerouslyBypassApprovalsAndSandbox": false,
+        "env": {
+          "PAPERCLIP_CODEX_ACP_NETWORK_ACCESS": {
+            "type": "plain",
+            "value": "***REDACTED***"
+          }
+        }
       },
       "runtimeConfig": {
         "heartbeat": {
           "enabled": false,
-          "maxDailyRuns": 2,
+          "maxDailyRuns": 3,
           "wakeOnDemand": false,
           "maxConcurrentRuns": 1,
           "maxDailyCostCents": 100
@@ -1295,17 +1337,13 @@
   },
   "evidenceLayers": {
     "declared": "verified",
-    "installed": "verified for the four company-library skills; plugin remains existing 0.2.0 and no candidate was installed",
+    "installed": "verified for the four company-library skills and current Executive plugin 0.3.0; this script performed no plugin install or upgrade",
     "desired": "verified from each agent configuration and skill snapshot",
     "loaded": "unverified without an authorized adapter run; library and desired state only",
     "activated": "false: all agents paused or pending approval and heartbeat triggers disabled",
     "executed": "false: zero L03 runs and no provider call was authorized"
   },
   "unresolved": [
-    "Candidate plugin installation/upgrade belongs to the parent task and was not attempted.",
-    "Actual Codex profile skill mount and provider authentication remain unverified until a separately authorized run.",
-    "The isolated toy-code fixture/project workspace is intentionally deferred to the parent campaign setup.",
-    "The host added dangerouslyBypassApprovalsAndSandbox=true to each codex_local configuration; this must be resolved or justified for the exact ACP engine before execution.",
-    "ACP network access is enabled by default and needs a reviewed execution-time restriction for the local toy campaign."
+    "Actual Codex profile skill mount and provider authentication remain unverified until a separately authorized run."
   ]
 }

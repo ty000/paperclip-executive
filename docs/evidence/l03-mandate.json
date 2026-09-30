@@ -1,0 +1,791 @@
+{
+  "observedAt": "2026-09-30T22:03:22.297Z",
+  "host": {
+    "base": "http://127.0.0.1:3220",
+    "commit": "61b3fd57a695614dc4a37e2303f426a34a9795cf",
+    "pid": 1074721,
+    "instance": "executive-dev",
+    "schedulerEnabled": false
+  },
+  "company": {
+    "id": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+    "ownerUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ"
+  },
+  "project": {
+    "id": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e"
+  },
+  "rootIssue": {
+    "id": "a378ad22-d01b-43f7-99d8-785076310607",
+    "identifier": "EXEA-1",
+    "status": "backlog",
+    "assigneeAgentId": "9acab613-9c24-45df-8f26-e600fc61d615"
+  },
+  "rosters": {
+    "team": {
+      "head": {
+        "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+        "rosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+        "publishedRevision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+        "lifecycle": "draft",
+        "version": 2,
+        "auditEntries": [
+          {
+            "at": "2026-09-30T21:58:39.938Z",
+            "action": "created",
+            "revision": "00012858-ed3c-4560-b855-9cc0c824a118",
+            "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ"
+          },
+          {
+            "at": "2026-09-30T22:02:04.269Z",
+            "action": "revised",
+            "toRevision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+            "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+            "fromRevision": "00012858-ed3c-4560-b855-9cc0c824a118"
+          }
+        ],
+        "createdAt": "2026-09-30T21:58:39.938Z",
+        "updatedAt": "2026-09-30T22:02:04.269Z"
+      },
+      "revision": {
+        "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+        "rosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+        "revision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+        "kind": "team",
+        "name": "L03 Budget Fixture Executor Team",
+        "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+        "content": {
+          "members": [
+            {
+              "agentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+              "responsibilities": [
+                "software-executor"
+              ]
+            }
+          ],
+          "integrationLeadAgentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+          "finalReviewerAgentId": null,
+          "requiredPerspectives": []
+        },
+        "createdByUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+        "createdAt": "2026-09-30T22:02:04.266Z"
+      },
+      "history": [
+        {
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "rosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+          "revision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+          "kind": "team",
+          "name": "L03 Budget Fixture Executor Team",
+          "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+          "content": {
+            "members": [
+              {
+                "agentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+                "responsibilities": [
+                  "software-executor"
+                ]
+              }
+            ],
+            "integrationLeadAgentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+            "finalReviewerAgentId": null,
+            "requiredPerspectives": []
+          },
+          "createdByUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+          "createdAt": "2026-09-30T22:02:04.266Z"
+        },
+        {
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "rosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+          "revision": "00012858-ed3c-4560-b855-9cc0c824a118",
+          "kind": "team",
+          "name": "L03 Budget Fixture Executor Team",
+          "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+          "content": {
+            "members": [
+              {
+                "agentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+                "responsibilities": [
+                  "integration_lead",
+                  "profile.software-executor"
+                ]
+              }
+            ],
+            "integrationLeadAgentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+            "finalReviewerAgentId": null,
+            "requiredPerspectives": []
+          },
+          "createdByUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+          "createdAt": "2026-09-30T21:58:39.934Z"
+        }
+      ]
+    },
+    "council": {
+      "head": {
+        "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+        "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+        "publishedRevision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+        "lifecycle": "draft",
+        "version": 2,
+        "auditEntries": [
+          {
+            "at": "2026-09-30T21:58:39.960Z",
+            "action": "created",
+            "revision": "fd0f5a0e-32a8-44ff-8827-2df128cfd969",
+            "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ"
+          },
+          {
+            "at": "2026-09-30T22:02:04.295Z",
+            "action": "revised",
+            "toRevision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+            "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+            "fromRevision": "fd0f5a0e-32a8-44ff-8827-2df128cfd969"
+          }
+        ],
+        "createdAt": "2026-09-30T21:58:39.960Z",
+        "updatedAt": "2026-09-30T22:02:04.296Z"
+      },
+      "revision": {
+        "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+        "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+        "revision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+        "kind": "council",
+        "name": "L03 Budget Fixture Council",
+        "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+        "content": {
+          "members": [
+            {
+              "agentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+              "responsibilities": [
+                "council-reviewer"
+              ]
+            },
+            {
+              "agentId": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+              "responsibilities": [
+                "product"
+              ]
+            },
+            {
+              "agentId": "63e53a4a-1c89-4490-9739-05699be031fa",
+              "responsibilities": [
+                "architecture"
+              ]
+            },
+            {
+              "agentId": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+              "responsibilities": [
+                "quality"
+              ]
+            },
+            {
+              "agentId": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+              "responsibilities": [
+                "delivery"
+              ]
+            },
+            {
+              "agentId": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+              "responsibilities": [
+                "economics"
+              ]
+            }
+          ],
+          "integrationLeadAgentId": null,
+          "finalReviewerAgentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+          "requiredPerspectives": [
+            "product",
+            "architecture",
+            "quality",
+            "delivery",
+            "economics"
+          ]
+        },
+        "createdByUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+        "createdAt": "2026-09-30T22:02:04.292Z"
+      },
+      "history": [
+        {
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "revision": "fd0f5a0e-32a8-44ff-8827-2df128cfd969",
+          "kind": "council",
+          "name": "L03 Budget Fixture Council",
+          "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+          "content": {
+            "members": [
+              {
+                "agentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+                "responsibilities": [
+                  "final_reviewer",
+                  "profile.council-reviewer"
+                ]
+              },
+              {
+                "agentId": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+                "responsibilities": [
+                  "specialist_contributor",
+                  "profile.product"
+                ]
+              },
+              {
+                "agentId": "63e53a4a-1c89-4490-9739-05699be031fa",
+                "responsibilities": [
+                  "specialist_contributor",
+                  "profile.architecture"
+                ]
+              },
+              {
+                "agentId": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+                "responsibilities": [
+                  "specialist_contributor",
+                  "profile.quality"
+                ]
+              },
+              {
+                "agentId": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+                "responsibilities": [
+                  "specialist_contributor",
+                  "profile.delivery"
+                ]
+              },
+              {
+                "agentId": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+                "responsibilities": [
+                  "specialist_contributor",
+                  "profile.economics"
+                ]
+              }
+            ],
+            "integrationLeadAgentId": null,
+            "finalReviewerAgentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+            "requiredPerspectives": [
+              "profile.product",
+              "profile.architecture",
+              "profile.quality",
+              "profile.delivery",
+              "profile.economics"
+            ]
+          },
+          "createdByUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+          "createdAt": "2026-09-30T21:58:39.957Z"
+        },
+        {
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "revision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+          "kind": "council",
+          "name": "L03 Budget Fixture Council",
+          "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+          "content": {
+            "members": [
+              {
+                "agentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+                "responsibilities": [
+                  "council-reviewer"
+                ]
+              },
+              {
+                "agentId": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+                "responsibilities": [
+                  "product"
+                ]
+              },
+              {
+                "agentId": "63e53a4a-1c89-4490-9739-05699be031fa",
+                "responsibilities": [
+                  "architecture"
+                ]
+              },
+              {
+                "agentId": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+                "responsibilities": [
+                  "quality"
+                ]
+              },
+              {
+                "agentId": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+                "responsibilities": [
+                  "delivery"
+                ]
+              },
+              {
+                "agentId": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+                "responsibilities": [
+                  "economics"
+                ]
+              }
+            ],
+            "integrationLeadAgentId": null,
+            "finalReviewerAgentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+            "requiredPerspectives": [
+              "product",
+              "architecture",
+              "quality",
+              "delivery",
+              "economics"
+            ]
+          },
+          "createdByUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+          "createdAt": "2026-09-30T22:02:04.292Z"
+        }
+      ]
+    },
+    "validation": {
+      "eligible": false,
+      "errors": [
+        {
+          "code": "agent_ineligible",
+          "rosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+          "agentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+          "message": "Agent Software Executor is paused and cannot activate this roster"
+        },
+        {
+          "code": "agent_ineligible",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "agentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+          "message": "Agent Council Reviewer is paused and cannot activate this roster"
+        },
+        {
+          "code": "agent_ineligible",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "agentId": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+          "message": "Agent Product Advisor is paused and cannot activate this roster"
+        },
+        {
+          "code": "agent_ineligible",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "agentId": "63e53a4a-1c89-4490-9739-05699be031fa",
+          "message": "Agent Architecture Advisor is paused and cannot activate this roster"
+        },
+        {
+          "code": "agent_ineligible",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "agentId": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+          "message": "Agent Quality Advisor is paused and cannot activate this roster"
+        },
+        {
+          "code": "agent_ineligible",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "agentId": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+          "message": "Agent Delivery Advisor is paused and cannot activate this roster"
+        },
+        {
+          "code": "agent_ineligible",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "agentId": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+          "message": "Agent Economics Advisor is paused and cannot activate this roster"
+        }
+      ],
+      "prerequisites": [
+        {
+          "code": "configuration_saved",
+          "status": "ready",
+          "message": "Roster revisions are saved and inspectable."
+        },
+        {
+          "code": "owner_destination",
+          "status": "ready",
+          "message": "Company default responsible user is the configured owner destination."
+        },
+        {
+          "code": "native_review_path",
+          "status": "pending",
+          "message": "Native mission review path is verified when an L2 mission is persisted."
+        },
+        {
+          "code": "mandate_and_limits",
+          "status": "pending",
+          "message": "Mission mandate and operating limits are supplied per mission."
+        },
+        {
+          "code": "decision_reconciliation",
+          "status": "unsupported",
+          "message": "L0 G3 uncertain-decision reconciliation remains unqualified."
+        },
+        {
+          "code": "runtime_budget_exposure",
+          "status": "unsupported",
+          "message": "L0 G4 aggregate runtime exposure remains unqualified."
+        }
+      ],
+      "team": {
+        "head": {
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "rosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+          "publishedRevision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+          "lifecycle": "draft",
+          "version": 2,
+          "auditEntries": [
+            {
+              "at": "2026-09-30T21:58:39.938Z",
+              "action": "created",
+              "revision": "00012858-ed3c-4560-b855-9cc0c824a118",
+              "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ"
+            },
+            {
+              "at": "2026-09-30T22:02:04.269Z",
+              "action": "revised",
+              "toRevision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+              "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+              "fromRevision": "00012858-ed3c-4560-b855-9cc0c824a118"
+            }
+          ],
+          "createdAt": "2026-09-30T21:58:39.938Z",
+          "updatedAt": "2026-09-30T22:02:04.269Z"
+        },
+        "revision": {
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "rosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+          "revision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+          "kind": "team",
+          "name": "L03 Budget Fixture Executor Team",
+          "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+          "content": {
+            "members": [
+              {
+                "agentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+                "responsibilities": [
+                  "software-executor"
+                ]
+              }
+            ],
+            "integrationLeadAgentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+            "finalReviewerAgentId": null,
+            "requiredPerspectives": []
+          },
+          "createdByUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+          "createdAt": "2026-09-30T22:02:04.266Z"
+        }
+      },
+      "council": {
+        "head": {
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "publishedRevision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+          "lifecycle": "draft",
+          "version": 2,
+          "auditEntries": [
+            {
+              "at": "2026-09-30T21:58:39.960Z",
+              "action": "created",
+              "revision": "fd0f5a0e-32a8-44ff-8827-2df128cfd969",
+              "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ"
+            },
+            {
+              "at": "2026-09-30T22:02:04.295Z",
+              "action": "revised",
+              "toRevision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+              "actorUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+              "fromRevision": "fd0f5a0e-32a8-44ff-8827-2df128cfd969"
+            }
+          ],
+          "createdAt": "2026-09-30T21:58:39.960Z",
+          "updatedAt": "2026-09-30T22:02:04.296Z"
+        },
+        "revision": {
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "rosterId": "8bc68301-2979-4383-919d-dc733d155267",
+          "revision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+          "kind": "council",
+          "name": "L03 Budget Fixture Council",
+          "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+          "content": {
+            "members": [
+              {
+                "agentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+                "responsibilities": [
+                  "council-reviewer"
+                ]
+              },
+              {
+                "agentId": "481caab0-d0b3-442b-a5f4-5fe1d6563edb",
+                "responsibilities": [
+                  "product"
+                ]
+              },
+              {
+                "agentId": "63e53a4a-1c89-4490-9739-05699be031fa",
+                "responsibilities": [
+                  "architecture"
+                ]
+              },
+              {
+                "agentId": "cc0fe155-dfeb-4157-9827-4abe01c98daf",
+                "responsibilities": [
+                  "quality"
+                ]
+              },
+              {
+                "agentId": "ff2d8928-78f9-4f7f-9c81-af6bded5bd1e",
+                "responsibilities": [
+                  "delivery"
+                ]
+              },
+              {
+                "agentId": "80d1e926-718d-4e7a-8311-c31e09e410fd",
+                "responsibilities": [
+                  "economics"
+                ]
+              }
+            ],
+            "integrationLeadAgentId": null,
+            "finalReviewerAgentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+            "requiredPerspectives": [
+              "product",
+              "architecture",
+              "quality",
+              "delivery",
+              "economics"
+            ]
+          },
+          "createdByUserId": "KaI1pP8ivXcLOjTFmIYwWwCDqehxzXRZ",
+          "createdAt": "2026-09-30T22:02:04.292Z"
+        }
+      }
+    },
+    "activationAttempted": false,
+    "activationRequest": {
+      "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+      "command": "activate-pair",
+      "teamRosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+      "teamExpectedVersion": 2,
+      "councilRosterId": "8bc68301-2979-4383-919d-dc733d155267",
+      "councilExpectedVersion": 2
+    },
+    "profileIdCorrection": {
+      "reason": "Runtime matching requires bare catalogue profile IDs; prefixed profile.* values are invalid.",
+      "supersededTeamRevision": "00012858-ed3c-4560-b855-9cc0c824a118",
+      "supersededCouncilRevision": "fd0f5a0e-32a8-44ff-8827-2df128cfd969",
+      "currentTeamRevision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+      "currentCouncilRevision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+      "priorRevisionsPreservedInHistory": true
+    }
+  },
+  "councilCredential": {
+    "agentKey": {
+      "id": "8cc06106-4e0a-4f29-9fed-f07731d47227",
+      "name": "L03 Council decision adapter",
+      "scope": {
+        "kind": "standard"
+      },
+      "revokedAt": null
+    },
+    "secret": {
+      "id": "5643ccfe-ba74-4038-b587-3c2dc8ece46b",
+      "name": "L03 Council reviewer API key",
+      "key": "l03_council_reviewer_api_key",
+      "provider": "local_encrypted",
+      "managedMode": "paperclip_managed",
+      "latestVersion": 1
+    },
+    "secretUsage": {
+      "secretId": "5643ccfe-ba74-4038-b587-3c2dc8ece46b",
+      "bindings": [
+        {
+          "id": "04f60e2b-b9ad-4349-9ab2-96f21051505c",
+          "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+          "secretId": "5643ccfe-ba74-4038-b587-3c2dc8ece46b",
+          "targetType": "plugin",
+          "targetId": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+          "configPath": "councilApiKey",
+          "versionSelector": "latest",
+          "required": true,
+          "label": "councilApiKey",
+          "projectionClass": "unclassified",
+          "projectionAllowlistKey": null,
+          "createdAt": "2026-09-30T21:59:17.793Z",
+          "updatedAt": "2026-09-30T21:59:17.793Z",
+          "target": {
+            "type": "plugin",
+            "id": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+            "label": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+            "href": null,
+            "status": null
+          }
+        }
+      ]
+    },
+    "rawValueRetained": false,
+    "recovery": {
+      "revokedOrphanKeyId": "85bf0b20-485d-40f5-98b5-16ffb02a26d9",
+      "reason": "The first local preparation attempt created the key but stopped before secret creation after reading the wrong one-time response field; readback proved no secret existed, so that isolated key was revoked before one replacement was created."
+    }
+  },
+  "councilConfig": {
+    "pluginId": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+    "readback": {
+      "id": "af292072-632e-4601-bf7c-09a4a42a87ff",
+      "pluginId": "cb1d37ab-e723-4d63-bed1-3e87442afc51",
+      "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+      "configJson": {
+        "apiBaseUrl": "http://127.0.0.1:3220",
+        "councilApiKey": {
+          "type": "secret_ref",
+          "version": "latest",
+          "secretId": "5643ccfe-ba74-4038-b587-3c2dc8ece46b"
+        },
+        "councilAgentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff"
+      },
+      "lastError": null,
+      "createdAt": "2026-09-30T21:59:17.796Z",
+      "updatedAt": "2026-09-30T21:59:17.796Z"
+    },
+    "secretRefVerified": true
+  },
+  "preparedRequests": {
+    "activation": {
+      "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+      "command": "activate-pair",
+      "teamRosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+      "teamExpectedVersion": 2,
+      "councilRosterId": "8bc68301-2979-4383-919d-dc733d155267",
+      "councilExpectedVersion": 2
+    },
+    "mission": {
+      "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+      "command": "create",
+      "commandId": "4057ebbb-6720-4045-a557-06a8d5fe0fb8",
+      "missionId": "4b91a4b3-ecf6-41ef-9de9-d2057dddc54a",
+      "rootIssueId": "a378ad22-d01b-43f7-99d8-785076310607",
+      "projectId": "fdd1f84b-cf18-4d8e-8015-2c517f6de76e",
+      "teamRosterId": "a95139d3-b826-4ddb-83b6-38663491048d",
+      "teamRevision": "1fc421d1-388d-494a-bb75-8e5b89f28451",
+      "councilRosterId": "8bc68301-2979-4383-919d-dc733d155267",
+      "councilRevision": "786673c6-c2e8-40d5-bfd7-8cd5365b387a",
+      "mandate": {
+        "objective": "Implement and independently review the deterministic L03 campaign budget allocator in the isolated fixture.",
+        "acceptanceCriteria": [
+          "roles: Accept only the seven declared profile IDs.",
+          "per-role: Permit at most two native run admissions per specialist or executor and three for the Council reviewer.",
+          "native-run-envelope: Permit at most fourteen native run admissions overall; the initial authorized proposal uses exactly ten sends and no retry.",
+          "admission-allocation: Refuse a plan whose admission allocation exceeds 700 cents, while treating native billed cost as authoritative and potentially higher after a run starts.",
+          "approach-first: Require the authenticated executor approach before Council reservation.",
+          "specialists-after-reservation: Require Council reservation before the five profile-bound specialist contributions.",
+          "direction-before-execution: Require a favorable Council direction before executor implementation.",
+          "independent-result-review: Require Council result review after implementation and forbid executor self-review.",
+          "atomic-refusal: Reject invalid roles, duplicates, invalid numeric values, invalid ordering, or excess allocation with a typed refusal and no partial plan."
+        ],
+        "commitments": [
+          "Initial campaign: ten native agent runs/sends in the prepared order, with no retry.",
+          "Before each approved send, patch only the exact role to wakeOnDemand true while heartbeat.enabled remains false, read back the patch and an empty queued-wake state, then restore wakeOnDemand false and pause the role immediately after terminal outcome or stop.",
+          "Any unexpected native run counts against the ten-run initial campaign and stops further dispatch; it is never replaced with a hidden extra run.",
+          "A native run may contain multiple provider turns or requests; provider request count is not hard bounded by codex_local.",
+          "The 700-cent figure is an admission allocation, not an enforceable billed-cost ceiling.",
+          "Any uncertain outcome, timeout, missing skill mount, provider/auth failure, stale state, or safety mismatch stops the campaign."
+        ],
+        "limits": {
+          "taskPolicy": "Exactly ten native agent runs/sends for the initial campaign, including any unexpected native run; no retry, hidden replacement, or live correction. Enable wakeOnDemand only JIT for the exact authorized role and restore false plus paused immediately after terminal outcome or stop.",
+          "periodPolicy": "One manually released qualification campaign before the governance expiry; reconcile after every terminal run.",
+          "correctionLimit": 1,
+          "elapsedMinutes": 1440
+        }
+      }
+    },
+    "governance": {
+      "companyId": "ba82ae5f-292f-4c13-a02a-70ddef6cb22b",
+      "missionId": "4b91a4b3-ecf6-41ef-9de9-d2057dddc54a",
+      "expectedMissionVersion": 1,
+      "mandateRevision": 1,
+      "executorAgentId": "9acab613-9c24-45df-8f26-e600fc61d615",
+      "finalReviewerAgentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+      "councilAgentId": "e39b0edd-435e-4aa7-bdd5-9d29753680ff",
+      "executivePluginActorId": "paperclip-executive.executive",
+      "expiresAt": "2026-10-07T20:00:00.000Z",
+      "ticket": {
+        "issueId": "a378ad22-d01b-43f7-99d8-785076310607",
+        "sourceRef": "/api/issues/a378ad22-d01b-43f7-99d8-785076310607",
+        "sourceVersion": "2026-09-30T21:51:03.143Z",
+        "sourceHash": "7015a87f309a0480faa7e3f5088b97f9720eb2174b687e918d1ce89275cf7a9f",
+        "suppliedContext": {
+          "sourceRef": "prepared:l03:4b91a4b3-ecf6-41ef-9de9-d2057dddc54a",
+          "sourceHash": "7015a87f309a0480faa7e3f5088b97f9720eb2174b687e918d1ce89275cf7a9f",
+          "content": "Issue EXEA-1: Implement the L03 campaign budget allocator\nProject fdd1f84b-cf18-4d8e-8015-2c517f6de76e; fixture baseline 53d784e2373cc7715da1c86e34dfbc6fe8795322.\nroles: Accept only the seven declared profile IDs.\nper-role: Permit at most two native run admissions per specialist or executor and three for the Council reviewer.\nnative-run-envelope: Permit at most fourteen native run admissions overall; the initial authorized proposal uses exactly ten sends and no retry.\nadmission-allocation: Refuse a plan whose admission allocation exceeds 700 cents, while treating native billed cost as authoritative and potentially higher after a run starts.\napproach-first: Require the authenticated executor approach before Council reservation.\nspecialists-after-reservation: Require Council reservation before the five profile-bound specialist contributions.\ndirection-before-execution: Require a favorable Council direction before executor implementation.\nindependent-result-review: Require Council result review after implementation and forbid executor self-review.\natomic-refusal: Reject invalid roles, duplicates, invalid numeric values, invalid ordering, or excess allocation with a typed refusal and no partial plan.\nExclusion: No L02 resource mutation.\nExclusion: No deploy or publication.\nExclusion: No external API or network action.\nExclusion: No credential or customer-data access.\nExclusion: No recursive delegation, schedule, or background wake.\nExclusion: No retry or live correction in the initial campaign."
+        },
+        "criteria": [
+          {
+            "id": "roles",
+            "text": "Accept only the seven declared profile IDs."
+          },
+          {
+            "id": "per-role",
+            "text": "Permit at most two native run admissions per specialist or executor and three for the Council reviewer."
+          },
+          {
+            "id": "native-run-envelope",
+            "text": "Permit at most fourteen native run admissions overall; the initial authorized proposal uses exactly ten sends and no retry."
+          },
+          {
+            "id": "admission-allocation",
+            "text": "Refuse a plan whose admission allocation exceeds 700 cents, while treating native billed cost as authoritative and potentially higher after a run starts."
+          },
+          {
+            "id": "approach-first",
+            "text": "Require the authenticated executor approach before Council reservation."
+          },
+          {
+            "id": "specialists-after-reservation",
+            "text": "Require Council reservation before the five profile-bound specialist contributions."
+          },
+          {
+            "id": "direction-before-execution",
+            "text": "Require a favorable Council direction before executor implementation."
+          },
+          {
+            "id": "independent-result-review",
+            "text": "Require Council result review after implementation and forbid executor self-review."
+          },
+          {
+            "id": "atomic-refusal",
+            "text": "Reject invalid roles, duplicates, invalid numeric values, invalid ordering, or excess allocation with a typed refusal and no partial plan."
+          }
+        ],
+        "exclusions": [
+          "No L02 resource mutation.",
+          "No deploy or publication.",
+          "No external API or network action.",
+          "No credential or customer-data access.",
+          "No recursive delegation, schedule, or background wake.",
+          "No retry or live correction in the initial campaign."
+        ]
+      },
+      "limits": {
+        "envelope": 14,
+        "approach": 2,
+        "result": 2,
+        "consultation": 5,
+        "correction": 1
+      }
+    },
+    "submitted": {
+      "activation": false,
+      "mission": false,
+      "governance": false
+    }
+  },
+  "campaignBoundary": {
+    "initialNativeAgentRunsOrSends": 10,
+    "retryPolicy": "none",
+    "futureGovernanceEnvelope": 14,
+    "admissionAllocationCents": 700,
+    "billedCostHardCap": false,
+    "providerRequestHardBound": false,
+    "providerRequestReason": "codex_local exposes a wall-clock timeout but no max-turn or provider-request limit; one native run can contain multiple model turns or requests."
+  },
+  "state": {
+    "agentsPaused": true,
+    "triggersEnabled": false,
+    "l03RunCount": 0,
+    "missionCount": 0,
+    "providerCalls": 0
+  },
+  "l02Preserved": {
+    "companyId": "331bf268-b21e-4874-9a3c-2137415c7e08",
+    "completedRunId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+    "agentIds": [
+      "676e3f2a-eae0-48e9-8280-5f9e1d158975",
+      "a844282f-fbfa-4404-b972-1ad11ab86f0f",
+      "f49ad183-bb22-47f1-a235-ee3309b21e02"
+    ]
+  },
+  "proofBoundary": "Draft/configured/request-ready is not activated, executed, provider-authenticated, skill-mounted, or model-run proof."
+}

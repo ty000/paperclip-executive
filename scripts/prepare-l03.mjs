@@ -208,7 +208,9 @@ for (const profile of profiles) {
   const draft = structuredClone(profile.nativeHireDraft);
   assert.equal(draft.adapterType, "codex_local");
   assert(advertisedModels.has(draft.adapterConfig.model), `Model is not advertised for ${profile.profileId}`);
-  draft.adapterConfig.timeoutSec = 300;
+  const timeoutSec = profile.profileId === "council-reviewer" ? 600 : 300;
+  const maxDailyRuns = profile.profileId === "council-reviewer" ? 3 : 2;
+  draft.adapterConfig.timeoutSec = timeoutSec;
   draft.desiredSkills = requiredKeys.map((key) => {
     const mapped = sourceToCompanySkillKey.get(key);
     assert(mapped, `No company-library mapping for ${key}`);
@@ -221,7 +223,7 @@ for (const profile of profiles) {
       enabled: false,
       wakeOnDemand: false,
       maxConcurrentRuns: 1,
-      maxDailyRuns: 2,
+      maxDailyRuns,
       maxDailyCostCents: 100,
     },
   };
@@ -247,13 +249,13 @@ for (const profile of profiles) {
   assert.equal(agent.name, draft.name);
   assert(["paused", "pending_approval"].includes(agent.status), `${profile.profileId} is not dormant`);
   if (
-    agent.adapterConfig?.timeoutSec !== 300 ||
+    agent.adapterConfig?.timeoutSec !== timeoutSec ||
     agent.runtimeConfig?.heartbeat?.maxDailyCostCents !== 100 ||
-    agent.runtimeConfig?.heartbeat?.maxDailyRuns !== 2 ||
+    agent.runtimeConfig?.heartbeat?.maxDailyRuns !== maxDailyRuns ||
     agent.runtimeConfig?.heartbeat?.maxConcurrentRuns !== 1
   ) {
     agent = await patch(`/api/agents/${agent.id}`, {
-      adapterConfig: { timeoutSec: 300 },
+      adapterConfig: { timeoutSec },
       runtimeConfig: draft.runtimeConfig,
     });
   }
@@ -271,9 +273,9 @@ for (const profile of profiles) {
   assert.equal(readback.runtimeConfig.heartbeat.enabled, false);
   assert.equal(readback.runtimeConfig.heartbeat.wakeOnDemand, false);
   assert.equal(readback.runtimeConfig.heartbeat.maxConcurrentRuns, 1);
-  assert.equal(readback.runtimeConfig.heartbeat.maxDailyRuns, 2);
+  assert.equal(readback.runtimeConfig.heartbeat.maxDailyRuns, maxDailyRuns);
   assert.equal(readback.runtimeConfig.heartbeat.maxDailyCostCents, 100);
-  assert.equal(readback.adapterConfig.timeoutSec, 300);
+  assert.equal(readback.adapterConfig.timeoutSec, timeoutSec);
   assert.equal(readback.budgetMonthlyCents, 100);
   assert.equal(readback.permissions.canCreateAgents, false);
   assert.equal(readback.permissions.canCreateSkills, false);
@@ -306,7 +308,8 @@ assert.equal(l03Runs.length, 0, "L03 preparation must not create model runs");
 assert.equal(l03AgentsAfter.length, selectedProfiles.length);
 
 const executivePlugin = pluginList.find((plugin) => plugin.id === "2f5ead19-69e1-4065-9fe4-93bd7699e510");
-assert.equal(executivePlugin?.manifestJson?.version, "0.2.0");
+assert(executivePlugin, "Executive plugin is not installed");
+assert.equal(executivePlugin.status, "ready");
 const evidence = {
   schemaVersion: "paperclip-executive.l03-preparation.v1",
   checkedAt: new Date().toISOString(),
@@ -378,18 +381,14 @@ const evidence = {
   runReadback: { count: l03Runs.length, runs: [] },
   evidenceLayers: {
     declared: "verified",
-    installed: "verified for the four company-library skills; plugin remains existing 0.2.0 and no candidate was installed",
+    installed: `verified for the four company-library skills and current Executive plugin ${executivePlugin.manifestJson.version}; this script performed no plugin install or upgrade`,
     desired: "verified from each agent configuration and skill snapshot",
     loaded: "unverified without an authorized adapter run; library and desired state only",
     activated: "false: all agents paused or pending approval and heartbeat triggers disabled",
     executed: "false: zero L03 runs and no provider call was authorized",
   },
   unresolved: [
-    "Candidate plugin installation/upgrade belongs to the parent task and was not attempted.",
     "Actual Codex profile skill mount and provider authentication remain unverified until a separately authorized run.",
-    "The isolated toy-code fixture/project workspace is intentionally deferred to the parent campaign setup.",
-    "The host added dangerouslyBypassApprovalsAndSandbox=true to each codex_local configuration; this must be resolved or justified for the exact ACP engine before execution.",
-    "ACP network access is enabled by default and needs a reviewed execution-time restriction for the local toy campaign.",
   ],
 };
 writeFileSync(resolve(root, "docs/evidence/l03-preparation.json"), JSON.stringify(evidence, null, 2) + "\n");

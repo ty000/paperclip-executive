@@ -6,10 +6,10 @@ Implement prepared ticket → approach → attributed Executive opinions → Cou
 
 ## Ownership and sequence
 
-- Council base 46669b3b77f760b0f481bb927d3ff3f53bf9b42c: mission authority, pinned context and mandate, atomic admission, distinct counters sharing one envelope, approach/result versions and decisions. New l03 modules and private additive migration; existing draft missions remain compatible.
-- Executive base 940aa21be26d5defae0c2b88bcbffbfc1a2aaeaa: authenticated reserved-slot consumer, selected profile/method attribution, reference validation and canonical observation UI. Preserve L01/L02 owner actions.
+- Council integrated base 9ae33f13968be4d8d5d20dc511deb2215c552ab0: mission authority, pinned context and mandate, atomic admission, distinct counters sharing one envelope, approach/result versions and decisions. New l03 modules and private additive migration; existing draft missions remain compatible.
+- Executive integrated base 9797a1208b47edfae2eb1f97bbac9a70adafdb81: authenticated reserved-slot consumer, selected profile/method attribution, reference validation and canonical observation UI. Preserve L01/L02 owner actions.
 - Paperclip 61b3fd57a695614dc4a37e2303f426a34a9795cf: read-only host contract reference. No host/schema/SDK changes.
-- Independent receipts lot remains owned by chat 01a0f406-fd7b-7ff3-9bd5-dd9cffc10a86. Consume only merged retained commits. No competing receipt or uncertainty barrier. Defer shared worker/adapter integration until that dependency resolves.
+- Council #14 and Executive #8 are merged and are ancestors of the L03 branches. Consume decision-receipts.ts with stable operationId and native_observed/indeterminate observations. Preserve Council #13 responsibilities documentation without broadening L03. No competing receipt journal.
 - Integrator wires actual APIs, content verification and UI, runs isolated persistence and host tests, obtains independent review and publishes draft PRs. No automatic merge.
 
 ## Priority revision of historical framing
@@ -35,4 +35,6 @@ Only isolated Executive/Council worktrees: plugin source, private additive migra
 
 ## Prewrite and closure
 
-Run canonical migration gate on docs/contracts/l03-migration-prewrite.json in each repository before persistence implementation. Council migration filename is 005_l03_governance.sql, reserving 004 for parallel receipts; reconcile against merged dependency before final qualification. Executive 003 is additive. Plan/coverage/envelopes precede writable delegation. Retain all mandatory criteria when proof is blocked; completion, integration, real qualification and deployment remain separate. PRs cannot be ready while retained dependencies remain unmerged/unintegrated.
+Run canonical migration gate on docs/contracts/l03-migration-prewrite.json in each repository before persistence implementation. Council migration filename is 005_l03_governance.sql, reserving 004 for parallel receipts; reconcile against merged dependency before final qualification. Executive 003 is additive; gated additive 004 widens opaque slot identifiers to text without modifying the already-applied 003. Plan/coverage/envelopes precede writable delegation. Retain all mandatory criteria when proof is blocked; completion, integration, real qualification and deployment remain separate. PRs cannot be ready while retained dependencies remain unmerged/unintegrated.
+
+Final implementation, evidence boundaries and Q1–Q11 trace are maintained in [IMPLEMENTATION-L03.md](IMPLEMENTATION-L03.md). The integrated prompt coverage remains historical; final readiness uses `docs/contracts/acceptance-coverage.final.v1.json`.

@@ -6,7 +6,8 @@
   "surfaces": [
     "Council mission aggregate and durable admissions",
     "Executive reserved-slot contributions",
-    "Council receipts consumed without duplication"
+    "Council receipts consumed without duplication",
+    "Executive private additive 004 widens slot_id uuid to text preserving installed003 and existing rows; no native tables"
   ],
   "slicing_verdict": "split-required",
   "ordered_slices": [
