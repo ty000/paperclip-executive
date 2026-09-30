@@ -16,6 +16,7 @@ class MemoryRepository implements AdviceRepository {
   settings = new Map<string, ExecutiveSettings>();
   records = new Map<string, AdviceRecord>();
   failMarkRunning = false;
+  failMarkDispatching = false;
 
   async getSettings(companyId: string) { return this.settings.get(companyId) ?? null; }
   async saveSettings(input: { companyId: string; ownerUserId: string; executiveAgentId: string; expectedRevision: number }) {
@@ -50,6 +51,7 @@ class MemoryRepository implements AdviceRepository {
     return record;
   }
   async markDispatching(companyId: string, contextId: string, sessionId: string) {
+    if (this.failMarkDispatching) throw new Error("persistence unavailable");
     this.change(companyId, contextId, { status: "dispatching", sessionId });
   }
   async markRunning(companyId: string, contextId: string, runId: string) {
@@ -68,9 +70,12 @@ class MemoryRepository implements AdviceRepository {
     status: "failed" | "outcome_unknown",
     error: string,
     runId: string | null = null,
+    sessionId: string | null = null,
   ) {
     const current = await this.get(companyId, contextId);
-    if (current && current.status !== "completed") this.change(companyId, contextId, { status, error, runId: runId ?? current.runId });
+    if (current && current.status !== "completed") this.change(companyId, contextId, {
+      status, error, runId: runId ?? current.runId, sessionId: sessionId ?? current.sessionId,
+    });
   }
   private change(companyId: string, contextId: string, patch: Partial<AdviceRecord>) {
     const current = this.records.get(contextId);
@@ -206,6 +211,20 @@ describe("Paperclip Executive L01", () => {
       status: "outcome_unknown",
       runId: "00000000-0000-4000-8000-000000000002",
     });
+  });
+
+  it("preserves a created session after its first persistence fails without sending or recreating it", async () => {
+    const { service, repository, sessions } = configuredService();
+    repository.failMarkDispatching = true;
+    const request = { requestKey: "session-id-key", question: "Choose A or B?" };
+    const submitted = await service.submit(owner, request);
+    expect(submitted).toMatchObject({
+      status: "outcome_unknown", sessionId: "00000000-0000-4000-8000-000000000001", runId: null,
+    });
+    const duplicate = await service.submit(owner, request);
+    expect(duplicate.contextId).toBe(submitted.contextId);
+    expect(sessions.creates).toBe(1);
+    expect(sessions.sends).toBe(0);
   });
 
   it("marks in-flight work unknown on restart and accepts an explicitly delivered terminal result", async () => {

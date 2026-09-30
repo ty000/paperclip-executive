@@ -23,10 +23,10 @@ pnpm test
 pnpm build
 ```
 
-At this revision, typecheck passed, all 14 targeted tests passed, and esbuild produced the manifest,
+At this revision, typecheck passed, all 15 targeted tests passed, and esbuild produced the manifest,
 worker, and UI bundles. Tests cover missing configuration, non-user and non-owner rejection,
 unambiguous active owner membership, owner transfer, cross-company refusal, stale settings revision, duplicate request deduplication, terminal result
-attribution including run IDs across a failed persistence transition, interruption/restart
+attribution including session and run IDs across a failed persistence transition, interruption/restart
 `outcome_unknown`, explicit terminal reconciliation, output-contract validation, and server-rendered unavailable and
 completed-result UI states.
 
@@ -43,7 +43,8 @@ completed-result UI states.
   worker can reconcile that state. The plugin does not query run persistence or recover missed terminal
   output automatically, so G02 still requires a real adapter/run recovery qualification.
 - The initial migration is new-package schema only. No existing instance or application data was
-  migrated.
+  migrated. User identity columns use text, matching the host's opaque authentication user IDs;
+  company, agent, session, run, and context identifiers remain UUIDs.
 - B02, specialists, Council, connectors, recurring work, generalized recovery, and real G01-G04
   qualification remain deferred.
 

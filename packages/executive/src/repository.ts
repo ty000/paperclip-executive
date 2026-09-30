@@ -125,12 +125,14 @@ export class SqlAdviceRepository implements AdviceRepository {
     status: "failed" | "outcome_unknown",
     error: string,
     runId: string | null = null,
+    sessionId: string | null = null,
   ): Promise<void> {
     const result = await this.db.execute(
       `UPDATE ${this.table("advice_contexts")}
-       SET status = $1, error = $2, run_id = COALESCE($3, run_id), updated_at = now()
-       WHERE company_id = $4 AND context_id = $5 AND status NOT IN ('completed', 'failed')`,
-      [status, error.slice(0, 4000), runId, companyId, contextId],
+       SET status = $1, error = $2, run_id = COALESCE($3, run_id),
+           session_id = COALESCE($4, session_id), updated_at = now()
+       WHERE company_id = $5 AND context_id = $6 AND status NOT IN ('completed', 'failed')`,
+      [status, error.slice(0, 4000), runId, sessionId, companyId, contextId],
     );
     if (result.rowCount > 1) throw new Error("Unexpected advice transition cardinality");
   }
