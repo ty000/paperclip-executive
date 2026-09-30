@@ -1,257 +1,301 @@
 # Paperclip Executive — PRD
 
-Version: 0.1 — September 30, 2026.
+Version: 0.2 — September 30, 2026.
 
-Status: initial product proposal, to be reviewed before use as an implementation reference.
+Status: revised product direction; requirements for a future usable journey, not a
+claim that the current package implements or qualifies it.
 
-This document defines the first useful scope of Paperclip Executive. The
-[roadmap](ROADMAP.md) preserves the other scenarios and proposes their order of
-exploration. It does not turn those scenarios into delivery commitments.
-The document version does not identify an available software release.
+This revision follows the owner's clarification: Paperclip is to execute software
+development autonomously from Linear tickets already decomposed upstream, with
+Council supervising relevance, proportionality, cost, and delivery time. Executive
+provides the profiles and methods that help Council exercise that supervision.
+The document is written in English; its version is not a software release number.
 
 ## 1. Problem and promise
 
-A human owner running several projects with agents still has to translate goals
-into actionable requests, select the expertise to consult, reconcile analyses,
-allocate work, and recover the reasons behind decisions. Completed tasks alone
-do not establish that the original objective has been achieved.
+Implementation agents can produce technically plausible work while drifting away
+from the intended product outcome. They may broaden scope, overengineer a small
+change, add unnecessary hardening, or repeat corrections whose value no longer
+justifies the time and resources consumed. A review only at the end may detect
+these problems after most of the avoidable work has already happened.
 
-Paperclip Executive must provide an executive point of contact that can clarify
-a request, involve useful specialists, prepare a decision, and coordinate
-authorized work through an explicit review of outcomes.
+The promise is: **help a supervised development workflow deliver sufficient,
+verified results within an explicit mandate, and stop spending effort on work
+that does not materially advance the objective**.
 
-The promise is: **better-informed decisions and better-scoped, better-tracked
-initiatives under explicit human delegation**.
+The target platform journey is:
 
-The product is an independent Paperclip plugin. It must port and adapt selected
-agent definitions, prompts, and methods from OpenExecutive while preserving their
-provenance. Roles with matching names alone do not constitute a port.
+**Prepared Linear ticket → Paperclip execution → proportionate Council supervision
+→ accepted result, bounded correction, or explicit escalation.**
 
-## 2. User and responsibilities
+Paperclip Executive is a native Paperclip plugin and a source of adapted executive
+profiles and methods. It is not a second task platform or a second acceptance
+authority beside Council. Selected OpenExecutive material may be adapted with
+provenance; reproducing the full upstream application is not a product objective.
 
-The initial user is a human owner managing projects with agents in Paperclip.
-Software development is one possible use case, not a permanent product restriction.
-Managing multiple human owners and their competing decisions is not required
-for the initial scope.
+## 2. Users, ownership, and perspectives
 
-| Actor | Responsibility | Boundary |
+The initial user is one human owner operating a software development platform.
+Ticket decomposition and product prioritization take place upstream. Autonomy
+means routine execution and supervision can proceed inside an approved mandate;
+it does not authorize agents to redefine the objective or expand their authority.
+
+| Actor or system | Responsibility | Boundary |
 | --- | --- | --- |
-| Owner | Define objectives, constraints, and delegation; decide exceptions; stop work. | A request for advice does not automatically delegate execution. |
-| Executive | Clarify, consult, synthesize, propose, and coordinate within the mandate. | Does not create new permissions or turn its recommendation into a human decision. |
-| Specialist | Provide an attributable domain contribution with sources, assumptions, and limitations. | A title does not confer assignment, spending, or acceptance authority. |
-| Executor | Perform assigned work and produce a verifiable result. | Does not independently accept its own contribution. |
-| Council, optional | Examine a submission under a supervision mandate. | Not a dependency of the initial scope; integration must be qualified separately. |
+| Owner | Define objectives, constraints, delegation, reserved decisions, and an escalation destination. | Silence is not approval; an intervention remains attributable to the owner. |
+| Upstream planning and Linear intake | Supply a prepared ticket and preserve its source identity and context. | Intake and synchronization are platform integration concerns, not an Executive connector catalogue. |
+| Paperclip executor or orchestrator | Implement the authorized ticket, report progress and blockers, and submit a verifiable result. | Cannot grant itself delegated acceptance or silently expand the ticket. |
+| Executive profiles and methods | Supply concise product, technical, and delivery/economic analysis to the review. | A contribution is neither a verdict nor permission to act. |
+| Council | Own the supervision mandate, review, correction or acceptance decision, and its confirmed effect in the covered workflow. | Executive must not duplicate or bypass this responsibility. |
+| Paperclip host | Execute agents and provide native work, identities, permissions, and run records. | Platform features alone do not demonstrate an integrated supervision guarantee. |
 
-For the first journey, Executive, CSO, CPO, and COO are **candidate profiles**:
-general coordination, strategy, product, and operations. This composition requires
-neither simultaneous creation nor systematic consultation of all four. The final
-selection must follow the reference use case; an initiative outside product work
-may need other expertise. An existing agent qualifies as a ported profile only
-after its instructions, methods, and responsibilities have been verified.
+Three perspectives guide the initial review:
 
-## 3. Two core use cases
-
-### B01 — Get executive advice on demand
-
-Example: compare two product directions or two ways to organize a service.
-The owner provides the question and available information.
-
-Executive:
-
-1. distinguishes a simple question from a trade-off that requires analysis;
-2. requests information that materially affects the answer or states its assumptions;
-3. consults only specialists whose contribution could change the answer;
-4. presents relevant options, facts, uncertainties, disagreements, and a recommendation.
-
-The result is an actionable answer linked to the contributions it used. A direct
-answer without consultation is appropriate when consultation would add no value.
-No initiative, task, expenditure, or external communication follows implicitly
-from a request for advice. The owner may then ask to continue through B02.
-
-### B02 — Scope and track an authorized initiative
-
-Example: improve user activation, reduce request processing time, or prepare
-an improvement to a service.
-
-The expected journey is:
-
-1. **Clarify the objective.** Identify the problem, beneficiary, and missing data.
-   A vague objective leads to scoping, not a delivery promise.
-2. **Propose the initiative.** Present the expected outcome, indicators, scope,
-   exclusions, dependencies, risks, responsibilities, and required decisions.
-3. **Establish delegation.** Make authorized actions, limits, and reserved decisions
-   explicit. The owner may approve, amend, or reject the proposal.
-4. **Coordinate authorized work.** Prepare or create linked work and assign it only
-   when both the mandate and effective permissions allow it. Otherwise, provide
-   the proposal and make the blocker visible.
-5. **Review progress on request.** Compare available results with the objective,
-   explain gaps, and propose next steps. Follow-up is manual within this scope.
-6. **Conclude or resume.** Distinguish completed work, observed outcomes, and remaining
-   decisions. The owner may accept, request a correction, suspend, or abandon
-   the initiative without losing its history.
-
-Each initiative retains at least: objective and problem; sources; expected outcome;
-indicator with baseline and target when known; scope and exclusions; accountable
-owner; work and dependencies; mandate; decisions; evidence and limitations.
-Unknown data remains unknown, with its effect on the decision stated. No target
-or deadline is invented to complete a record.
-
-## 4. Initial scope and exclusions
-
-The proposed initial scope includes B01 and B02, attributable consultations,
-traceable decisions, and manual resumption of an initiative after interruption.
-It must work without Council or a mandatory external connector, using supplied
-information and authorized Paperclip resources.
-
-The following are not committed within this scope:
-
-- full project portfolio prioritization;
-- specialized launch, finance, organization, or risk review journeys;
-- scheduled reviews, monitoring, and proactive follow-ups;
-- Council integration and independent delegated acceptance;
-- automatic ingestion of email, CRM, calendars, or external knowledge bases;
-- automatic agent creation, expenditure, external sending, publication, or deployment;
-- reuse of OpenExecutive's backend, interface, storage, or scheduler;
-- autonomous learning or a promise of demonstrated continuous improvement.
-
-These exclusions do not prevent discussion of a risk or cost within B01/B02.
-They avoid promising specialized journeys, connected data, or actions that have
-not yet been qualified. The roadmap preserves these possibilities.
-
-## 5. Delegation and understandable states
-
-The mandate must identify its author, scope, authorized actions, affected resources,
-applicable time or resource consumption limits, reserved decisions, and escalation
-recipient. If a limit is necessary to act but unknown, Executive prepares the work
-and requests the missing decision.
-
-Valid delegation may cover several routine actions: authorization need not be
-requested again at every step already covered. Technical permission does not
-replace delegation; delegation does not bypass an API refusal. Any extension of
-scope, criteria, or commitments must be decided explicitly.
-
-The experience distinguishes the following concepts without prescribing their
-technical model here:
-
-| Concept | What it establishes |
+| Perspective | Useful question |
 | --- | --- |
-| Recommendation | An analysis proposes a direction. |
-| Authorized decision | An authorized actor has decided within an identified scope. |
-| Executed action | The operation actually occurred, with an inspectable record. |
-| Observed outcome | Evidence establishes the effect obtained at a given time. |
-| Acceptance | The appropriate actor accepts the identified result against agreed criteria. |
+| Product | Does this work satisfy the intended user need and acceptance criteria without adding unrelated scope? |
+| Technical | Is the design and verification sufficient for the actual change and its risks? |
+| Delivery and economics | Is the next iteration worth its likely time and resource cost, and is there a simpler sufficient path? |
 
-Failures, missing responses, and uncertain effects remain visible. After an
-interruption, the product must recover what actually happened before proposing
-resumption. A corrected version remains linked to its predecessor and does not
-silently inherit its acceptance. Without Council, acceptance reserved in the first
-journey belongs to the owner; Executive prepares the review and may assess evidence
-without taking over that decision.
+These are perspectives, not a requirement to deploy three agents or hold a meeting
+for every ticket. Start with a reviewer distinct from the executor; it may apply
+several perspectives. Consult an additional specialist only for an identified
+question likely to change the decision. Do not describe one reviewer using several
+perspectives as a demonstrated multidisciplinary council. Executive need not become
+an additional permanent coordinator above an existing orchestrator and Council.
+
+## 3. Reference input and core journeys
+
+### 3.1 A prepared development ticket
+
+The reference case is one small feature or bug fix already decomposed in Linear,
+represented by a native Paperclip issue and its source reference. Its review context
+includes:
+
+- source identity and captured revision or content snapshot;
+- product objective, affected user journey, and reason for doing the work;
+- acceptance criteria, scope, exclusions, and relevant dependencies;
+- executor, authorized resources, and evidence expected for acceptance;
+- applicable time/resource limits, stopping rules, and owner-reserved decisions.
+
+Do not invent missing business context, cost, or a deadline. A decisive omission
+requires clarification; independent authorized work may continue. Criteria remain
+stable during execution unless an authorized change is recorded and assessed.
+A source update does not silently replace the mandate or approve a changed result.
+
+### B03 — Establish a proportionate execution direction
+
+Before implementation, the executor proposes a short approach linked to the ticket.
+The designated reviewer checks product fit, a sufficient technical approach, and
+expected effort within the mandate. A small, clear ticket can receive a short direct
+review; specialists and a separate executive synthesis are not mandatory.
+
+The outcome is an attributable direction to proceed, a targeted plan correction,
+or an escalation naming the missing decision. It is not acceptance of code that
+has not yet been produced. Existing ticket decomposition is reused rather than
+recreated as a new initiative hierarchy.
+
+### B04 — Detect and resolve drift during execution
+
+Review is triggered by a material scope/design change, repeated failure or correction
+without meaningful progress, a declared blocker, or an approaching configured time
+or resource limit. The workflow must surface those signals without requiring the
+owner to read every agent message. This requires a bounded execution checkpoint or
+observable host signal; a promise in an agent prompt alone is insufficient.
+
+Council assesses the evidence with the relevant perspectives, then permits continued
+work within the mandate, requests a smaller sufficient correction, records an
+optional improvement for later consideration, or escalates. A trigger does not
+require rereviewing unchanged work or consulting every specialist.
+
+### B05 — Review the result and conclude within limits
+
+The executor submits an identified result with evidence against the ticket criteria.
+Council reviews that version and classifies findings as:
+
+| Class | Meaning and consequence |
+| --- | --- |
+| Must fix | A demonstrated acceptance gap, relevant material risk, or applicable obligation; requires a specific correction or owner arbitration. |
+| Useful now | An optional improvement with a stated benefit; may be selected within remaining scope and limits, but is not itself an acceptance blocker. |
+| Defer | Work whose benefit does not justify doing it for this ticket; preserve a short rationale without automatically creating new tickets. |
+
+Each correction identifies the affected criterion or risk, evidence, smallest
+sufficient change, and how completion will be checked. Re-review focuses on the
+correction and affected behavior. Unchanged findings cannot sustain an unlimited
+loop; new blockers need new evidence or a newly demonstrated gap.
+
+A compliant result can be accepted with deferred suggestions. A corrected version
+receives its own review and does not inherit approval. If a necessary correction
+would exceed the mandate or remaining limits, dependent work waits for the owner;
+budget exhaustion does not turn a noncompliant result into an acceptable one.
+
+## 4. First useful scope and exclusions
+
+The first useful journey covers B03–B05 for one prepared ticket, with one executor
+and one distinct accountable Council reviewer. Product, technical, and delivery
+perspectives must be available; multiple specialist agents are conditional.
+
+The first implementation slice may begin with an existing Paperclip issue and a
+supplied Linear reference/context snapshot. Automated Linear ingestion, bidirectional
+status synchronization, and upstream decomposition are not prerequisites for that
+slice. A manually supplied ticket does not prove an automated Linear integration.
+
+The supervised workflow must support bounded automatic continuation within the
+mandate, an actual correction and re-review, and explicit intervention when needed.
+The first usable release is not satisfied by an advice-only screen or by a favorable
+review comment with no verified effect.
+
+Excluded from this revision's committed scope:
+
+- general executive business advice and creation of broad initiatives as the main journey;
+- portfolio management, launch, finance, HR, or other specialized business workflows;
+- mandatory panels, voting systems, appeal hierarchies, or a new orchestration platform;
+- general periodic monitoring, cross-project optimization, or autonomous learning;
+- OpenExecutive backend, UI, storage, scheduler, or a custom Codex CLI adapter;
+- automatic hiring, external expenditure, publication, merge, or deployment;
+- claims of universal bypass resistance or control over external delivery paths.
+
+This does not exclude considering an actual cost, security, or reliability risk in
+a ticket. The depth of investigation must follow its consequences, rather than an
+open-ended hardening checklist.
+
+## 5. Authority, intervention, and stopping
+
+Council remains the authority for supervision semantics; Executive supplies evidence
+and recommendations. Activation must identify the governed Paperclip issue path,
+reviewer, executor, permitted operations, owner destination, and effective controls.
+An unqualified path may be used for clearly labeled advisory evaluation only; it
+must not be described as enforced supervision.
+
+The mandate includes a maximum number of correction cycles, limits on review and
+specialist work, and applicable elapsed-time/resource limits. Numeric values are
+selected for the reference case before activation, not silently invented here.
+Review effort counts toward the total envelope. Unknown usage is not zero; a hard
+monetary ceiling requires an enforceable accounting/control path or an explicit
+owner decision to use another enforceable limit.
+
+Within those boundaries, routine actions do not need repeated approval. Extensions
+of scope, relaxed criteria, changed commitments, or reserved trade-offs require the
+owner's decision. Preserve any stricter project or Council delegation profile;
+Executive does not loosen it. In particular, it does not authorize infrastructure
+cost changes merely because some budget remains.
+
+At a stopping threshold, do not dispatch another affected execution or review
+attempt. Expose a concise recommendation and the decision required. A confirmed
+control may stop running work; otherwise show it as in flight and identify the
+operator action needed. Suspending a workflow is not proof that a process stopped.
+Only dependent work waits; waiting cannot be interpreted as automatic acceptance.
+
+Distinguish **recommendation**, **recorded authorized decision**, **confirmed effect**,
+and **observed outcome**. Council acceptance of a patch does not by itself establish
+a business improvement, authorize a merge, or prove deployment.
 
 ## 6. Requirements and acceptance criteria
 
+These requirements replace the initial advice/initiative framing. The EXE IDs remain
+stable where their intent carries forward; their wording is revised in version 0.2.
+EXE-13 through EXE-16 are new. B01/B02 remain historical journey identifiers and are
+not reused for B03–B05.
+
 | ID | Requirement | Observable criterion |
 | --- | --- | --- |
-| EXE-01 | Proportionate scoping | Given an incomplete objective, Executive identifies decisive unknowns and proposes a scope; it does not declare the objective delivered. |
-| EXE-02 | Selective consultation | Consulted specialists answer an explicit question; the synthesis lets the user find each author and contribution, including disagreements. |
-| EXE-03 | Actionable advice | B01 provides a reasoned recommendation, relevant alternatives, and uncertainties; it creates no implicit operational commitment. |
-| EXE-04 | Verifiable initiative | B02 makes the expected outcome, indicators, scope, exclusions, dependencies, and required decisions inspectable; missing values are flagged. |
-| EXE-05 | Explicit authority | A covered and permitted action may proceed; an action outside the mandate or denied remains unexecuted, with a reason and a targeted request. |
-| EXE-06 | Attributable coordination | Authorized work is linked to the initiative with accountable actors and blockers; a proposed assignment is distinct from a completed assignment. |
-| EXE-07 | Outcome-based tracking | The review compares evidence with criteria; completed tasks with an unknown business effect do not become an achieved objective. |
-| EXE-08 | Continuity | Resumption recovers the objective, mandate, decisions, work, versions, and evidence without relying solely on an agent's private memory. |
-| EXE-09 | Stop and correction | Suspension, abandonment, or correction remain possible; ongoing actions and uncertain effects are exposed without a false promise of cancellation. |
-| EXE-10 | Confidentiality and scope | A consultation exposes only authorized context; unauthorized cross-company reads or external disclosure are not allowed. |
-| EXE-11 | Traceable, customizable port | Profiles carry upstream references; a proposed update makes changes identifiable and preserves customizations. |
-| EXE-12 | Actual state visible | Declared, installed, configured, loaded, activated, and executed are distinct; an unavailable specialist is not presented as having contributed. |
+| EXE-01 | Prepared context | The reviewer can identify objective, criteria, exclusions, source, and decisive unknowns without reconstructing a full conversation. |
+| EXE-02 | Selective perspectives | A direct review can suffice; every specialist answers a specific question with attributed evidence, assumptions, and dissent. |
+| EXE-03 | Proportionate direction | B03 yields a sufficient plan, targeted correction, or explicit blocker without recreating upstream planning. |
+| EXE-04 | Identified submission | Review targets an exact result and evidence version; an update cannot inherit previous acceptance. |
+| EXE-05 | Explicit authority | Covered actions proceed under the mandate; denied or out-of-scope actions remain blocked without a privileged fallback. |
+| EXE-06 | One supervised workflow | Executive contributions feed Council and native work; there is no competing Executive acceptance state or hidden task hierarchy. |
+| EXE-07 | Outcome-based assessment | Criteria and evidence support the verdict; completed work with an unmeasured business effect remains outcome-unknown. |
+| EXE-08 | Continuity | Restart or handoff preserves source context, mandate, attempts, decisions, and evidence without blind redispatch. |
+| EXE-09 | Bounded correction and stop | Corrections have a stopping rule; reaching it prevents new affected work and exposes in-flight work and the escalation destination. |
+| EXE-10 | Confidentiality and scope | Consultations receive only authorized context; source content cannot grant permissions or cross company boundaries. |
+| EXE-11 | Traceable adaptation | Selected upstream profiles/methods retain provenance and customizations; titles alone do not establish functional equivalence. |
+| EXE-12 | Actual state visible | Installed, configured, loaded, activated, executed, decision recorded, and effect confirmed remain distinguishable. |
+| EXE-13 | In-flight drift response | A configured progress/limit signal triggers B04 before another avoidable iteration, without mandatory review of every tool call. |
+| EXE-14 | Finding proportionality | Must-fix findings cite a criterion or material risk; useful-now/deferred suggestions do not silently become acceptance blockers. |
+| EXE-15 | Applied Council decision | The governed workflow exposes the recorded verdict and confirmed native effect; pending or uncertain application is not acceptance. |
+| EXE-16 | Supervision value visible | Execution and review time, available cost/usage, corrections, interventions, and useful outcome are distinguishable; missing measurements stay explicit. |
 
-A synthesis must distinguish sourced facts, assumptions, and judgment. External
-data or supplied attachments cannot grant new permissions. Legal or economic
-analysis must not be presented as professional certification. Fictional biographies
-and degree claims in upstream personas must be adapted into honestly presented
-agent profiles.
+Model conclusions distinguish facts, assumptions, and judgment. Adapt fictional
+upstream biographies into honest descriptions of agent responsibilities. An
+executive title supplies neither professional certification nor authority.
 
-## 7. User experience
+## 7. Operator experience
 
-The owner must be able to submit a question, understand a recommendation, amend
-an initiative's scope, identify the decision needed, track work, and interrupt
-an initiative. The main synthesis stays concise; contributions, sources,
-disagreements, and history remain accessible without rereading every conversation.
+Use a compact supervision view linked to the native Paperclip issue. It should
+answer: what are we trying to deliver, are we still within limits, what changed,
+what was decided, did the decision take effect, and who needs to act next?
 
-States that must be understandable include: missing information, proposal awaiting
-a decision, authorized work, in progress, blocked, suspended, awaiting review, and
-outcome still unknown. The user must know who needs to act and on what. The product
-does not hide a failed consultation behind an apparently unanimous synthesis.
+Show the source ticket, active criteria, approach, evidence, remaining limits when
+known, latest decision, must-fix/deferred findings, and next action. Contributions
+and history remain inspectable without dominating the summary. Do not build a
+second project board or require a ceremonial conversation for routine continuation.
 
-The choice between native Paperclip surfaces and a dedicated interface remains
-open. Any selected surface must support keyboard use, present states without
-relying on color alone, and display errors with an understandable next step.
-English is the language of this document; product languages, mobile scope, and any
-additional design system remain to be decided. This document defines no frontend.
+Distinguish unconfigured, missing context, executing, awaiting review, correction
+required, waiting for owner, suspended, accepted, and effect unknown. Keyboard
+navigation, non-color status labels, and understandable error recovery are required.
+Reuse host UI conventions. Product languages and mobile requirements remain open;
+this revision does not create a new design system.
 
-## 8. Evaluating the first useful release
-
-Future qualification must cover at least:
+## 8. Validation and value
 
 | Scenario | Expected result |
 | --- | --- |
-| Simple advice | A sufficient answer without unnecessary coordination. |
-| Trade-off with disagreement | Attributable contributions, visible disagreement, and a reasoned recommendation. |
-| Vague objective | Missing information and a proposed initiative, without a false commitment. |
-| Authorized initiative | Work actually created or assigned within the mandate, with its effective state read back. |
-| Action outside the mandate or denied | No bypass; the blocker and required decision are visible. |
-| Unavailable specialist | Explicit failure and a proportionate next step: retry, limited answer, or escalation. |
-| Interruption and correction | Resumption from actual state, preservation of versions and decisions, no blind repetition of an action. |
-| Work complete, effect unmeasured | Delivery distinguished from a business outcome that remains unknown. |
-| Withdrawal of delegation | New affected actions stop, and the state of actions already underway is visible. |
-| Update to a customized profile | Identifiable changes and preserved custom content. |
+| Small sufficient implementation | One accountable reviewer can accept without mandatory specialist calls or cosmetic correction. |
+| Overengineered plan | Review points to the actual need and proposes a smaller sufficient approach. |
+| Drift before final submission | A checkpoint or host signal surfaces the drift and affects the next authorized iteration. |
+| Material result defect | V1 receives a specific correction; V2 is reviewed against preserved criteria and affected behavior. |
+| Low-value suggestions | Suggestions are deferred with reasons; a compliant result is not held indefinitely. |
+| Repeated correction or exhausted limit | No further affected dispatch; concise escalation with current evidence and in-flight status. |
+| Specialist failure or disagreement | No invented consensus; a sufficient bounded decision or explicit escalation. |
+| Changed source, result, or mandate | The change is visible; stale authorization or acceptance is not applied to the new version. |
+| Duplicate submission or restart | Recover the recorded operation/effect before retrying; ambiguous state stays unknown. |
+| Unauthorized action or unavailable Council | No silent acceptance bypass or automatic downgrade to advisory operation. |
 
-To declare the journey usable, later qualification must use real, authorized
-identities, persistence, and the Paperclip runtime. Reviewed prompts, simulated
-tests, or a successful installation are insufficient.
+Qualification requires a real, authorized Paperclip/Council journey with distinct
+executor/reviewer identities, persisted evidence, and native decision readback.
+Mocks can validate contracts, not authority or the usefulness of an executive review.
+The real journey must include a correction and a bounded stopping case.
 
-Evaluation will compare the journey with simpler management on comparable requests:
-quality of decisions and scoping, observed outcomes, total time, known resource
-consumption, human interventions, and coordination overhead. Unknown costs remain
-unknown. Thresholds and the reference use case must be set before qualification;
-this PRD version promises no quantified gain.
+Compare with a simpler implementation plus review on comparable tickets: accepted
+outcome, end-to-end elapsed time, implementation versus supervision effort, available
+usage/cost, correction count, human interventions, and scope avoided. A longer review
+is not automatically better. Set thresholds before the pilot; no quantified savings
+are promised by this document.
 
-## 9. Sources, provenance, and evidence status
+## 9. Sources, current state, and document transition
 
-| Source | Reference | Scope |
+| Source | Reference | Evidence boundary |
 | --- | --- | --- |
-| Mission and familiarization on September 30, 2026 | Owner's brief, followed by the request for this PRD and roadmap | Product direction; no authorization to install or activate. |
-| Paperclip Executive | [README](../README.md), [current license](../LICENSE), commit `a8deee6a5a9fe10b71d80e74a96adcc07c40a47b` | Starting point: README and MIT license, no port or implementation. |
-| OpenExecutive | [Revision `13da433`](https://github.com/SenteLabsAI/OpenExecutive/tree/13da433bc6f3ae97e78bb8c90f06bb5e49953447) | Profiles, prompts, orchestrator, methods, and knowledge examined in the preceding mission. |
-| Paperclip | [Revision `61b3fd5`](https://github.com/paperclipai/paperclip/tree/61b3fd57a695614dc4a37e2303f426a34a9795cf) | Guides, SDK contracts, and code examined; no deployed instance is proven. |
-| Paperclip Council | [PRD at commit `365809e`](https://github.com/ty000/paperclip-council/blob/365809efdf190010f818a25b938bad59ebd4f33c/docs/PRD.md) | Product proposal and reported historical observations; Executive integration is unproven. |
+| Owner clarification and update request, September 30, 2026 | This conversation: autonomous development from prepared Linear tickets, supervised by executive perspectives in Council | Product direction and authorization to revise PRD/TAD; no runtime activation. |
+| Executive implementation | Repository baseline `6b157f8b57967cf7695a155df7fab72e03028e3c`; [L01 report](IMPLEMENTATION-L01.md), `packages/executive/src/manifest.ts` and `worker.ts` | Existing direct-advice package and adapted Executive profile; no B03–B05 implementation or qualification. |
+| Council product definition | [PRD 0.2 at `365809e`](https://github.com/ty000/paperclip-council/blob/365809efdf190010f818a25b938bad59ebd4f33c/docs/PRD.md) | Ownership of supervision, proportionate review, delegated decisions, and existing owner-specific limits; not proof of an Executive integration. |
+| Paperclip source baseline | [Revision `61b3fd5`](https://github.com/paperclipai/paperclip/tree/61b3fd57a695614dc4a37e2303f426a34a9795cf) | Native contracts recorded in the TAD; compatibility with a future target requires verification. |
+| OpenExecutive source baseline | [Revision `13da433`](https://github.com/SenteLabsAI/OpenExecutive/tree/13da433bc6f3ae97e78bb8c90f06bb5e49953447) | Candidate profiles/methods; no full upstream runtime dependency selected. |
 
-The nine domain specialists and Executive do not represent all upstream code:
-the consultation registry also includes triage; other auxiliaries and configuration
-entries exist. Their titles guarantee neither functional equivalence nor relevance
-to the initial scope. The knowledge, tools, and continuity mechanisms on which
-profiles depend must be explicitly selected or replaced.
+L01's reported build and mocked tests are historical local evidence, not proof of a
+live supervised journey. Its B01 advice feature remains an existing capability;
+this revision neither removes it nor makes it the next delivery priority. The
+OpenExecutive bridge experiment does not qualify the native Executive/Council path.
 
-For each ported element, retain the upstream file, revision, destination, and
-modifications. Provide visible attribution in the README, a copy of Apache-2.0,
-relevant upstream NOTICE entries, and a statement of modifications in derived
-files. Separately verify selected third-party materials, especially external
-knowledge. Before incorporation, attribution remains prospective. This document
-does not change the project's overall license or incorporate upstream prompts.
+For adapted material, retain upstream file/revision, destination, license/notices,
+and modifications; preserve user customizations. Existing attribution remains in
+place. New methods authored for this workflow must not be mislabeled as upstream.
 
-Evidence status: documentary familiarization completed; PRD and roadmap drafted;
-port, build, installation, configuration, loading, activation, and business
-execution unproven. No historical Council result is evidence for Executive.
+[ROADMAP.md](ROADMAP.md) is still version 0.1 and has not been revised here. Its H3
+placement of optional Council and its B01/B02-first sequence are superseded by this
+PRD for current scope. Other scenarios remain deferred ideas, not commitments.
+No versioned backlog or sprint plan was found in this repository's local history
+at the inspected baseline. [TAD 0.2](TAD.md) is the architecture companion; a future
+backlog must derive from this revised PRD rather than the old horizon order.
 
-## 10. Open decisions before implementation
+## 10. Decisions required for the first implementation slice
 
-1. Select a reference initiative and its observable criteria.
-2. Define the initial delegation envelope: advice, preparation, or work creation/assignment.
-3. Confirm the required profiles and the methods/knowledge actually to be ported.
-4. Choose interaction surfaces and the durable representation of initiatives and decisions.
-5. Choose adapters, providers, models, reasoning efforts, and budgets after verification on the target.
-6. Set usefulness thresholds and the qualification protocol.
+1. Select the reference ticket, acceptance evidence, and accountable executor/reviewer.
+2. Set the mandate, measurable operating limits, stopping thresholds, and owner destination.
+3. Qualify the narrow Executive-to-Council contribution and decision-effect boundary.
+4. Select the progress signals/checkpoints that make B04 effective on the target host.
+5. Select only the methods and, if justified, additional specialists needed for that ticket.
 
-These decisions do not require a complete OpenExecutive port. They must enable
-selection of a first testable version of B01/B02, followed by architecture derived
-from that need, without activating roadmap scenarios by default.
+These decisions refine the pilot; they do not reopen the choice to use native
+Paperclip execution or make a full OpenExecutive port a prerequisite.

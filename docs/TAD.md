@@ -1,538 +1,375 @@
 # Paperclip Executive — Technical Architecture Document
 
-Version: 0.1 — September 30, 2026.
+Version: 0.2 — September 30, 2026.
 
-Status: proposed architecture derived from PRD 0.1; not an implemented or qualified system.
+Status: revised architecture derived from PRD 0.2; supervision contracts are
+proposed and require implementation and runtime qualification.
 
-## 1. Authority, scope, and baseline
+## 1. Authority, baseline, and change from version 0.1
 
-The [PRD](PRD.md) owns product requirements. This TAD proposes how to deliver B01
-(executive advice on demand) and B02 (scoping and tracking an authorized initiative).
-The [roadmap](ROADMAP.md) preserves later scenarios; none is activated by this design.
-Open PRD decisions remain open unless explicitly identified below as technical
-recommendations. No agents, services, credentials, or runtime configuration were
-created to produce this document.
+The [PRD 0.2](PRD.md) owns product requirements. This TAD covers B03 (proportionate
+execution direction), B04 (in-flight drift response), and B05 (bounded result review)
+for a prepared software development ticket. Council supervision is now central.
+Version 0.1's AD-10, manual and Council-independent H1, is explicitly superseded.
+Historical B01 advice and B02 broad initiative coordination are not relabeled as
+implemented supervision. The existing advice feature may remain available.
 
-Source baseline:
+Only PRD/TAD are revised here. [Roadmap 0.1](ROADMAP.md) still contains the earlier
+horizons; its Council deferral and B01/B02 ordering do not govern this design.
+No backlog or sprint plan is introduced by this document.
 
-| Source | Examined revision or fingerprint | Evidence boundary |
+| Source | Baseline | Evidence boundary |
 | --- | --- | --- |
-| Executive repository | `a8deee6a5a9fe10b71d80e74a96adcc07c40a47b`, branch `main` | Authoring baseline: README and MIT license tracked; PRD and roadmap were untracked inputs. Their fingerprints below identify the versions included with this TAD. |
-| PRD 0.1 | SHA-256 `8b11a68ce72ac5f94065464fd8695dfafb10c287de8a82b062de494abb2acee9` | Product input, not implementation evidence. |
-| Roadmap 0.1 | SHA-256 `91160d4937682987f2089f6201c1aa8b196d8641f7c6b4391a4bcf0e6a178215` | Prioritization input, not delivery commitments. |
-| Paperclip | `61b3fd57a695614dc4a37e2303f426a34a9795cf` | Local tracked source examined. Existing modified lockfile and untracked Council prototype/reports were not used as runtime proof. |
-| OpenExecutive | `13da433bc6f3ae97e78bb8c90f06bb5e49953447` | Public source, including profiles and orchestration; no upstream application executed. |
+| Executive | `6b157f8b57967cf7695a155df7fab72e03028e3c`; [L01 report](IMPLEMENTATION-L01.md), package manifest and worker | Direct advice through native sessions, persisted attribution, one adapted profile; no Council integration. |
+| Product requirements | PRD 0.2 in this change | Owner's clarified direction; not runtime evidence. |
+| Council | [PRD 0.2 at `365809e`](https://github.com/ty000/paperclip-council/blob/365809efdf190010f818a25b938bad59ebd4f33c/docs/PRD.md) | Supervision responsibilities, acceptance semantics, proportionality, and owner-specific delegation rules; no assumed integration API. |
+| Paperclip | `61b3fd57a695614dc4a37e2303f426a34a9795cf` | Native contracts documented from the prior source inspection; source references retained below, not a fresh deployed-host audit. |
+| OpenExecutive | `13da433bc6f3ae97e78bb8c90f06bb5e49953447` | Candidate instructions and methods, not a backend dependency. |
 
-Throughout this document, **observed** means supported by the inspected source,
-**proposed** means an Executive design choice, and **qualification required** means
-the intended behavior must still be demonstrated on an explicitly authorized target.
-No claim is made about the version or configuration of a running Paperclip instance.
+**Existing** refers to source or the explicitly scoped L01 report. **Proposed**
+refers to this architecture. **Qualification required** means behavior must be
+proved on the chosen host and Council revision. No models, services, or agents
+were activated for this revision; prior bridge trials do not qualify this design.
 
 ## 2. Architectural decisions
 
-All decisions below are proposed for this TAD version.
+The AD identifiers are retained; wording is revised for the new journeys.
 
 | ID | Decision | Reason and trade-off | PRD trace |
 | --- | --- | --- | --- |
-| AD-01 | Build an external TypeScript Paperclip plugin with a worker, manifest, and small React UI. | Fits the native plugin contract; avoids importing the Python application and operating another backend. | B01, B02, EXE-12 |
-| AD-02 | Execute model work through visible Paperclip agents and sessions. | Preserves agent identity, host execution, and usage records; requires asynchronous result handling and recovery. | EXE-02, EXE-08, EXE-12 |
-| AD-03 | Separate model recommendations from deterministic authorization and dispatch. | Model output can request work but cannot grant authority or commit acceptance. | EXE-03, EXE-05, EXE-10 |
-| AD-04 | Keep Executive coordination state in a company-scoped plugin database namespace; keep actual work in native Paperclip issues. | Supports precise revisions and recovery without creating a competing hidden task system. | EXE-04, EXE-06, EXE-08 |
-| AD-05 | Use revision checks and a durable operation journal, with readback after host effects. | There is no observed transaction spanning plugin state and host operations; uncertain outcomes must remain recoverable. | EXE-05, EXE-08, EXE-09 |
-| AD-06 | Prefer native authenticated issue routes for delegated business mutations; do not substitute privileged SDK writes on refusal. | SDK and HTTP mutation paths do not have demonstrated authorization parity. The execution bridge is a qualification gate. | EXE-05, EXE-06 |
-| AD-07 | Start with explicit context packets and selected ported methods, without a vector database. | Sufficient candidate for bounded H1; does not reproduce upstream RAG or memory automatically. | EXE-01, EXE-02, EXE-08, EXE-11 |
-| AD-08 | Provision selected managed profiles separately from configuration and activation; preserve customizations. | Managed resources support native visibility, while reset can replace operator choices. | EXE-11, EXE-12 |
-| AD-09 | Use a plugin page for advice, initiative state, and owner decisions, with links to native work. | Provides explicit decision controls and visibility without building a full project management interface. Surface choice remains subject to product review. | EXE-03, EXE-04, EXE-09 |
-| AD-10 | Keep H1 manual and Council-independent. | Avoids importing scheduler, alerting, external delivery, or supervision contracts before their roadmap scope is selected. | B01, B02, EXE-07 |
+| AD-01 | Retain the external native TypeScript plugin and small host UI. | Reuse L01 packaging; no Python backend or second project platform. | EXE-06, EXE-12 |
+| AD-02 | Run model work through Paperclip agents/sessions. | Preserve visible identities and run records; no hidden provider loop in the worker. | EXE-02, EXE-08 |
+| AD-03 | Executive produces contributions; Council owns the mandate, verdict, and decision effect. | Prevent two acceptance authorities; model text never directly grants permission. | EXE-05, EXE-06, EXE-15 |
+| AD-04 | Native issues own work; Council owns supervision records; Executive stores only bindings, input snapshots, contributions, and dispatch correlation it needs. | Avoid a second initiative/task/acceptance system. | EXE-01, EXE-04, EXE-06 |
+| AD-05 | Persist before dispatch; use revision checks, stable operation keys, and readback. | No cross-system transaction is assumed; ambiguous outcomes require reconciliation. | EXE-08, EXE-09, EXE-15 |
+| AD-06 | Apply verdict effects through the qualified Council/native path under its authenticated actor. | Executive must not reproduce Council's decision writer or fall back to privileged SDK writes. | EXE-05, EXE-15 |
+| AD-07 | Use bounded context packets and selected methods, without vector storage. | A prepared ticket supplies the initial context; no upstream memory stack required. | EXE-01, EXE-10, EXE-11 |
+| AD-08 | Bind existing agents first; provision selected profiles separately from activation and preserve customizations. | One executor and one distinct Council reviewer can start; specialists are conditional. | EXE-02, EXE-11, EXE-12 |
+| AD-09 | Extend the existing plugin page with a compact supervision view and native issue/Council links. | Show decisions and next actions without a parallel project board. | EXE-12, EXE-16 |
+| AD-10 | Use bounded execution checkpoints and material signals for supervision, with automatic continuation only inside the mandate. | Replaces manual Council-independent H1; avoids both final-review-only detection and constant model polling. | EXE-03, EXE-09, EXE-13 |
+| AD-11 | Start at an existing Paperclip issue with a supplied Linear source snapshot/reference. | Prove supervision before automating intake; full Linear synchronization stays outside Executive. | EXE-01, EXE-06 |
+| AD-12 | Budget review as well as execution and persist stopping counters. | Council must not recreate the low-value loops it is meant to prevent. | EXE-09, EXE-14, EXE-16 |
 
-Rejected starting points: the full OpenExecutive backend; an invisible model loop
-inside the plugin worker; a meeting of every specialist for every request; a prompt
-as the sole permission boundary; and treating an issue's `done` state as acceptance
-of the initiative's business outcome.
+Rejected starting points: full OpenExecutive port, mandatory executive panel,
+custom Codex CLI adapter, prompt-only authority, an independent Executive verdict
+engine, generic retry infrastructure, and a new scheduler merely to trigger reviews.
 
-## 3. Components and ownership
+## 3. Components and responsibility boundaries
 
 ```mermaid
 flowchart TD
-  Owner[Human owner] --> UI[Executive plugin page]
-  UI --> Host[Paperclip authenticated plugin routes]
-  Host --> Worker[Executive worker: validation and coordination]
-  Worker <--> Ledger[Company-scoped initiative and decision records]
-  Worker --> Sessions[Paperclip agent sessions and runs]
-  Sessions --> Executive[Executive agent]
-  Sessions --> Specialists[Selected specialist agents]
-  Executive --> Results[Attributed recommendations and contributions]
-  Specialists --> Results
-  Results --> Worker
-  Worker --> Journal[Authorized operation journal]
-  Journal --> Bridge[Qualified execution bridge]
-  Bridge --> CoreAPI[Native Paperclip issue API]
-  CoreAPI --> Work[Visible tasks and dependencies]
-  Work --> Worker
+  Linear[Prepared Linear ticket] --> Intake[Platform intake or supplied snapshot]
+  Intake --> Issue[Native Paperclip issue]
+  Issue --> Execution[Paperclip executor or orchestrator]
+  Execution --> Checkpoint[Plan, material progress signal, or result]
+  Checkpoint --> Council[Council review and mandate]
+  Council --> Methods[Selected Executive methods]
+  Council --> Contributions[Optional Executive specialist contributions]
+  Contributions --> Council
+  Council --> Decision[Recorded verdict and qualified native effect]
+  Decision --> Execution
+  Decision --> Owner[Owner escalation when required]
+  Issue --> View[Compact supervision view]
+  Council --> View
 ```
 
 | Component | Owns | Does not own |
 | --- | --- | --- |
-| Plugin UI | User interaction, explicit choices, accessible status and contribution views. | Authentication decisions, secrets, authoritative state transitions. |
-| Worker | Payload validation, orchestration, context selection, mandate checks, operation correlation, durable state. | Provider SDK calls, invented user identity, native task execution rules. |
-| Executive agent | Scoping, selective consultation requests, synthesis, recommendations. | Permission grants, journal transitions, owner acceptance. |
-| Specialist agents | Domain analyses against supplied context, attributable limitations and disagreement. | Autonomous fan-out, initiative mutation, owner decisions. |
-| Execution bridge | Exact authorized native operations under an identified actor/run, followed by readback. | General administrator access, direct core-table writes, recovery through a more privileged identity. |
-| Paperclip host | Authentication, native permissions, agent execution, issue lifecycle, persistence infrastructure, budgets. | Executive-specific mandate semantics or the meaning of an initiative's outcome. |
+| Intake integration | Linear-to-Paperclip mapping and source capture; later synchronization if selected. | Review decisions or Executive-specific authority. |
+| Paperclip execution | Native issue lifecycle, assigned implementation runs, progress evidence. | Self-acceptance of executor output. |
+| Council | Canonical mandate, review identity, findings, decisions, correction counters, stopping policy, application and readback of effects. | Implicit merge/deploy authority or unqualified alternate-path guarantees. |
+| Executive package | Adapted profiles/methods, bounded contribution production, provenance, and an inspection surface. | A second Council, automatic hiring, or competing acceptance records. |
+| Executive worker | Validated context preparation, optional contribution dispatch, persisted operation correlation and result references. | Provider SDK calls, native issue mutation on behalf of Council, or authorization inferred from text. |
+| Host | Authentication, company isolation, permitted storage/reads, sessions, run controls and budgets where supported. | Automatic enforcement of every proposed mandate or cost cap. |
 
-The execution bridge is a proposed deterministic helper used within an authorized
-Paperclip agent run, not a claim that a new native SDK service already exists. The
-selected coordinating agent may supply that run identity; no additional permanent
-service agent is required by this design. Its transport and containment must pass G01.
+A Council reviewer can directly use selected Executive methods. A separate Executive
+synthesis agent is not mandatory. Where Council already schedules consultations,
+it remains the only scheduler for those calls; the integration must designate one
+dispatch owner and never let both systems launch the same contribution.
 
-Paperclip plugins are trusted code, and plugin UI runs in the host origin. Manifest
-capabilities restrict host calls but are not a security sandbox for arbitrary worker
-or UI code. Installation therefore remains an explicit trust decision [PC01].
+The initial integration binds existing executor/reviewer identities and requires
+them to differ. Additional advisors are attributable but do not acquire verdict
+authority through their titles. The owner remains the escalation destination.
 
-## 4. Native contracts and their limitations
+Plugins and their UI are trusted code, not a sandbox for arbitrary execution [PC01].
+Manifest capabilities and role prompts alone do not establish runtime containment.
 
-| Concern | Observed contract | Architectural consequence |
+## 4. Proposed exchange contracts
+
+These are semantic contracts to implement and qualify, not claims that Council
+already exposes endpoints with these names. Prefer its existing contract where it
+satisfies the requirement; record any missing host/Council work as an explicit
+dependency rather than silently expanding this repository's scope.
+
+| Contract | Minimum content | Owner and checks |
 | --- | --- | --- |
-| Packaging | External package with `paperclipPlugin` metadata, manifest and worker; UI optional in the platform. | Use the native scaffold/build conventions later; package names and release version are not set by this document. |
-| Managed resources | Manifest agents, skills, projects, and routines; stable-key `get`, `reconcile`, and `reset`. | Use only selected agents/skills for H1; bind an authorized existing project rather than creating one by default. |
-| Agent sessions | `create`, `list`, `sendMessage`, `close`; send returns a `runId`, events arrive asynchronously. | Store correlation before dispatch; persist terminal results rather than relying on the live stream. |
-| Session identity | Host session lookup uses the `plugin:<pluginKey>:session:` task-key prefix. | Preserve that prefix in any deterministic task key; do not assume an arbitrary key remains discoverable. |
-| Session close | Current host code deletes the session row. | Closing is neither run cancellation nor a durable conversation archive. |
-| Plugin routes | Declared routes under `/api/plugins/:pluginId/api/*`, authenticated actor and resolved company supplied by host. | Use host actor context, never actor IDs from model output or request bodies. |
-| Database | `ctx.db.query` permits restricted reads; `execute` permits one namespace-local mutation statement and returns row count. | No assumed worker transaction API, runtime DDL, or mutation of public tables. Use conditional single-row updates. |
-| Work | Native issues support project/goal/parent references and blocker relations. | Link execution work to the initiative; preserve native assignment and checkout rules. |
-| Assignment preview | `authorization.policies.previewAssignment` provides an authorization explanation. | Useful preflight, not an atomic grant or substitute for enforcement at mutation time. |
-| Documents | Issue document upsert creates a revision; the inspected SDK signature has no expected-revision argument. | Do not use this SDK call as the authoritative compare-and-swap decision store. |
-| Recovery reads | `heartbeat_runs` is an allowed core-read table; run records include status, result and context fields. | Narrow reads may support recovery; result extraction is adapter-specific and must be qualified. |
+| Ticket context | Company/project/issue IDs; Linear ID/URL; source revision or snapshot hash; objective; criteria; exclusions; dependencies; permitted evidence references. | Intake supplies it; the recipient verifies company and authorized resources. A URL alone is insufficient context. |
+| Supervision binding | Council reference; executor/reviewer IDs; mandate ID/revision; allowed actions; limits; stopping policy; owner destination; covered native workflow. | Council is canonical. Executive stores references and an observed revision, not an independently editable mandate. |
+| Checkpoint | Stable trigger ID; kind `plan`, `progress`, or `result`; issue/run; context and mandate revisions; reason; progress/evidence references; known usage and missing measurements. | Authenticated execution/host source; correlation and deduplication precede any model call. |
+| Review subject | Checkpoint plus exact result reference/version and evidence set; repository/commit and artifact identity when reviewing code. | Council checks the current subject before recording and applying a verdict. A mutable branch name alone is insufficient. |
+| Contribution request/result | Review ID; question; selected perspective; permitted context; session/run; attempt; attributable finding, rationale, evidence, assumptions and limitations. | Executive validates terminal structured output; no recursive specialist fan-out. |
+| Council decision observation | Canonical decision ID/revision; subject; authorized actor; outcome; findings; next action; application status and readback reference. | Council owns recording/application. Executive can display a verified observation but cannot manufacture acceptance. |
 
-Sources: [PC01], [PC02], [PC03], [PC04], [PC05], [PC06].
-The current SDK's issue update method does not expose the full HTTP execution-policy
-contract. The host SDK handler calls the issue service directly, whereas native
-routes contain additional authorization and transition logic. This establishes a
-contract difference, not a proven bypass. No Council acceptance path is selected here.
+Conceptual outcomes include proceed within mandate, correction required, accepted,
+escalate, or suspend. Map them explicitly to the selected Council/native API during
+implementation; do not assume five existing native verdict values. Deferred
+suggestions are findings, not a separate acceptance verdict.
 
-## 5. Data model and consistency
+A finding carries its classification (`must_fix`, `useful_now`, `defer`), criterion
+or material risk, evidence, consequence, and smallest sufficient action. Council
+must validate that a requested correction remains within the mandate. A malformed
+or incomplete result is a visible failed contribution, not an implicit approval.
 
-### 5.1 Ownership of records
+Treat ticket descriptions, attachments, agent text, and external content as evidence,
+not instructions capable of expanding permissions. Include only the authorized
+context required for the review; preserve references for further permitted inspection.
 
-Propose two plugin-owned tables: `company_settings` and `contexts`. Both use explicit
-company identifiers; the host namespace separates plugins, not companies. No
-cross-company query is permitted without a validated company predicate.
+## 5. Checkpoints, correction, and automatic continuation
 
-`company_settings` binds the owner identity, selected native agent IDs and profile
-versions, permitted project IDs, adapter qualification records, and configured
-resource limits. It stores references, never provider credentials. Updates require
-the authorized owner and an expected revision.
+### 5.1 Normal path
 
-`contexts` is the authoritative coordination aggregate. Proposed columns include
-`company_id`, `context_id`, `creation_request_key`, `kind`, `revision`, `schema_version`,
-`payload`, and timestamps. The primary key includes company and context; a unique
-company/request-key constraint makes initial creation replayable. `kind` is `advice`
-or `initiative`: B01 creates no native execution task merely to store a conversation.
-An explicit B01-to-B02 conversion creates a linked initiative and preserves the advice.
+1. Bind the existing issue and captured ticket context to the Council mandate.
+   Check identity separation, required limits, owner destination and path readiness.
+2. Persist and review the executor's short plan (B03). A single Council reviewer
+   using the selected methods may suffice; skip unnecessary specialist dispatch.
+3. Release a bounded execution segment only after the applicable direction is
+   recorded and its continuation effect is confirmed. Execution remains native.
+4. At a material checkpoint, evaluate deterministic triggers before scheduling
+   another review. Persist the trigger, context version and consumed limits.
+5. For B04, review only what could change the next action. Continue, select a
+   smaller correction, or escalate within the remaining envelope.
+6. For B05, review the exact submitted result and evidence. Apply the Council
+   decision through its qualified path and read back the native state.
+7. On correction, retain the criteria and prior findings, increment the canonical
+   correction counter, and review the changed result and affected behavior.
 
-The aggregate payload contains these logical records:
+No correction, continuation, or acceptance is reported as applied solely from an
+agent's summary. External merge, publication, deployment and Linear status writeback
+remain separate integrations and authorities.
 
-| Record | Required content |
-| --- | --- |
-| Brief versions | Objective, problem, sources, expected outcome, measures, unknowns, scope, exclusions, criteria and content hash. |
-| Mandate versions | Verified author, scope, allowed operations/resources/actors, limits, expiry if applicable, escalation recipient, revision and revocation state. |
-| Consultations | Question, selected profile/agent, input revision/hash, session/run IDs, attempt, status, contribution, evidence references and limitations. |
-| Recommendations | Attributed synthesis, options, assumptions, dissent, referenced contribution versions and source versions. |
-| Decisions | Actor from trusted context, type, rationale, exact subject/version/hash, timestamp and supersession links. |
-| Work links | Native company/project/issue IDs, operation key, intended assignment, observed state and readback timestamp. |
-| Operations | Stable operation ID, payload hash, mandate revision, actor/run, state, host references and reconciliation evidence. |
-| Observations | Measured outcome, provenance, observation time, reference to the relevant criterion; unknown values stay explicit. |
-| History | Append-only logical transition records retained with the aggregate. Corrections append and supersede; they do not silently rewrite prior decisions. |
+### 5.2 Trigger and limit enforcement
 
-Acceptance targets a result version and evidence set, not a mutable title or the
-latest conversation text. A new result version requires a new acceptance decision.
-History is auditable application data, not cryptographically immutable storage;
-hashes identify content but do not prove who authorized it.
-
-Keep coordination lifecycle separate from outcome assessment. Proposed initiative
-states are `draft`, `awaiting_authorization`, `authorized`, `active`, `blocked`,
-`suspended`, `review_pending`, `accepted` and `abandoned`. Owner commands authorize,
-suspend, abandon, resume or accept; observed dispatch and results advance operational
-states. Resumption revalidates the mandate and unresolved operations. Correction
-creates a new version requiring the applicable authorization and review. Outcome
-assessment remains independently `unknown`, `partially_observed`, `met` or `not_met`,
-supported by evidence. Owner acceptance cannot turn an unmeasured outcome into `met`.
-Advice has its own request/consultation/completion states and never acquires an
-initiative mandate by changing a status field.
-
-### 5.2 Atomic local updates
-
-For H1, update an aggregate snapshot, its operation journal and history together
-using one parameterized conditional `UPDATE` with company, context and expected
-revision predicates; increment the revision in the same statement. Zero affected
-rows means conflict, not success. A caller rereads before preparing another update.
-Do not overwrite a newer mandate or accept against a stale result version.
-
-This deliberately avoids assuming an SDK transaction across several tables. Settings
-and context updates are not jointly atomic: authorization-sensitive settings are
-rechecked before dispatch, with changes and already-started actions exposed. The
-exact SQL shape and row-count behavior require qualification against the pinned host.
-
-Keep bounded transcripts and structured evidence references rather than raw run logs
-inside the aggregate. Enforce configured size and history limits before accepting
-more work; report capacity reached instead of silently dropping history. Numerical
-limits must be selected during G04. Large-scale archival or normalized history is
-outside H1 and would require an explicit storage revision.
-
-### 5.3 Crossing the host boundary
-
-There is no atomic transaction between the plugin aggregate and session creation,
-agent execution, or issue mutation. Use a durable journal with the proposed states:
-
-`prepared → authorized → dispatching → observed_success | observed_failure | outcome_unknown`
-
-The worker records an operation before dispatch, claims it through the revision
-check, and records returned IDs and readback. Repeating a request with the same key
-and payload returns the recorded operation; reusing the key for a different payload
-is rejected. A crash after dispatch leaves an uncertain operation, not permission
-to send it again. A worker lease expiry alone never proves a host action failed.
-
-Use native issue-creation idempotency keys where supported and tested [PC07]. Do not
-generalize that guarantee to session sends, assignment updates or all host APIs.
-An ambiguous operation is reconciled from actual host state or escalated; it blocks
-dependent actions. No exactly-once execution guarantee is claimed.
-
-## 6. Authentication and delegation enforcement
-
-### 6.1 Owner commands
-
-Owner-facing routes use `auth: board` and explicit company resolution. The worker
-additionally checks the bound owner identity for delegation, acceptance, suspension,
-settings and profile-management commands. Missing or ambiguous user identity fails
-closed; a local operator context without an attributable user requires a separately
-qualified identity binding, not a fabricated owner ID.
-
-Request bodies may identify an expected revision or target resource, but never set
-the authenticated author. All targets are resolved again within the current company.
-Company membership alone must not be treated as ownership of every initiative.
-
-### 6.2 Model and specialist boundaries
-
-Model outputs are untrusted proposals. Validate schemas, allowed enum values,
-resource IDs, lengths, source references and version bindings. Models cannot set
-the owner, grant permissions, expand a mandate, or mark their contribution accepted.
-Supplied documents and retrieved text are evidence, not executable instructions.
-
-The worker constructs a minimum context packet for each specialist: the question,
-relevant facts and sources, initiative constraints, relevant decisions, output
-contract, and explicit unknowns. It excludes unrelated initiatives and confidential
-material outside that profile's authorized context.
-
-Paperclip configuration and the selected adapter must also restrict direct reads,
-writes, filesystem access and outbound access where the profile requires it. Prompt
-prose and a small context packet do not prove isolation. Qualification must exercise
-both plugin-mediated operations and direct native/tool access; unavailable containment
-is a release blocker for the affected authority claim, not an undocumented exception.
-
-### 6.3 Business mutations
-
-Use a deterministic helper in an authorized coordinating run to perform exact
-operations through the native authenticated API. The helper receives an operation
-reference, retrieves the canonical authorized payload, and checks the current
-mandate and claim before dispatch. It must not accept arbitrary URLs, shell text,
-SQL, actor IDs, or replacement payloads from an agent.
-
-For supported local runs, Paperclip documents injected run identity and short-lived
-authentication, plus run attribution on issue mutations [PC08]. Keep those credentials
-inside their native execution environment; do not relay them through the browser,
-model prompt, plugin ledger or logs. Other adapters require their own verified path.
-No provider, engine or model is selected by this transport preference.
-
-The core route must authorize the actual actor, assignment and lifecycle transition.
-A denied operation stays denied. Do not retry via SDK issue writes, direct database
-access, board impersonation or a different credential. The plugin records both the
-owner's delegation and the agent/run that actually executes the action.
-
-This helper, its scoped claim route and its runtime containment are **proposed
-Executive components**. The existing sources do not prove an atomic mandate check
-inside every native API mutation. G01 must establish the covered path and reject
-unauthorized alternate paths before B02 execution is enabled. A proposal-only mode
-remains useful but does not satisfy the full B02 qualification criterion.
-
-### 6.4 Suspension and revocation
-
-Revocation prevents new operation claims and new consultations; every subsequent
-dispatch rechecks the mandate. An already claimed or dispatched operation is shown
-as in flight until its effect is reconciled. A revocation racing an external write
-does not retroactively cancel that write. Do not equate session close with run stop,
-or agent pause with cancellation of work already running.
-
-Use a supported run-control path only after qualification; otherwise expose the
-remaining run and request the native operator action. Historical decisions and
-observed effects remain available after suspension or abandonment.
-
-## 7. Agent orchestration and journeys
-
-### 7.1 Output contracts
-
-Define versioned structured outputs for `clarification`, `consultation_plan`,
-`contribution`, `recommendation`, `initiative_proposal` and `work_proposal`.
-Each carries its context/input revision and source references. Contributions include
-author attribution from the host run, assumptions, limitations and dissent; proposals
-reference valid resources but never constitute authorization.
-
-Parse and validate the complete terminal output. Streaming fragments are display-only.
-Malformed output remains failed or incomplete. A bounded correction attempt may be
-allowed within configured limits; exhausted limits surface a useful partial result
-or blocker rather than an unlimited repair loop.
-
-### 7.2 B01 flow
-
-1. Persist the owner's request and input references as an advice context.
-2. Invoke the Executive profile through a tracked session. It may answer directly,
-   request clarification, or propose a bounded consultation plan.
-3. Validate that plan against selected profiles, permitted context and request limits.
-   Only the worker dispatches specialist calls; specialists do not recursively fan out.
-4. Persist each attributed contribution or failure independently in the context.
-5. Ask Executive to synthesize only the available contributions. Preserve dissent
-   and identify missing expertise rather than presenting false consensus.
-6. Publish the persisted recommendation in the UI. Do not create an initiative or
-   native work unless the owner explicitly requests B02.
-
-A provider call per specialist is not necessarily required for every request.
-The maximum number of consultations, synthesis attempts and concurrent runs must be
-configured; hierarchy depth does not establish a need for more agents.
-
-### 7.3 B02 flow
-
-1. Create an initiative context from an explicit request or linked advice context.
-2. Use the scoping and consultation flow to prepare a versioned brief and work proposal.
-3. The owner authorizes a specified brief and delegation envelope through a dedicated
-   command. A chat sentence interpreted by a model is not the authorization record.
-4. The worker prepares operations for the qualified bridge. Resolve an existing
-   authorized project; do not create a project, goal or new agent implicitly.
-5. Create ordinary execution tasks with correlation/idempotency keys, required plan
-   content, intended assignees and real dependencies through the native contract.
-   Read back the created work and assignment before reporting that coordination occurred.
-6. On manual refresh or review, fetch current authorized work/evidence. Executive
-   compares observed outcomes with the brief; neither task completion nor an agent's
-   favorable synthesis accepts the initiative.
-7. The owner accepts an exact result/evidence version, requests a correction, suspends,
-   or abandons. Corrections preserve links to prior versions and decisions.
-
-The initiative is a plugin coordination record, not automatically a parent issue.
-Do not create a blocker on a conversational record. Where native conversation tasks
-are used, follow Paperclip's handoff rules: ordinary execution tasks, plan supplied
-at creation and no parent/blocker relationship back to the conversation [PC08].
-An explicit native goal may be linked, but H1 does not create or claim achievement
-of a goal merely from a recommendation.
-
-### 7.4 Session recovery
-
-Store context, operation and attempt identifiers in session task keys and prompts,
-without secrets. The observed session implementation forwards live events and
-removes subscriptions on disposal; it exposes no session-event replay API [PC03].
-Terminal events can be missed around dispatch or restart, so absence of an event
-never means the model failed or should be reinvoked.
-
-Use exact company/agent/run correlation to inspect permitted `heartbeat_runs`
-fields via a narrow allowlisted read when recovering. A known successful run still
-needs a validated final contribution: adapter `result_json` and stdout excerpts are
-not assumed interchangeable. Test the selected adapter's completion format before
-enabling automatic recovery. If an ID was lost, reconcile exact context/session
-correlation; multiple matches remain ambiguous.
-
-The session list exposes neither task keys nor last-run identifiers [PC02, PC03].
-If session creation succeeds but its returned ID is lost before any run exists,
-the current SDK and permitted core reads cannot reliably recover that session.
-Keep the operation outcome unknown and require explicit reconciliation; do not
-infer identity from list order or blindly repeat creation.
-
-Persist recovered output before synthesis; do not rerequest model work solely to
-rebuild UI text. Manual resume is the H1 control surface. Recovery on worker startup
-may reconcile state but must not silently restart business actions. UI streams are
-optional acceleration; durable reads remain the source of truth.
-
-## 8. Porting profiles and reusable methods
-
-The proposed source-to-destination map is prospective. These files do not exist yet.
-All upstream paths below are relative to `packages/core/openexecutive/` at the
-OpenExecutive revision in section 1.
-
-| Candidate | Upstream inputs | Proposed destination and adaptation | Missing equivalence |
-| --- | --- | --- | --- |
-| Executive | `prompts/executive_persona.py`, `prompts/cache_manager.py`, `orchestrator/executive.py`, `orchestrator/router.py` | `profiles/executive/AGENTS.md` plus worker contracts; retain scoping/synthesis, remove fictional credentials, automatic external sending and hidden-contributor instructions. Native role `general` proposed. | Python routing loop, memory, tools and scheduler are not ported by copying the persona. |
-| CSO | `agents/strategy.py`, `CSO_PROMPT` in `prompts/domain_prompts.py`, selected strategy knowledge | `profiles/strategy/AGENTS.md`; explicit assumptions, strategic options and reserved owner decisions. Native role `general`. | RAG, market data and outcome quality require separate evidence. |
-| CPO | `agents/product.py`, `CPO_PROMPT`, `knowledge/builtin/skills/product/feature-prioritization.md` | `profiles/product/AGENTS.md` and a selected prioritization skill; title CPO, native role `pm`. | Product evidence, valid scoring inputs and independent acceptance are not supplied by the role. |
-| COO | `agents/operations.py`, `COO_PROMPT`, selected operations knowledge | `profiles/operations/AGENTS.md`; coordination proposals and explicit permissions. Native role `general`. | Actual assignment, capacity and dependency handling require the qualified native path. |
-
-Role identifiers are constrained by the host schema; titles are separate. Avoid
-automatically choosing `ceo` for Executive, because that native role has special
-permission-management treatment [PC09]. Selection of these four profiles remains
-subject to the PRD's reference use case.
-
-Separate durable role instructions, reusable methods, adapter/model configuration,
-and initiative context. An initial method set can adapt feature prioritization and
-relevant portions of upstream review/scoping material; distinguish copied material,
-adaptations and newly authored procedures. Do not imply that all three are upstream.
-The weekly review method, if selected, supports manual review only in H1.
-
-Package only reviewed knowledge needed by the selected methods. Explicitly handle
-missing company context, dated heuristics and jurisdiction-sensitive claims. Do not
-import the external corpus, ChromaDB, Honcho or provider defaults as hidden dependencies.
-Maintain a port map with upstream path/revision/hash, destination, license, changes,
-functional dependencies and unreproduced capabilities. Preserve Apache-2.0 and
-relevant NOTICE content, mark derived-file changes, and add README attribution once
-materials are actually incorporated. Keep the existing project license decision separate.
-
-## 9. Plugin surface and capabilities
-
-Proposed package areas: `src/manifest.ts`, `src/worker.ts`, `src/domain/`,
-`src/persistence/`, `src/paperclip/`, `src/ui/`, `profiles/`, `skills/`,
-`migrations/`, and a provenance manifest. This is a layout recommendation, not scaffolding.
-Use the native SDK snapshot compatible with the examined host. An npm version string
-alone is insufficient to establish compatibility with that source revision.
-
-| Capability group | Proposed use | Boundary |
+| Signal | Source/control required | Response |
 | --- | --- | --- |
-| `api.routes.register` | Company-scoped owner commands, state reads, and narrowly authenticated operation claims/results. | Board-only owner decisions; agent routes verify exact permitted agent/run/operation. |
-| `agents.read`, `agents.managed`, `skills.managed` | Inspect bindings and perform explicitly requested provisioning. | Setup is a separate action; no automatic hire on advice submission. |
-| `agent.sessions.create`, `.list`, `.send` | Tracked Executive/specialist consultations. | Only configured agents; activation and budgets checked before dispatch. |
-| `database.namespace.migrate`, `.read`, `.write` | Durable plugin aggregates and revision checks. | No public-table writes; explicit company predicates. |
-| `issues.read`, `projects.read`, `goals.read` | Inspect authorized context and native work. | Worker additionally limits reads to the initiative's allowed resources. |
-| `issue.documents.read`, `issue.relations.read` | Obtain evidence and blockers. | No generic document browsing beyond authorized context. |
-| `authorization.policies.read` | Explain assignment preflight. | Does not authorize an operation or grant privileges. |
-| `ui.page.register`, `ui.sidebar.register` | Advice, initiative and readiness views in the host. | No arbitrary host navigation or unrelated UI extension. Live streaming is optional; durable reads remain authoritative. |
+| Plan or final result | Persisted execution checkpoint for the selected issue/run. | One review for the identified subject. |
+| Material scope/design change or blocker | Executor/orchestrator checkpoint with supporting evidence. | Reassess the affected direction; no silent criteria rewrite. |
+| Repeated failure or lack of progress | Persisted attempt/correction history and evidence comparison at segment boundaries. | Compare marginal value; simplify or escalate instead of replaying indefinitely. |
+| Approaching elapsed-time or resource limit | Host run control/budget signal or bounded segment deadline enforced outside model instructions. | Review before another segment; do not launch work beyond the remaining envelope. |
+| Missing progress or stalled run | Qualified timeout/watchdog/control supplied by the host or orchestrator. | Expose stalled/in-flight state; use a supported stop path or operator escalation. |
 
-Initially allowlist only `heartbeat_runs` for database core reads, subject to recovery
-qualification. Fetch work through native read services. Do not request generic
-outbound HTTP, secret access, grant/policy writes, direct issue mutation capabilities,
-agent creation tools, routine scheduling or global agent pause/resume merely for convenience.
-Profile provisioning and later activation remain separate supported operator workflows.
+Choose the concrete signal mechanism against the target host. Do not invent a
+subscription API or introduce a permanent scheduler here. A bounded segment must
+have an independently enforced maximum duration; relying on an agent to voluntarily
+report that it has run too long does not qualify B04. If the required control is
+unavailable, mark this path unready and expose the dependency.
 
-Proposed command names such as `submitAdvice`, `proposeInitiative`, `authorizeMandate`,
-`requestReview`, `acceptResult`, `suspendInitiative` and `resumeInitiative` are
-Executive-owned interfaces, not existing Paperclip endpoints. Every mutating command
-requires an idempotency key and expected context revision where a context exists.
-Agent claim/result interfaces are narrower than owner commands and must verify native
-run provenance before accepting a result. Their route declarations and runtime
-authentication are part of G01, not an assumed inherited capability.
+Persist limits for correction cycles, consultation count, output repair attempts,
+concurrent calls, elapsed execution/review time, and available usage. Start with one
+dispatch owner and serial execution/review segments for the reference ticket; keep
+consultations serial too. Council owns the envelope. Use its canonical revision
+check to claim the next attempt and consume its allowance before dispatch; an
+Executive cache cannot authorize another attempt. Do not build a general shared
+budget service for this slice. Concurrent dispatch, if later selected, requires
+qualified atomic reservation before claiming a shared cap.
 
-## 10. User interface and lifecycle
+Numeric thresholds are set with the owner for the reference case. Optional
+consultations end when their bounded value or budget is exhausted. A required review
+that cannot complete becomes a blocker. Starting a new session, changing an agent,
+or retrying delivery does not reset correction or resource counters. A semantic
+correction cycle and a transport retry are counted separately and neither is unlimited.
 
-Propose one plugin page with advice and initiative views. It shows the current brief,
-next required decision, mandate, work links, contributions, evidence and history.
-Owner controls display the exact version and consequences of authorization or
-acceptance. A correction edits a new draft version, not an accepted historical record.
+At a threshold, block further affected dispatch and escalate. Already running work
+remains visible until the stop or completion is observed. A run timeout alone is
+not a proven end-to-end monetary cap. Unknown usage is displayed as unknown; required
+hard limits without enforceable controls prevent activation of that claim.
 
-Use the host's shared components where appropriate and preserve native navigation.
-Do not render model-generated HTML or derive execution commands from rendered text.
-Persist before reporting success; stale revisions produce a refresh-and-review state.
-Keyboard navigation, focus handling, named controls, textual status labels and usable
-error states are acceptance requirements. Mobile layout and product languages remain
-open PRD choices; the TAD does not silently set them through its use of English.
+## 6. Persistence, versions, and recovery
 
-Installation and readiness sequence, for a later authorized operation:
+Reuse L01's existing advice/settings persistence for its existing journey. Add only
+the bindings and contribution records required by the selected integration; do not
+rewrite the advice store into the former broad initiative model as a prerequisite.
+Council remains canonical for review subjects, mandates, verdicts and loop counters.
+Executive observations reference their canonical IDs/revisions and readback times.
 
-1. Validate package, capabilities, migrations and port attribution; build reproducibly.
-2. Install on an identified compatible host and inspect plugin/worker health.
-3. Bind company, owner, resources and selected profiles through explicit setup.
-4. Reconcile only selected resources; keep agents paused or pending approval as required.
-5. Configure and verify adapter, engine, model, effort, authentication, permissions and limits.
-6. Assign company skills through supported synchronization and verify actual runtime loading.
-7. Activate selected agents explicitly and qualify B01, then the gated B02 execution path.
+Proposed Executive records are company-scoped and contain issue/Council bindings,
+input snapshots or hashes, profile versions, contribution requests/results, session
+and run IDs, operation keys, states and reconciliation evidence. Provider secrets,
+full unbounded logs, and duplicate mutable acceptance state do not belong there.
 
-Reconcile is not defaults synchronization: it generally retains existing content.
-Reset can replace instructions, identity and adapter/runtime/permission defaults
-[PC10]. Upgrades must compare shipped, previously applied and current custom content;
-surface conflicts and apply reviewed changes rather than resetting all profiles.
+For local state changes, use a parameterized conditional update on company, record
+ID and expected revision, writing the operation state with the record. A zero-row
+update is a conflict. The pinned SDK does not establish a cross-service transaction
+or general multi-statement transaction API [PC02, PC04]. Namespace isolation does
+not replace explicit company predicates.
 
-Database migrations are checksummed by the host. Use additive migrations and test
-recovery from failure; do not modify already-applied migration files. Plugin disablement
-must stop new dispatch but does not imply cancellation of running agents. Backup and
-restore the plugin namespace together with relevant host records; do not claim a
-package downgrade rolls back decisions or external effects. No deletion policy is
-implemented by this document; retention/export limits require an owner decision.
+Record a stable operation key and input hash before each side effect. Repeating the
+same key and payload returns the existing operation; changing the payload under the
+same key is rejected. Track `prepared`, `dispatching`, `observed_success`,
+`observed_failure`, or `outcome_unknown`. A crash, lease expiry or missing callback
+must not cause automatic replay of an operation whose effect is uncertain.
 
-## 11. Observability, limits, and failure handling
+For decision application, query Council/native state before retrying. For sessions,
+persist the returned IDs and terminal output. The pinned SDK's live event stream
+has no proven replay contract; allowed reads of `heartbeat_runs` may support recovery,
+but final output extraction is adapter-specific [PC03, PC06]. Lost session identity
+or multiple matches remain ambiguous; never select by list order.
 
-Record company/context/operation IDs, mandate and input revisions, agent/run IDs,
-profile/skill versions, transition times, failure categories and readback references.
-Correlate plugin activity with host runs without forging human attribution. Avoid
-logging credentials, full confidential prompts or unrestricted provider payloads.
+L01 currently marks in-flight work `outcome_unknown` after restart and lacks automatic
+recovery of missed terminal output. Its tests do not qualify recovery for this new
+workflow. Implement only the needed reconciliation path and test it with the selected
+adapter; manual resolution of genuinely ambiguous effects must remain possible.
 
-Track consultation count, elapsed time, available usage/cost data, repair attempts,
-human decisions and coordination overhead. Unknown cost is not zero. Host budgets
-and configured run timeouts are complementary controls, not proof of an initiative's
-total spend or end-to-end latency. Unknown required limits prevent activation of
-the affected operation; numeric limits remain part of G04.
+Changed ticket snapshots, criteria, mandates, or results invalidate affected pending
+reviews. Council must recheck the current subject/mandate at decision application,
+not only at review dispatch. Preserve historical decisions on their original subject.
+If the native path cannot enforce this binding, it cannot be called version-bound
+acceptance. Hashes identify content; they do not independently authenticate approval.
+
+Migrations remain additive and checksummed; never edit an applied migration. Bound
+stored content and preserve decision/evidence references. Retention values remain
+an operator decision; generic archival and vector-memory work are outside this slice.
+
+## 7. Native authority and integration readiness
+
+The source baseline exposes authenticated plugin routes, native agents and sessions,
+namespace persistence, native issues, and authorization checks [PC01–PC07]. Their
+presence does not establish a working Executive-to-Council control path.
+
+Required integration checks before supervised activation:
+
+- Derive company and actor identity from authenticated host context, not request or
+  model-supplied IDs. Restrict operator changes to the authorized owner.
+- Resolve the configured Council and executor; validate their distinct identities,
+  current run/issue relationship, mandate and selected workflow.
+- Preserve Council's applicable delegation profile, including reserved product
+  trade-offs, infrastructure cost changes and both task and period budget limits.
+- Apply decisions only through the qualified Council/native contract, with the
+  expected actor and exact subject. Confirm the recorded decision and native effect.
+- Verify that the covered continuation/completion path cannot silently proceed when
+  a required Council decision is missing, stale, denied or unapplied.
+- Test relevant alternative executor paths before any bypass-resistance claim;
+  explicitly disclose uncovered administrative or external delivery paths.
+
+The SDK and native HTTP issue-mutation paths differ at the pinned baseline [PC07].
+Do not substitute a privileged SDK mutation after a Council or native refusal.
+Executive must not implement its own generic authenticated mutation bridge just to
+complete the former B02 work-creation design. If Council needs a missing contract,
+identify the owning component and bound that follow-up implementation explicitly.
+
+Revocation blocks new affected claims. It cannot undo an already dispatched write.
+Session close deletes a row at the examined baseline; it is not run cancellation
+[PC03]. Qualify stop controls separately and preserve pending decisions/readback
+through suspension. Council unavailability is a visible blocker in a governed
+workflow, not an automatic switch to advisory mode.
+
+## 8. Profiles, methods, and configuration
+
+Retain the adapted L01 Executive profile and its provenance as existing material;
+do not claim it is already a qualified Council reviewer. Review-specific methods
+are selected for their ability to answer the three PRD perspectives. Candidate
+upstream sources include product prioritization, strategy/scoping and operations
+methods [OE01, OE02]. A technical proportionality method may need original authoring
+or another reviewed source; do not fabricate an OpenExecutive origin.
+
+Keep role instructions, reusable methods, execution configuration and ticket context
+separate. Native role identifiers are constrained; titles confer no extra permission
+[PC09]. Bind existing qualified agents first. Any provisioning, model/effort selection,
+authentication, skill distribution and activation is explicit and verified on the
+target, not inferred from a manifest declaration. No custom provider adapter is
+required by this design; use a qualified native Paperclip adapter.
+
+Retain upstream revision/path, destination, license/NOTICE, modifications and missing
+functional equivalents for each adaptation. Mark newly authored methods accurately.
+Do not import upstream RAG, memory, provider defaults or scheduler dependencies.
+Preserve current customization on updates: reconcile is not a general defaults sync,
+and reset may replace instructions and configuration [PC10].
+
+## 9. UI, observability, and failures
+
+Extend the existing host page only as needed to inspect the selected issue's ticket
+context, latest contribution, canonical Council decision, application status, limits
+and next actor/action. Link to native work and Council details rather than duplicating
+their editing controls. Keep L01 advice clearly separate from supervised execution.
+
+Reuse host components [PC11]. Support keyboard use, visible focus, named controls,
+non-color statuses and understandable errors. Model-generated content is text/data,
+not trusted HTML or executable commands. Product languages and mobile scope remain
+open; there is no separate design-system implementation in this change.
+
+Correlate company, issue, checkpoint, mandate/review revision, contribution, agent/run,
+profile/method version, decision and operation IDs. Measure execution and review
+elapsed time separately, available usage/cost, corrections, escalations and deferred
+findings. Avoid logging secrets or entire confidential inputs. Unknown cost is not zero.
 
 | Failure | Required behavior |
 | --- | --- |
-| Duplicate request or concurrent edit | Return the correlated result or conflict; do not duplicate work or overwrite a newer decision. |
-| Model/provider error or malformed output | Preserve attributable failure; bounded repair or limited response within remaining authority. |
-| Missing terminal event | Reconcile persisted run state; do not blindly rerun. |
-| Permission refusal | Record denied state and explanation; never change transport or identity to bypass it. |
-| Host mutation succeeds but ledger update fails | Preserve uncertain operation; correlate and read back before recording success or considering retry. |
-| Partial work creation | Show each confirmed issue and unresolved operation; resume only missing authorized work. |
-| Mandate withdrawn during execution | Stop new claims, expose in-flight effects and qualified stop options. |
-| Source or result changes after acceptance | Mark the new version unaccepted; retain the historical decision on the old version. |
-| Deleted or inaccessible native evidence | Keep a tombstone/reference and mark evidence unavailable; do not infer success. |
-| Profile/skill mismatch or update conflict | Mark readiness incomplete and retain customization until a reviewed resolution. |
+| Duplicate signal/submission | Reuse the correlated operation; no duplicate specialist or review run. |
+| Unavailable specialist | Record failure; Council decides from sufficient evidence or escalates within limits. |
+| Invalid output | Bounded repair if permitted and affordable; otherwise explicit failed contribution. |
+| Changed source/subject/mandate | Mark affected work stale and resolve authority before application. |
+| Council decision recorded but effect unknown | Display pending/unknown; reconcile before redispatch or reporting acceptance. |
+| Stop threshold reached | No new affected dispatch; retain in-flight state and notify the owner destination. |
+| Permission refusal | Preserve the refusal; no identity or transport fallback. |
+| Missing callback/restart | Recover persisted identity/output where qualified; otherwise show `outcome_unknown`. |
+| Council unavailable | Hold dependent governed work; no implicit approval or advisory downgrade. |
 
-## 12. Validation and release gates
+## 10. Qualification and release boundaries
 
-No runtime tests were executed for this documentary task. The checks below specify
-future evidence, not completed qualification.
+These are required future checks, not tests executed for this documentation revision.
+The existing G identifiers are retained with revised scope.
 
-| Gate | Evidence required | Blocks |
+| Gate | Required evidence | Blocks |
 | --- | --- | --- |
-| G01 — Identity and authority | Real owner/agent/run attribution; authorized native create/assign/readback; rejected out-of-mandate and direct alternate writes; denied SDK fallback; revocation races and least-privilege runtime containment. | B02 mutation activation and any broad authority/isolation claim. |
-| G02 — Durable execution | Real session dispatch/result collection, restart with missed events, exact run recovery, duplicate/concurrent commands and ambiguous operation handling. | B01/B02 readiness and continuity claims. |
-| G03 — Profile and port fidelity | Selected upstream-to-profile map, license/notices review, preserved customizations, actual skills/configuration/runtime readback. | Claims of functional porting and usable profiles. |
-| G04 — Product and operating envelope | Owner-selected reference case, delegation scope, data/classification and retention rules, compatible host/adapter, limits and usefulness thresholds. | Production activation and product acceptance. |
+| G01 — Council authority and effect | Distinct authenticated identities; exact subject/mandate; allowed and denied decisions; confirmed native effect; selected alternate paths; revocation/in-flight handling. | Claims of enforced supervision and version-bound acceptance. |
+| G02 — Durable execution and controls | Real sessions/output; duplicate and concurrent signals; restart/missed event reconciliation; persisted counters; qualified checkpoint/timeout and selected-limit enforcement; uncertain effects. | Autonomous continuation and B04 readiness. |
+| G03 — Profile and method fidelity | Provenance/licensing, preservation of customization, selected runtime instructions/skills and actual contribution attribution. | Claims that adapted executive methods are loaded and usable. |
+| G04 — Product value and envelope | Reference ticket, criteria, mandate/thresholds, minimal sufficient review, real correction/re-review, drift and stopping case, time/usage and interventions compared with simpler review. | Usable-release and net-value claims. |
 
-Tests should progress from deterministic contract tests to an explicitly authorized
-disposable host and then a bounded real-agent journey. Use mocks for parser/state
-logic only; do not use mock success as authority or lifecycle proof. Do not install
-dependencies, create an instance, call business models or activate agents under this
-document-authoring authorization.
+Use deterministic tests for validation, classification, state/revision checks and
+budget accounting. Then qualify the narrow integration on an authorized disposable
+host with real actors, persistence and native readback. Finally exercise a bounded
+real-agent development journey. Synthetic verdicts prove neither review judgment
+nor the real correction workflow; the prior bridge experiment is not a substitute.
 
-| PRD requirement | Architecture coverage | Necessary validation |
+| PRD requirements | Architecture coverage | Discriminating validation |
 | --- | --- | --- |
-| EXE-01 | Structured clarification and brief versions; AD-03/07. | Vague objective yields decisive questions and no delivery claim. |
-| EXE-02 | Consultation plan, per-run contributions and dissent; AD-02/03. | Selective routing, direct answer, disagreement and unavailable specialist. |
-| EXE-03 | Advice contexts distinct from initiatives; AD-03/04. | Advice produces no operational commitment or work creation. |
-| EXE-04 | Versioned brief with measures and unknowns; AD-04. | Missing targets remain explicit; proposal is inspectable. |
-| EXE-05 | Owner mandate, native authenticated bridge and gates; AD-03/05/06. | G01 authorization, refusal, stale mandate and alternate-path tests. |
-| EXE-06 | Journal, idempotent native creation and work readback; AD-04/05/06. | Actual assignments and dependencies match the authorized proposal. |
-| EXE-07 | Observations distinct from task state and acceptance; AD-04/10. | Completed tasks with unmeasured effect remain outcome-unknown. |
-| EXE-08 | Durable aggregate, input snapshots and run recovery; AD-02/04/05. | Restart and manual resume preserve decisions without blind replay. |
-| EXE-09 | Revocation, suspension and versioned correction; AD-05/06/09. | No new claims after revocation; in-flight effects and revisions remain visible. |
-| EXE-10 | Company predicates, owner/run checks and runtime containment; AD-03/06/07. | Cross-company and unauthorized-context attempts fail across covered paths. |
-| EXE-11 | Port map and reviewed profile migrations; AD-07/08. | Actual derived content is attributed and custom content survives an update. |
-| EXE-12 | Readiness ladder and evidence per resource; AD-02/08. | Installed/configured/loaded/activated/executed evidence remains distinct. |
+| EXE-01, EXE-03 | Ticket snapshot, plan checkpoint; AD-07/10/11. | Prepared ticket reused; overlarge plan reduced without new upstream planning. |
+| EXE-02, EXE-11 | Selected methods and conditional contributions; AD-02/08. | One reviewer suffices; needed specialist is attributable and customization survives. |
+| EXE-04, EXE-07 | Exact subject/evidence and separate outcome; AD-03/05. | Changed result cannot inherit acceptance; business effect remains unknown when unmeasured. |
+| EXE-05, EXE-06, EXE-15 | Council ownership and native readback; AD-03/04/06. | Denied/stale/unapplied decision cannot be displayed as applied acceptance. |
+| EXE-08, EXE-09 | Journal, reconciliation, persisted limits; AD-05/12. | Restart does not replay effects or reset a correction budget; stop is observable. |
+| EXE-10, EXE-12 | Scoped context, authenticated identity, readiness and UI; AD-01/07/09. | Cross-company or supplied-content authority is refused; lifecycle states remain distinct. |
+| EXE-13, EXE-14, EXE-16 | Material signals, finding classes and measured review overhead; AD-09/10/12. | Drift affects the next iteration; optional polish does not block; review cost stays visible. |
 
-## 13. Remaining decisions and next technical step
+## 11. Delivery direction and unresolved contracts
 
-The recommended starting architecture is an external plugin using native agents,
-explicit context, a durable coordination record and a qualified native mutation
-path. This is technically concrete enough for review, but not approval to start
-implementation or a claim that all necessary enforcement already exists.
+The existing L01 package is a reusable starting point, not a completed first
+supervision slice. The recommended next vertical slice is one existing native issue
+with Linear context, one executor and one Council reviewer: plan, bounded execution,
+identified result, correction/re-review, and a confirmed decision or explicit blocker.
+It must also demonstrate a material progress/limit signal before a final submission.
+Automated Linear ingestion can follow without changing supervision ownership.
 
-Before decomposition into implementation work, confirm the reference initiative,
-initial delegation, selected profiles and interaction surface. Resolve G01's bridge
-and containment feasibility first, alongside G02's selected-adapter result recovery.
-If the host cannot support the required boundary, report the missing contract and
-seek an explicit architecture/product decision; do not silently reduce the PRD or
-expand the work to modify Paperclip core.
+Before implementation, resolve only what that slice requires:
 
-Council integration, recurrence, connectors, additional executives and vector
-retrieval stay in the roadmap. No Council API, external delivery control or
-general learning mechanism is specified as an available dependency here.
+1. The selected Council/host revision and narrow contribution/decision-readback API.
+2. The host/orchestrator checkpoint, independent timeout and stop mechanism.
+3. Canonical attempt/counter checks for serial dispatch and the selected limits.
+4. Exact result/evidence identity and decision-time version checks.
+5. The reference ticket, numeric limits, retained evidence and owner destination.
 
-## 14. Source references
+These are explicit qualification dependencies, not permission to build a generic
+connector framework, second Council engine, scheduler, learning system or every
+future profile. A later backlog/sprint plan must trace to PRD 0.2 and this TAD;
+roadmap 0.1's old sequence is not an implementation instruction.
 
-Paperclip links are pinned to the source revision in section 1. These are source
-contracts, not a deployed-instance audit. The native authoring guide is used over
-the prospective `PLUGIN_SPEC.md`; the skill's older claim that shared UI components
-are absent is contradicted by the examined guide and SDK exports.
+## 12. Source references
+
+The following pinned source links are retained from the original native-contract
+inspection. Revalidate the relevant contracts on the actual implementation target;
+they do not claim a currently running host or a newly verified upstream version.
+Council's product source is linked in section 1; its integration API remains to be
+selected and qualified.
 
 - PC01: [Plugin authoring guide](https://github.com/paperclipai/paperclip/blob/61b3fd57a695614dc4a37e2303f426a34a9795cf/doc/plugins/PLUGIN_AUTHORING_GUIDE.md) — trusted code, packaging, database, routes, managed resources and UI.
 - PC02: [SDK types](https://github.com/paperclipai/paperclip/blob/61b3fd57a695614dc4a37e2303f426a34a9795cf/packages/plugins/sdk/src/types.ts) — database client, issue documents, issue mutations, sessions and authorization preview.
