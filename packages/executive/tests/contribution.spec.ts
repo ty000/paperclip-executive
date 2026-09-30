@@ -23,7 +23,10 @@ class MemoryContributions implements ContributionRepository {
   }
   async markRunning(companyId: string, id: string, sessionId: string, runId: string) {
     if (this.failRunning) throw new Error("persistence unavailable"); const item = await this.required(companyId, id);
-    if (item.sessionId === sessionId && ["dispatching", "running"].includes(item.status) && (!item.runId || item.runId === runId)) this.patch(item, { status: "running", runId });
+    if (item.sessionId !== sessionId || !["dispatching", "running"].includes(item.status) || (item.runId && item.runId !== runId)) {
+      throw new Error("Contribution state changed concurrently; refresh before continuing");
+    }
+    this.patch(item, { status: "running", runId });
   }
   async complete(companyId: string, id: string, sessionId: string, runId: string, result: ContributionResult) {
     if (this.failComplete) throw new Error("completion persistence unavailable");
@@ -42,12 +45,14 @@ class MemoryContributions implements ContributionRepository {
 
 class Sessions implements ContributionSessionClient {
   creates = 0; sends = 0; failSend = false;
+  beforeReturn: (() => void) | null = null;
   onEvent: Parameters<ContributionSessionClient["sendMessage"]>[2]["onEvent"] | null = null;
   synchronousEvents: Parameters<ContributionSessionClient["sendMessage"]>[2]["onEvent"] extends (event: infer E) => void ? E[] : never[] = [];
   async create() { this.creates += 1; return { sessionId: "00000000-0000-4000-8000-000000000011" }; }
   async sendMessage(_session: string, _company: string, options: Parameters<ContributionSessionClient["sendMessage"]>[2]) {
     this.sends += 1; this.onEvent = options.onEvent; if (this.failSend) throw new Error("connection lost");
     for (const event of this.synchronousEvents) options.onEvent(event);
+    this.beforeReturn?.();
     return { runId: "00000000-0000-4000-8000-000000000012" };
   }
 }
@@ -182,6 +187,18 @@ describe("Paperclip Executive L02 contribution", () => {
     expect(duplicateExecutes).toHaveLength(1);
   });
 
+  it("A2 requires exactly one persisted mark-running transition", async () => {
+    for (const rowCount of [0, 1, 2]) {
+      const repository = new SqlContributionRepository({ namespace: "plugin_executive_test",
+        execute: async () => ({ rowCount }), query: async <T>() => [] as T[],
+      });
+      const transition = repository.markRunning("company-1", "contribution-1",
+        "00000000-0000-4000-8000-000000000011", "00000000-0000-4000-8000-000000000012");
+      if (rowCount === 1) await expect(transition).resolves.toBeUndefined();
+      else await expect(transition).rejects.toThrow("state changed concurrently");
+    }
+  });
+
   it("A3 accepts zero must-fix findings and classifies optional polish as defer", () => {
     expect(parseContributionResult(JSON.stringify(validResult)).findings).toEqual([]);
     const proportional = parseContributionResult(JSON.stringify({ ...validResult, findings: [{ id: "F-1", class: "defer", perspective: "product", criterionRef: "Optional polish", evidence: [], reasons: ["Not required for acceptance"], smallestUsefulAction: "Revisit after usage evidence." }] }));
@@ -233,6 +250,22 @@ describe("Paperclip Executive L02 contribution", () => {
     sessions.synchronousEvents = [{ sessionId: "00000000-0000-4000-8000-000000000011", runId: "00000000-0000-4000-8000-000000000012", seq: 1, eventType: "done", stream: "stdout", message: JSON.stringify(validResult), payload: null }];
     const result = await service.submit(owner, input);
     expect(result).toMatchObject({ status: "completed", runId: "00000000-0000-4000-8000-000000000012", result: validResult });
+    expect(sessions.creates).toBe(1); expect(sessions.sends).toBe(1);
+  });
+
+  it("A4 routes a zero-row mark-running transition through durable uncertainty correlation", async () => {
+    const { service, sessions, repository } = setup();
+    sessions.synchronousEvents = [{ sessionId: "00000000-0000-4000-8000-000000000011", runId: "00000000-0000-4000-8000-000000000012", seq: 1,
+      eventType: "done", stream: "stdout", message: JSON.stringify(validResult), payload: null }];
+    sessions.beforeReturn = () => {
+      const record = [...repository.records.values()][0];
+      if (record) repository.records.set(record.contributionId, { ...record, status: "outcome_unknown" });
+    };
+
+    const result = await service.submit(owner, input);
+
+    expect(result).toMatchObject({ status: "completed", sessionId: "00000000-0000-4000-8000-000000000011",
+      runId: "00000000-0000-4000-8000-000000000012", result: validResult });
     expect(sessions.creates).toBe(1); expect(sessions.sends).toBe(1);
   });
 

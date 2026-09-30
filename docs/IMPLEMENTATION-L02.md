@@ -88,7 +88,7 @@ contribution/session/run identity, and sanitized API/browser check results.
 | Completed-result persistence after host restart | Exact contribution, issue fields, executor state and run set preserved. |
 | Real Chromium interaction after restart | Completed result and run attribution visible; captured snapshot expanded; reload retained result; no uncaught page errors. |
 | Native issue/executor | EXE-2 remained `todo`, assigned to the same paused executor. |
-| Package checks | 34 tests passed; `pnpm typecheck` and `pnpm build` passed. |
+| Package checks | 36 tests passed; `pnpm typecheck` and `pnpm build` passed. |
 
 The full report is advisory. The real result included `acceptanceCriteria[2]` and
 `exclusions[2]`, although the owner had supplied one combined line per array. These
@@ -148,6 +148,12 @@ Tests cover queued and later recovery, incorrect callback correlation, and missi
 or mismatched durable identity. Native readback again preserved the same result
 and single run. The initial review loop stopped after publishing this tested correction.
 Current review and merge status are tracked in [PR #4](https://github.com/ty000/paperclip-executive/pull/4).
+
+The resumed review also found that a zero-row run-state update was treated as
+success. `markRunning` now requires exactly one affected row, like `markDispatching`,
+so a concurrent state change enters the existing uncertainty/readback path. SQL
+cardinality and service recovery regressions cover this without another dispatch.
+Zero-row terminal updates remain intentional idempotent no-ops.
 
 ## Remaining boundaries
 

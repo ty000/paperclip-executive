@@ -5,7 +5,7 @@
   "candidateBase": "c0839fe18a8673893cc6f87cafb5d765c556d638",
   "candidateFileSha256": {
     "packages/executive/src/contribution.ts": "29228c9b4552c0b0cf8d8830a4dfb9e47abcc86f0d3bb497e820bf79db68b243",
-    "packages/executive/src/contribution-repository.ts": "7e5f4eac80c995af9553a269c0a06bf28675cd2e1fd281c93f7b37c2b9de62a8",
+    "packages/executive/src/contribution-repository.ts": "a8edba3e31b47d9e2480152d8d46add452650556447d38ac2aeb04a60571f961",
     "packages/executive/src/worker.ts": "0951b0dc12fe17d44f997fbc0d341e7188500b4a3637611996358da01af836cf",
     "packages/executive/src/ui/index.tsx": "1a05fe190c759fb9bddeec65fd2c33ed6b7af3c0bf36ae4043f883bd333542e0",
     "packages/executive/migrations/002_prepared_ticket_contributions.sql": "eb7aa2c814039f62070c1d6a676abb816f16a6102f4fb80055013728f03d5ebf"
@@ -94,6 +94,14 @@
   },
   "postCallbackRecoveryFixReadback": {
     "checkedAt": "2026-09-30T17:24:56.162Z",
+    "mode": "verify",
+    "contributionId": "7201f796-70bb-489b-9685-e400aecdd651",
+    "runId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",
+    "runCount": 1,
+    "status": "pass"
+  },
+  "postRunTransitionFixReadback": {
+    "checkedAt": "2026-09-30T18:23:10.927Z",
     "mode": "verify",
     "contributionId": "7201f796-70bb-489b-9685-e400aecdd651",
     "runId": "2285549d-f090-4f92-ad46-64c2bce1d3cd",

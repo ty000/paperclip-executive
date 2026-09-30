@@ -74,12 +74,11 @@ export class SqlContributionRepository implements ContributionRepository {
     );
   }
   async markRunning(companyId: string, contributionId: string, sessionId: string, runId: string): Promise<void> {
-    const result = await this.db.execute(
+    await this.transition(
       `UPDATE ${this.table()} SET run_id = $1, status = 'running', updated_at = now()
        WHERE company_id = $2 AND contribution_id = $3 AND session_id = $4 AND status IN ('dispatching', 'running')
          AND (run_id IS NULL OR run_id = $1)`, [runId, companyId, contributionId, sessionId],
     );
-    if (result.rowCount > 1) throw new Error("Unexpected contribution transition cardinality");
   }
   async complete(companyId: string, contributionId: string, sessionId: string, runId: string, resultValue: ContributionResult): Promise<boolean> {
     const result = await this.db.execute(
