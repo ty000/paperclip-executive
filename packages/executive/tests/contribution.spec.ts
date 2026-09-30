@@ -7,7 +7,7 @@ import {
 
 class MemoryContributions implements ContributionRepository {
   records = new Map<string, ContributionRecord>();
-  failDispatching = false; failRunning = false;
+  failDispatching = false; failRunning = false; failComplete = false;
   async claim(input: Omit<ContributionRecord, "createdAt" | "updatedAt">) {
     const existing = [...this.records.values()].find((item) => item.companyId === input.companyId && item.requestKey === input.requestKey);
     if (existing) return { record: existing, inserted: false };
@@ -26,6 +26,7 @@ class MemoryContributions implements ContributionRepository {
     if (item.sessionId === sessionId && ["dispatching", "running"].includes(item.status) && (!item.runId || item.runId === runId)) this.patch(item, { status: "running", runId });
   }
   async complete(companyId: string, id: string, sessionId: string, runId: string, result: ContributionResult) {
+    if (this.failComplete) throw new Error("completion persistence unavailable");
     const item = await this.required(companyId, id);
     if (item.sessionId !== sessionId || (item.runId && item.runId !== runId) || !["dispatching", "running", "outcome_unknown"].includes(item.status)) return false;
     this.patch(item, { status: "completed", runId, result, error: null }); return true;
@@ -148,6 +149,39 @@ describe("Paperclip Executive L02 contribution", () => {
     expect(executes[0]).toContain("ON CONFLICT (company_id, request_key) DO NOTHING"); expect(queries[0]).toContain("request_key = $2"); expect(result.inserted).toBe(false);
   });
 
+  it("A2 marks only an inserted claim outcome-unknown when request-key readback fails", async () => {
+    const claimInput = {
+      companyId: "company-1", contributionId: "inserted-contribution", requestKey: "key", authorUserId: "owner-1", inputHash: "hash", inputVersion: 1,
+      issue: { id: "issue", identifier: null, projectId: null, title: "T", description: null, status: "todo", executorAgentId: "executor", updatedAt: "2026-09-30T00:00:00.000Z" },
+      source: { reference: "LIN-1", objective: "O", acceptanceCriteria: ["A"], exclusions: ["E"], dependencies: [] },
+      approach: { summary: "S", evidenceReferences: [], decisiveUnknowns: ["None"], constraints: ["None"] },
+      contributor: { agentId: "agent", name: "A", role: "engineer", title: null, status: "idle", adapterType: "codex_local" }, method: CONTRIBUTION_METHOD,
+      sessionId: null, runId: null, status: "prepared" as const, result: null, error: null,
+    };
+    for (const failure of ["query-error", "missing-row"] as const) {
+      const winnerExecutes: Array<{ sql: string; params: unknown[] | undefined }> = [];
+      const winner = new SqlContributionRepository({ namespace: "plugin_executive_test",
+        execute: async (sql, params) => { winnerExecutes.push({ sql, params }); return { rowCount: 1 }; },
+        query: async <T>() => {
+          if (failure === "query-error") throw new Error("readback unavailable");
+          return [] as T[];
+        },
+      });
+      await expect(winner.claim(claimInput)).rejects.toThrow(failure === "query-error" ? "readback unavailable" : "could not be read back");
+      expect(winnerExecutes).toHaveLength(2);
+      expect(winnerExecutes[1]?.sql).toContain("SET status = $1");
+      expect(winnerExecutes[1]?.params).toMatchObject({ 0: "outcome_unknown", 4: "company-1", 5: "inserted-contribution" });
+    }
+
+    const duplicateExecutes: string[] = [];
+    const duplicate = new SqlContributionRepository({ namespace: "plugin_executive_test",
+      execute: async (sql) => { duplicateExecutes.push(sql); return { rowCount: 0 }; },
+      query: async () => { throw new Error("readback unavailable"); },
+    });
+    await expect(duplicate.claim({ ...claimInput, contributionId: "losing-contribution" })).rejects.toThrow("readback unavailable");
+    expect(duplicateExecutes).toHaveLength(1);
+  });
+
   it("A3 accepts zero must-fix findings and classifies optional polish as defer", () => {
     expect(parseContributionResult(JSON.stringify(validResult)).findings).toEqual([]);
     const proportional = parseContributionResult(JSON.stringify({ ...validResult, findings: [{ id: "F-1", class: "defer", perspective: "product", criterionRef: "Optional polish", evidence: [], reasons: ["Not required for acceptance"], smallestUsefulAction: "Revisit after usage evidence." }] }));
@@ -200,6 +234,21 @@ describe("Paperclip Executive L02 contribution", () => {
     const result = await service.submit(owner, input);
     expect(result).toMatchObject({ status: "outcome_unknown", runId: "00000000-0000-4000-8000-000000000012", result: null });
     expect(sessions.creates).toBe(1); expect(sessions.sends).toBe(1);
+  });
+
+  it("A4 marks valid completion persistence failure outcome-unknown and accepts later correlated recovery", async () => {
+    const { service, sessions, repository } = setup(); repository.failComplete = true;
+    const doneEvent = { sessionId: "00000000-0000-4000-8000-000000000011", runId: "00000000-0000-4000-8000-000000000012", seq: 1,
+      eventType: "done" as const, stream: "stdout" as const, message: JSON.stringify(validResult), payload: null };
+    sessions.synchronousEvents = [doneEvent];
+
+    const unknown = await service.submit(owner, input);
+    expect(unknown).toMatchObject({ status: "outcome_unknown", result: null, error: expect.stringContaining("completion persistence unavailable") });
+
+    repository.failComplete = false;
+    sessions.onEvent?.({ ...doneEvent, seq: 2 });
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(await repository.get("company-1", unknown.contributionId)).toMatchObject({ status: "completed", result: validResult, error: null });
   });
 
   it("A4 persists a correlated terminal result and ignores wrong session/run callbacks", async () => {

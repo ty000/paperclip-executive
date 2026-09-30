@@ -33,11 +33,20 @@ export class SqlContributionRepository implements ContributionRepository {
         JSON.stringify(input.issue), JSON.stringify(input.source), JSON.stringify(input.approach), JSON.stringify(input.contributor),
         JSON.stringify(input.method), input.sessionId, input.runId, input.status, input.result ? JSON.stringify(input.result) : null, input.error],
     );
-    const rows = await this.db.query<Row>(
-      `SELECT * FROM ${this.table()} WHERE company_id = $1 AND request_key = $2`, [input.companyId, input.requestKey],
-    );
-    if (!rows[0]) throw new Error("Contribution claim could not be read back");
-    return { record: map(rows[0]), inserted: result.rowCount === 1 };
+    const inserted = result.rowCount === 1;
+    try {
+      const rows = await this.db.query<Row>(
+        `SELECT * FROM ${this.table()} WHERE company_id = $1 AND request_key = $2`, [input.companyId, input.requestKey],
+      );
+      if (!rows[0]) throw new Error("Contribution claim could not be read back");
+      return { record: map(rows[0]), inserted };
+    } catch (error) {
+      if (inserted) {
+        await this.fail(input.companyId, input.contributionId, "outcome_unknown",
+          `Contribution claim was inserted but could not be read back: ${error instanceof Error ? error.message : "Unknown error"}`);
+      }
+      throw error;
+    }
   }
   async get(companyId: string, contributionId: string): Promise<ContributionRecord | null> {
     const rows = await this.db.query<Row>(`SELECT * FROM ${this.table()} WHERE company_id = $1 AND contribution_id = $2`, [companyId, contributionId]);

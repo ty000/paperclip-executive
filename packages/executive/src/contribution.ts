@@ -245,15 +245,33 @@ export class ContributionService {
     let terminalProcessing = Promise.resolve();
     const persistTerminal = async (event: AgentSessionEvent): Promise<void> => {
       if (!sessionId || event.sessionId !== sessionId || !persistedRunId || event.runId !== persistedRunId) return;
-      try {
-        if (event.eventType === "done") {
-          await this.repository.complete(companyId, created.contributionId, sessionId, event.runId, parseContributionResult(event.message));
-        } else if (event.eventType === "error") {
-          await this.repository.fail(companyId, created.contributionId, "failed", event.message ?? "The contribution run failed", event.runId, sessionId);
-        }
-      } catch (error) {
+      if (event.eventType === "done") {
+        let result: ContributionResult;
         try {
-          await this.repository.fail(companyId, created.contributionId, "failed", safeError(error), event.runId, sessionId);
+          result = parseContributionResult(event.message);
+        } catch (error) {
+          try {
+            await this.repository.fail(companyId, created.contributionId, "failed", safeError(error), event.runId, sessionId);
+          } catch {
+            // Callback persistence failures remain visible through the last durable state.
+          }
+          return;
+        }
+        try {
+          await this.repository.complete(companyId, created.contributionId, sessionId, event.runId, result);
+        } catch (error) {
+          try {
+            await this.repository.fail(companyId, created.contributionId, "outcome_unknown",
+              `Completion persistence outcome is unknown: ${safeError(error)}`, event.runId, sessionId);
+          } catch {
+            // Callback persistence failures remain visible through the last durable state.
+          }
+        }
+        return;
+      }
+      if (event.eventType === "error") {
+        try {
+          await this.repository.fail(companyId, created.contributionId, "failed", event.message ?? "The contribution run failed", event.runId, sessionId);
         } catch {
           // Callback persistence failures remain visible through the last durable state.
         }

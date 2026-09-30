@@ -88,7 +88,7 @@ contribution/session/run identity, and sanitized API/browser check results.
 | Completed-result persistence after host restart | Exact contribution, issue fields, executor state and run set preserved. |
 | Real Chromium interaction after restart | Completed result and run attribution visible; captured snapshot expanded; reload retained result; no uncaught page errors. |
 | Native issue/executor | EXE-2 remained `todo`, assigned to the same paused executor. |
-| Package checks | 30 tests passed; `pnpm typecheck` and `pnpm build` passed. |
+| Package checks | 32 tests passed; `pnpm typecheck` and `pnpm build` passed. |
 
 The full report is advisory. The real result included `acceptanceCriteria[2]` and
 `exclusions[2]`, although the owner had supplied one combined line per array. These
@@ -130,6 +130,15 @@ before claiming or dispatching. Atomic claim still arbitrates concurrent new req
 Two regression tests cover these boundaries, and native replay with the contributor
 paused passed without adding a run. Evidence retains the real-run source hashes
 separately from the final candidate hashes; no new model run was needed for this fix.
+
+A second review identified two persistence boundaries. If claim insertion succeeds
+but its readback fails, only that confirmed winner is marked `outcome_unknown`;
+a competing duplicate never updates the winner. A valid terminal result whose
+completion write fails now remains `outcome_unknown`, while invalid output remains
+`failed`. A later correlated terminal event can complete the uncertain record.
+Fault-injection tests cover both changes. Native readback after the updated build
+preserved the completed contribution and the same single run; no additional model
+call or live database-failure injection was performed.
 
 ## Remaining boundaries
 
